@@ -8,7 +8,7 @@ import android.view.MenuItem;
 //commentaar van Tijs
 public class MainActivity extends Activity {
 
-    //THIS IS KOEKOOEEEET!
+    //THIS IS KOEKOOEEEET! (This is SPARTY-parodie ;D )
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
