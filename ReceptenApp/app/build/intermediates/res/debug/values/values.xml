@@ -11,7 +11,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="app_name">ReceptenApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_recept_detail">ReceptDetailActivity</string>
     <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/styles.xml -->
     <eat-comment />
 

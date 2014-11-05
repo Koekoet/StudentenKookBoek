@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="20" />
- <!-- tijs -->
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -21,6 +21,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="be.howest.nmct.receptenapp.ReceptDetailActivity"
+            android:label="@string/title_activity_recept_detail" >
         </activity>
     </application>
 

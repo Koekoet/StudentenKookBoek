@@ -1,23 +1,31 @@
 package be.howest.nmct.receptenapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-//commentaar van Tijs blablablablalkjmqsdlmfjklskmqf
-//msdkfjqlmksqdjfmqslkdfjmqlsdkjmlkqjdlkfmqslmkdflmkqsflksqdmlkf
-//psqdfjp
 public class MainActivity extends Activity {
 
-    //THIS IS KOEKOOEEEET! (This is SPARTY-parodie ;D )
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Load navigation (Mattias)
+
+        Button testButton = (Button) findViewById(R.id.testButton);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
