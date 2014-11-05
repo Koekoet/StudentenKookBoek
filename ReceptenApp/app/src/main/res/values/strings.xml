@@ -6,5 +6,12 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="riPictureRecipe">Picture Recipe</string>
+    <string name="riDurationRecipe">Duur:</string>
+    <string name="riNameRecipe">Name Recipe</string>
+    <string name="riCostRecipe">Kost:</string>
+    <string name="riNumRecipe"># personen:</string>
+    <string name="riDiffRecipe">Moeilijkheid:</string>
+    <string name="riUploadedRecipe">Geüpload door:</string>
 
 </resources>

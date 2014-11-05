@@ -8,6 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import data.Recept;
+import fragments.ReceptBereidingFragment;
+import fragments.ReceptInfoFragment;
+import fragments.ReceptIngredientenFragment;
+
 public class MainActivity extends Activity {
 
 
@@ -22,6 +27,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+                intent.putExtra("selectedRecipe", new Recept());
                 startActivity(intent);
             }
         });

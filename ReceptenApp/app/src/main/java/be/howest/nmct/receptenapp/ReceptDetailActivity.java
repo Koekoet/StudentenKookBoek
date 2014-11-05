@@ -4,21 +4,32 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import data.Recept;
 import fragments.ReceptBereidingFragment;
 import fragments.ReceptInfoFragment;
 import fragments.ReceptIngredientenFragment;
 
 
-public class ReceptDetailActivity extends Activity {
+public class ReceptDetailActivity extends Activity implements
+        ReceptInfoFragment.onReceptInfoSelectedListener,
+        ReceptIngredientenFragment.onReceptIngredientSelectedListener,
+        ReceptBereidingFragment.onReceptBereidingSelectedListener {
+
+    public static Recept selectedRecipe = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recept_detail);
+        //setContentView(R.layout.activity_recept_detail);
+
+        //We krijgen een Recept binnen...
+        Intent intent = getIntent();
+        selectedRecipe = (Recept) intent.getParcelableExtra("selectedRecipe");
 
         ActionBar actionbar = getActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -53,6 +64,20 @@ public class ReceptDetailActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onReceptInfoSelected(String tekst) {
+        ReceptInfoFragment fragment = (ReceptInfoFragment) getFragmentManager().findFragmentById(R.id.fragment);
+    }
+
+    @Override
+    public void onReceptIngredientSelectedListener(String tekst) {
+        ReceptIngredientenFragment fragment = (ReceptIngredientenFragment) getFragmentManager().findFragmentById(R.id.fragment);
+    }
+
+    @Override
+    public void onReceptBereidingSelected(String tekst) {
+        ReceptBereidingFragment fragment = (ReceptBereidingFragment) getFragmentManager().findFragmentById(R.id.fragment);
+    }
 
     class MyTabListener<T extends Fragment> implements ActionBar.TabListener{
         private Fragment mFragment;
@@ -88,6 +113,7 @@ public class ReceptDetailActivity extends Activity {
 
         }
     }
+
 }
 
 
