@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
+//commentaar van Tijs
 public class MainActivity extends Activity {
 
     //THIS IS KOEKOOEEEET!
