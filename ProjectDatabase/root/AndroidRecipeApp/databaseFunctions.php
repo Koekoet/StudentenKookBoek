@@ -12,7 +12,7 @@ function selectData($tableName)
         } else {
             $sql = "SELECT * FROM $tableName";
             if (!$con->query($sql)) {
-                $data["error"] = "Failed to execute the query: " . $con->error;
+                $data["error"] = "Failed to do the query: " . $con->error;
             } else {
                 $query = $con->query($sql);
                 $row = $query->fetch_array(MYSQLI_ASSOC);
