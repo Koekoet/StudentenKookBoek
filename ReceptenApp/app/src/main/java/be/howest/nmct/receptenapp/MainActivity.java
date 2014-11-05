@@ -10,7 +10,7 @@ import android.view.MenuItem;
 //psqdfjp
 public class MainActivity extends Activity {
 
-    //THIS IS KOEKOOEEEET!
+    //THIS IS KOEKOOEEEET! (This is SPARTY-parodie ;D )
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
