@@ -1,6 +1,13 @@
 <?php
 include("databaseFunctions.php");
-$data = selectDataById("ap_unit",2);
+if (isset ($_GET["function"]) && isset ($_GET["tableName"])) {
+
+    if (isset ($_GET["id"])) {
+       $data = $_GET["function"]($_GET["tableName"], $_GET["id"]);
+    } else {
+        $data = $_GET["function"]($_GET["tableName"]);
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">

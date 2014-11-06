@@ -1,5 +1,9 @@
-[Sat Nov 01 16:40:23.069011 2014] [mpm_winnt:notice] [pid 10848:tid 536] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
-[Sat Nov 01 16:40:23.069011 2014] [mpm_winnt:notice] [pid 10848:tid 536] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
-[Sat Nov 01 16:40:23.069011 2014] [core:notice] [pid 10848:tid 536] AH00094: Command line: 'C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase/apache2/bin/httpd_usbwv8.exe -d C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ProjectDatabase/apache2'
-[Sat Nov 01 16:40:23.084659 2014] [mpm_winnt:notice] [pid 10848:tid 536] AH00418: Parent: Created child process 10696
-[Sat Nov 01 16:40:24.959980 2014] [mpm_winnt:notice] [pid 10696:tid 560] AH00354: Child: Starting 64 worker threads.
+[Wed Nov 05 10:04:31.577040 2014] [mpm_winnt:notice] [pid 8580:tid 600] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
+[Wed Nov 05 10:04:31.577040 2014] [mpm_winnt:notice] [pid 8580:tid 600] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
+[Wed Nov 05 10:04:31.577040 2014] [core:notice] [pid 8580:tid 600] AH00094: Command line: 'C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase/apache2/bin/httpd_usbwv8.exe -d C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ProjectDatabase/apache2'
+[Wed Nov 05 10:04:31.625022 2014] [mpm_winnt:notice] [pid 8580:tid 600] AH00418: Parent: Created child process 1480
+[Wed Nov 05 10:04:33.347342 2014] [mpm_winnt:notice] [pid 1480:tid 572] AH00354: Child: Starting 64 worker threads.
+[Wed Nov 05 11:11:38.179235 2014] [:error] [pid 1480:tid 1092] [client ::1:44996] PHP Notice:  Undefined variable: data in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 16, referer: http://localhost:8080/
+[Wed Nov 05 11:23:11.264164 2014] [:error] [pid 1480:tid 1116] [client ::1:45117] PHP Notice:  Undefined index: params in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 6
+[Wed Nov 05 11:23:46.391910 2014] [:error] [pid 1480:tid 1116] [client ::1:45123] PHP Warning:  Missing argument 2 for selectDataById(), called in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 8 and defined in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\databaseFunctions.php on line 37
+[Wed Nov 05 11:23:46.391910 2014] [:error] [pid 1480:tid 1116] [client ::1:45123] PHP Notice:  Undefined variable: id in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\databaseFunctions.php on line 42

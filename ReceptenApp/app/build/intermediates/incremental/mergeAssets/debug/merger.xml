@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\assets" />
+        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\debug\assets" />
+        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\debug\assets" />
     </dataSet>
 
 </merger>
