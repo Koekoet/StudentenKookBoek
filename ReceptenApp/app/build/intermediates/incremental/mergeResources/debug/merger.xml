@@ -44,6 +44,15 @@
             <file
                 path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\values\strings.xml"
                 qualifiers="" >
+<<<<<<< HEAD
+=======
+                <string name="hello_world" >Hello world!
+                </string>
+                <string name="title_activity_recept_detail" >ReceptDetailActivity
+                </string>
+                <string name="hello_blank_fragment" >Hello blank fragment
+                </string>
+>>>>>>> 2ebd26e335d9ab6a1f0012e4e7bcec69fe7d61d7
                 <string name="action_settings" >Settings
                 </string>
                 <string name="app_name" >ReceptenApp
@@ -68,6 +77,31 @@
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                name="fragment_recept_info"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_recept_info.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="activity_recept_detail"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_recept_detail.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="fragment_recept_bereiding"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_recept_bereiding.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="fragment_recept_ingredienten"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_recept_ingredienten.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="recept_detail"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\menu\recept_detail.xml"
+                qualifiers=""
+                type="menu" />
         </source>
         <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\build\generated\res\rs\debug" />
         <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\build\generated\res\generated\debug" />
