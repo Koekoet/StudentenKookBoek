@@ -1,19 +1,26 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
+import data.Ingredient;
+import data.Recept;
 
 /**
  * Created by Toine on 5/11/2014.
  */
 public class ReceptIngredientenFragment extends Fragment {
     onReceptIngredientSelectedListener mCallback;
+    private static Recept selectedRecipe = null;
 
     public interface onReceptIngredientSelectedListener {
         public void onReceptIngredientSelectedListener(String tekst); //dit moet nog changen
@@ -41,5 +48,8 @@ public class ReceptIngredientenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
+
 }
