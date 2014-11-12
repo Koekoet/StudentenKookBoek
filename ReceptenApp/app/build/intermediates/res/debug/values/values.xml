@@ -13,12 +13,15 @@
     <string name="app_name">ReceptenApp</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
-<<<<<<< HEAD
-    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/styles.xml -->
-=======
+    <string name="riCostRecipe">Kost:</string>
+    <string name="riDiffRecipe">Moeilijkheid:</string>
+    <string name="riDurationRecipe">Duur:</string>
+    <string name="riNameRecipe">Name Recipe</string>
+    <string name="riNumRecipe"># personen:</string>
+    <string name="riPictureRecipe">Picture Recipe</string>
+    <string name="riUploadedRecipe">Geüpload door:</string>
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
-    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/styles.xml -->
->>>>>>> 2ebd26e335d9ab6a1f0012e4e7bcec69fe7d61d7
+    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">

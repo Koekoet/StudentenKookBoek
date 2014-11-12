@@ -1,17 +1,6 @@
-<<<<<<< HEAD
-[Wed Nov 05 10:04:31.577040 2014] [mpm_winnt:notice] [pid 8580:tid 600] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
-[Wed Nov 05 10:04:31.577040 2014] [mpm_winnt:notice] [pid 8580:tid 600] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
-[Wed Nov 05 10:04:31.577040 2014] [core:notice] [pid 8580:tid 600] AH00094: Command line: 'C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase/apache2/bin/httpd_usbwv8.exe -d C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ProjectDatabase/apache2'
-[Wed Nov 05 10:04:31.625022 2014] [mpm_winnt:notice] [pid 8580:tid 600] AH00418: Parent: Created child process 1480
-[Wed Nov 05 10:04:33.347342 2014] [mpm_winnt:notice] [pid 1480:tid 572] AH00354: Child: Starting 64 worker threads.
-[Wed Nov 05 11:11:38.179235 2014] [:error] [pid 1480:tid 1092] [client ::1:44996] PHP Notice:  Undefined variable: data in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 16, referer: http://localhost:8080/
-[Wed Nov 05 11:23:11.264164 2014] [:error] [pid 1480:tid 1116] [client ::1:45117] PHP Notice:  Undefined index: params in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 6
-[Wed Nov 05 11:23:46.391910 2014] [:error] [pid 1480:tid 1116] [client ::1:45123] PHP Warning:  Missing argument 2 for selectDataById(), called in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 8 and defined in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\databaseFunctions.php on line 37
-[Wed Nov 05 11:23:46.391910 2014] [:error] [pid 1480:tid 1116] [client ::1:45123] PHP Notice:  Undefined variable: id in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\databaseFunctions.php on line 42
-=======
-[Wed Nov 05 12:19:22.776121 2014] [mpm_winnt:notice] [pid 12076:tid 552] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
-[Wed Nov 05 12:19:22.776121 2014] [mpm_winnt:notice] [pid 12076:tid 552] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
-[Wed Nov 05 12:19:22.776121 2014] [core:notice] [pid 12076:tid 552] AH00094: Command line: 'C:\\Users\\Toine\\Dropbox\\School\\3e jaar\\S1\\App Dev Android\\Opdracht\\Project\\ProjectDatabase/apache2/bin/httpd_usbwv8.exe -d C:/Users/Toine/Dropbox/School/3e jaar/S1/App Dev Android/Opdracht/Project/ProjectDatabase/apache2'
-[Wed Nov 05 12:19:22.817179 2014] [mpm_winnt:notice] [pid 12076:tid 552] AH00418: Parent: Created child process 3004
-[Wed Nov 05 12:19:23.417410 2014] [mpm_winnt:notice] [pid 3004:tid 564] AH00354: Child: Starting 64 worker threads.
->>>>>>> 2ebd26e335d9ab6a1f0012e4e7bcec69fe7d61d7
+[Wed Nov 12 09:13:58.396886 2014] [mpm_winnt:notice] [pid 6240:tid 500] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
+[Wed Nov 12 09:13:58.396886 2014] [mpm_winnt:notice] [pid 6240:tid 500] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
+[Wed Nov 12 09:13:58.396886 2014] [core:notice] [pid 6240:tid 500] AH00094: Command line: 'C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase/apache2/bin/httpd_usbwv8.exe -d C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ProjectDatabase/apache2'
+[Wed Nov 12 09:13:58.460167 2014] [mpm_winnt:notice] [pid 6240:tid 500] AH00418: Parent: Created child process 7536
+[Wed Nov 12 09:14:01.365173 2014] [mpm_winnt:notice] [pid 7536:tid 572] AH00354: Child: Starting 64 worker threads.
+[Wed Nov 12 09:14:19.399482 2014] [:error] [pid 7536:tid 1068] [client ::1:39315] PHP Notice:  Undefined variable: data in C:\\Users\\tijs1\\Documents\\3NMCT\\AppDev\\Project\\ProjectDatabase\\ProjectDatabase\\root\\AndroidRecipeApp\\index.php on line 21, referer: http://localhost:8080/

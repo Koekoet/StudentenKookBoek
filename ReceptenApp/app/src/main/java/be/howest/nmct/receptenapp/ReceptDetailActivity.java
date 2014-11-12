@@ -6,8 +6,12 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import data.Recept;
 import fragments.ReceptBereidingFragment;
@@ -15,12 +19,13 @@ import fragments.ReceptInfoFragment;
 import fragments.ReceptIngredientenFragment;
 
 
-public class ReceptDetailActivity extends Activity implements
+public class ReceptDetailActivity extends FragmentActivity implements
         ReceptInfoFragment.onReceptInfoSelectedListener,
         ReceptIngredientenFragment.onReceptIngredientSelectedListener,
         ReceptBereidingFragment.onReceptBereidingSelectedListener {
 
     public static Recept selectedRecipe = null;
+    List<Fragment> tabFragmentList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class ReceptDetailActivity extends Activity implements
         actionbar.addTab(tab1);
         actionbar.addTab(tab2);
         actionbar.addTab(tab3);
+
 
     }
 
@@ -85,6 +91,7 @@ public class ReceptDetailActivity extends Activity implements
         private final Activity mActivity;
         private final String mTag;
 
+
         public MyTabListener(Activity activity, String tag, Class<T> clz){
             mActivity = activity;
             mTag = tag;
@@ -93,18 +100,48 @@ public class ReceptDetailActivity extends Activity implements
 
         @Override
         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            if(mFragment == null){
+            /*if(mFragment == null){
                 mFragment = Fragment.instantiate(mActivity, mClass.getName());
                 fragmentTransaction.add(android.R.id.content, mFragment, mTag);
             } else {
                 fragmentTransaction.attach(mFragment);
+            }*/
+            Fragment tf = null;
+            if(tabFragmentList.size() > tab.getPosition())
+                mFragment = tabFragmentList.get(tab.getPosition());
+
+            if(mFragment == null){
+
+                Bundle bundle = new Bundle();
+                if(tab.getPosition()==0){
+                    //Info Fragment
+                    tf = new ReceptInfoFragment();
+                } else if(tab.getPosition()==1){
+                    //Ingredienten Fragment
+                    tf=new ReceptIngredientenFragment();
+                } else if(tab.getPosition()==2){
+                    //Bereiding fragment
+                    tf = new ReceptBereidingFragment();
+                }
+
+                bundle.putParcelable("MYSELECTEDRECIPE", selectedRecipe);
+                bundle.putParcelableArrayList("SELECTEDRECIPEINGREDIENTS", selectedRecipe.getIngredients());
+                tf.setArguments(bundle);
+                tabFragmentList.add(tf);
+            } else{
+                tf = mFragment;
             }
+            fragmentTransaction.replace(android.R.id.content, tf);
+
         }
 
         @Override
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            if(mFragment != null){
+            /*if(mFragment != null){
                 fragmentTransaction.detach(mFragment);
+            }*/
+            if(tabFragmentList.size() > tab.getPosition()){
+                fragmentTransaction.remove(tabFragmentList.get(tab.getPosition()));
             }
         }
 
@@ -113,7 +150,6 @@ public class ReceptDetailActivity extends Activity implements
 
         }
     }
-
 }
 
 
