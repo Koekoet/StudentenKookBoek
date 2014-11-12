@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import data.Recept;
-import fragments.ReceptBereidingFragment;
-import fragments.ReceptInfoFragment;
-import fragments.ReceptIngredientenFragment;
 
 public class MainActivity extends Activity {
 
@@ -22,15 +17,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        Button testButton = (Button) findViewById(R.id.testButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
-                intent.putExtra("selectedRecipe", new Recept());
-                startActivity(intent);
-            }
-        });
+        
 
     }
 
@@ -48,8 +35,10 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_TestRecepi) {
+            Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+            intent.putExtra("selectedRecipe", new Recept());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
