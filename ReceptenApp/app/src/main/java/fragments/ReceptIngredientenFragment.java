@@ -3,6 +3,7 @@ package fragments;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Parcelable;
@@ -32,6 +33,8 @@ public class ReceptIngredientenFragment extends ListFragment {
     onReceptIngredientSelectedListener mCallback;
     private static Recept selectedRecipe = null;
     private ListAdapter mAdapter;
+    private static final String ADDEDINGREDIENTS = "added-ingredients";
+    private ArrayList<Ingredient> TOEGEVOEGDEINGREDIENTEN = new ArrayList<Ingredient>();
 
     public interface onReceptIngredientSelectedListener {
         public void onReceptIngredientSelectedListener(String tekst); //dit moet nog changen
@@ -47,6 +50,26 @@ public class ReceptIngredientenFragment extends ListFragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //Save fragment
+        outState.putParcelableArrayList(ADDEDINGREDIENTS, TOEGEVOEGDEINGREDIENTEN);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState!=null){
+            //get fragments state
+            TOEGEVOEGDEINGREDIENTEN = savedInstanceState.getParcelableArrayList(ADDEDINGREDIENTS);
+            Ingredient test = new Ingredient(0,"Ing1");
+            TOEGEVOEGDEINGREDIENTEN.add(test);
+            MainActivity.BOODSCHAPPENLIJSTJE.add(test);
+        }
+    }
+
     public ReceptIngredientenFragment(){
 
     }
@@ -59,6 +82,14 @@ public class ReceptIngredientenFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+            //get fragments state
+            TOEGEVOEGDEINGREDIENTEN = savedInstanceState.getParcelableArrayList(ADDEDINGREDIENTS);
+            Ingredient test = new Ingredient(0,"Ing1");
+            TOEGEVOEGDEINGREDIENTEN.add(test);
+            MainActivity.BOODSCHAPPENLIJSTJE.add(test);
+        }
 
         Bundle args = getArguments();
         selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
@@ -83,17 +114,25 @@ public class ReceptIngredientenFragment extends ListFragment {
             tvName.setText(selectedRecipe.getIngredients().get(position).getName());
 
             final ImageButton imageButton = (ImageButton) row.findViewById(R.id.riAddBasket);
+            if(TOEGEVOEGDEINGREDIENTEN.contains(ingredient)){
+                imageButton.setImageResource(R.drawable.ic_tick);
+                imageButton.setBackgroundResource(0);
+            } else {
+                imageButton.setImageResource(R.drawable.ic_action_new);
+            }
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(!MainActivity.BOODSCHAPPENLIJSTJE.contains(ingredient)){
+                        MainActivity.BOODSCHAPPENLIJSTJE.add(ingredient);
+                        TOEGEVOEGDEINGREDIENTEN.add(ingredient);
                         AddToBasket(selectedRecipe.getIngredients().get(position));
                         imageButton.setImageResource(R.drawable.ic_tick);
                         imageButton.setBackgroundResource(0);
                     }
                 }
             });
-
+            
             return row;
         }
     }

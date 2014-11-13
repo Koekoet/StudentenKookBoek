@@ -26,11 +26,16 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
     public static Recept selectedRecipe = null;
     List<Fragment> tabFragmentList = new ArrayList();
+    android.support.v4.app.Fragment mContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_recept_detail);
+
+        if(savedInstanceState != null){
+            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+        }
 
         //We krijgen een Recept binnen...
         Intent intent = getIntent();
@@ -50,6 +55,12 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

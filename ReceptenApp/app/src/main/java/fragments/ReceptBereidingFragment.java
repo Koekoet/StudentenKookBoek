@@ -41,7 +41,7 @@ public class ReceptBereidingFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_recept_bereiding, container, false);
 
         TextView bereiding = (TextView) v.findViewById(R.id.riBereiding);
-        //bereiding.setText(selectedRecipe.get);
+        bereiding.setText(selectedRecipe.getRecipeText());
 
         return v;
     }
@@ -49,5 +49,8 @@ public class ReceptBereidingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
     }
 }
