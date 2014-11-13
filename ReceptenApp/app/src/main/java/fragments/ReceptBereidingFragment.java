@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import be.howest.nmct.receptenapp.R;
 import data.Recept;
@@ -15,6 +16,7 @@ import data.Recept;
  */
 public class ReceptBereidingFragment extends Fragment {
     onReceptBereidingSelectedListener mCallback;
+    private static Recept selectedRecipe = null;
 
     public interface onReceptBereidingSelectedListener {
         public void onReceptBereidingSelected(String tekst); //dit moet nog changen
@@ -36,7 +38,12 @@ public class ReceptBereidingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recept_bereiding, container, false);
+        View v = inflater.inflate(R.layout.fragment_recept_bereiding, container, false);
+
+        TextView bereiding = (TextView) v.findViewById(R.id.riBereiding);
+        //bereiding.setText(selectedRecipe.get);
+
+        return v;
     }
 
     @Override

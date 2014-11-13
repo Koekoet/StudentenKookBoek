@@ -100,12 +100,6 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
         @Override
         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            /*if(mFragment == null){
-                mFragment = Fragment.instantiate(mActivity, mClass.getName());
-                fragmentTransaction.add(android.R.id.content, mFragment, mTag);
-            } else {
-                fragmentTransaction.attach(mFragment);
-            }*/
             Fragment tf = null;
             if(tabFragmentList.size() > tab.getPosition())
                 mFragment = tabFragmentList.get(tab.getPosition());
@@ -125,7 +119,7 @@ public class ReceptDetailActivity extends FragmentActivity implements
                 }
 
                 bundle.putParcelable("MYSELECTEDRECIPE", selectedRecipe);
-                bundle.putParcelableArrayList("SELECTEDRECIPEINGREDIENTS", selectedRecipe.getIngredients());
+                //bundle.putParcelableArrayList("SELECTEDRECIPEINGREDIENTS", selectedRecipe.getIngredients());
                 tf.setArguments(bundle);
                 tabFragmentList.add(tf);
             } else{
@@ -137,9 +131,6 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
         @Override
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            /*if(mFragment != null){
-                fragmentTransaction.detach(mFragment);
-            }*/
             if(tabFragmentList.size() > tab.getPosition()){
                 fragmentTransaction.remove(tabFragmentList.get(tab.getPosition()));
             }

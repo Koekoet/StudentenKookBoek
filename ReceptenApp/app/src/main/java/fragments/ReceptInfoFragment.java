@@ -3,6 +3,7 @@ package fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +55,10 @@ public class ReceptInfoFragment extends Fragment {
 
         //Set text
         riName.setText(selectedRecipe.getName());
-        tvDuration.setText(selectedRecipe.getDuration());
-        tvCostRecipe.setText(selectedRecipe.getCost());
+        tvDuration.setText(selectedRecipe.getDuration()+"min");
+        tvCostRecipe.setText(selectedRecipe.getCost()+"€");
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
-        tvUploadedRecipe.setText(""+selectedRecipe.getAuthorID()); //Moet nog de author ophalen
+        tvUploadedRecipe.setText(""+selectedRecipe.getAuthor().getName());
 
 
         return v;
@@ -68,7 +69,5 @@ public class ReceptInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
-        ArrayList<Ingredient> ingredients = args.getParcelableArrayList("SELECTEDRECIPEINGREDIENTS");
-        selectedRecipe.setIngredients(ingredients);
     }
 }

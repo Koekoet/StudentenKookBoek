@@ -3,7 +3,9 @@ package data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -28,16 +30,22 @@ public class Recept implements Parcelable{
         setID(in.readInt());
         setName(in.readString());
         setAuthorID(in.readInt());
+        setAuthor((Author) in.readParcelable(Author.class.getClassLoader()));
+        setIngredients(in.readArrayList(Ingredient.class.getClassLoader()));
         setDuration(in.readString());
         setCost(in.readString());
         setNumberOfPersons(in.readInt());
         setDifficultyID(in.readInt());
+        setDifficulty((data.Difficulty) in.readParcelable(data.Difficulty.class.getClassLoader()));
         setPicture(in.readString());
         setRecipeText(in.readString());
         setCategoryID(in.readInt());
+        setCategory((data.Category) in.readParcelable(data.Category.class.getClassLoader()));
     }
 
     public Recept(){
+        //Dummy-data
+
         setID(0);
         setName("Name");
         setAuthorID(0);
@@ -53,6 +61,21 @@ public class Recept implements Parcelable{
         ingredients.add(new Ingredient(1,"Ing2"));
         ingredients.add(new Ingredient(2,"Ing3"));
         setIngredients(ingredients);
+        data.Author author = new Author();
+        author.setID(0);
+        author.setName("Koekoet");
+        author.setEmail("toinekoekoet@gmail.com");
+        author.setPassword("nope");
+        setAuthor(author);
+        data.Difficulty diff = new Difficulty();
+        diff.setID(3);
+        diff.setDescription("Moeilijk");
+        setDifficulty(diff);
+        data.Category cat = new Category();
+        cat.setID(0);
+        cat.setName("Categorie 0");
+        cat.setPicture("iets");
+        setCategory(cat);
     }
 
     @Override
@@ -65,17 +88,17 @@ public class Recept implements Parcelable{
         out.writeInt(getID());
         out.writeString(getName());
         out.writeInt(getAuthorID());
-        //out.write
+        out.writeParcelable(getAuthor(), 0);
+        out.writeList(getIngredients());
         out.writeString(getDuration());
         out.writeString(getCost());
         out.writeInt(getNumberOfPersons());
         out.writeInt(getDifficultyID());
-        //out.write
+        out.writeParcelable(getDifficulty(),flags);
         out.writeString(getPicture());
-        //out.writeStringArray(Ingredients);
         out.writeString(getRecipeText());
         out.writeInt(getCategoryID());
-        //out.write
+        out.writeParcelable(getCategory(), flags);
     }
 
     public static final Creator<Recept> CREATOR = new Creator<Recept>() {
@@ -176,6 +199,30 @@ public class Recept implements Parcelable{
 
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         Ingredients = ingredients;
+    }
+
+    public Author getAuthor() {
+        return Author;
+    }
+
+    public void setAuthor(Author author) {
+        Author = author;
+    }
+
+    public Difficulty getDifficulty() {
+        return Difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        Difficulty = difficulty;
+    }
+
+    public Category getCategory() {
+        return Category;
+    }
+
+    public void setCategory(Category category) {
+        Category = category;
     }
 
     public class IngredientList extends ArrayList<Ingredient> implements Parcelable{

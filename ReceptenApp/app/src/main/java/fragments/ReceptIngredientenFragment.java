@@ -1,16 +1,26 @@
 package fragments;
 
 import android.app.Activity;
+import android.app.ListFragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Parcelable;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
 import data.Ingredient;
 import data.Recept;
@@ -18,9 +28,10 @@ import data.Recept;
 /**
  * Created by Toine on 5/11/2014.
  */
-public class ReceptIngredientenFragment extends Fragment {
+public class ReceptIngredientenFragment extends ListFragment {
     onReceptIngredientSelectedListener mCallback;
     private static Recept selectedRecipe = null;
+    private ListAdapter mAdapter;
 
     public interface onReceptIngredientSelectedListener {
         public void onReceptIngredientSelectedListener(String tekst); //dit moet nog changen
@@ -49,7 +60,48 @@ public class ReceptIngredientenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle args = getArguments();
+        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
+
+
+
+        mAdapter = new IngredientAdapter();
+        setListAdapter(mAdapter);
     }
 
+    class IngredientAdapter extends ArrayAdapter<Ingredient>{
+        public IngredientAdapter(){
+            super(getActivity(),R.layout.row_ingredients, R.id.tv_ingredient_name, selectedRecipe.getIngredients());
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final Ingredient ingredient = selectedRecipe.getIngredients().get(position);
+            View row = super.getView(position, convertView, parent);
+
+            TextView tvName = (TextView) row.findViewById(R.id.tv_ingredient_name);
+            tvName.setText(selectedRecipe.getIngredients().get(position).getName());
+
+            final ImageButton imageButton = (ImageButton) row.findViewById(R.id.riAddBasket);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!MainActivity.BOODSCHAPPENLIJSTJE.contains(ingredient)){
+                        AddToBasket(selectedRecipe.getIngredients().get(position));
+                        imageButton.setImageResource(R.drawable.ic_tick);
+                        imageButton.setBackgroundResource(0);
+                    }
+                }
+            });
+
+            return row;
+        }
+    }
+
+    private void AddToBasket(Ingredient ingredient) {
+        //CODE OM TOE TE VOEGEN AAN WINKELMANDJE
+
+        Toast.makeText(getActivity(), "Toegevoegd aan mandje: " + ingredient.getID(), Toast.LENGTH_SHORT).show();
+    }
 
 }

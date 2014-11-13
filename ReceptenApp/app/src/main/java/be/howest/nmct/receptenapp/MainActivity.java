@@ -8,12 +8,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
+import data.Ingredient;
 import data.Recept;
 import fragments.ReceptBereidingFragment;
 import fragments.ReceptInfoFragment;
 import fragments.ReceptIngredientenFragment;
 
 public class MainActivity extends Activity {
+
+    //Globale vars
+    //  Boodschappenlijstje
+    public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
 
 
     @Override
