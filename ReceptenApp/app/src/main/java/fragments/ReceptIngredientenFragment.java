@@ -132,7 +132,7 @@ public class ReceptIngredientenFragment extends ListFragment {
                     }
                 }
             });
-            
+
             return row;
         }
     }
