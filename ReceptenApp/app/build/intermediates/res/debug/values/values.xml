@@ -21,8 +21,12 @@
     <string name="riNumRecipe"># personen:</string>
     <string name="riPictureRecipe">Picture Recipe</string>
     <string name="riUploadedRecipe">Geüpload door:</string>
+    <string name="search_hint">Zoekterm</string>
+    <string name="search_title">Zoeken</string>
     <string name="swipeToAddBasket">Swipe rechts: toevoegen aan mandje</string>
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
     <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/styles.xml -->
     <eat-comment />
 

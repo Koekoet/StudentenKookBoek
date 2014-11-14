@@ -15,5 +15,9 @@
     <string name="riUploadedRecipe">Geüpload door:</string>
     <string name="swipeToAddBasket">Swipe rechts: toevoegen aan mandje</string>
     <string name="AddBasket">addBasket</string>
+    <string name="search_hint">Zoekterm</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="search_title">Zoeken</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
 
 </resources>

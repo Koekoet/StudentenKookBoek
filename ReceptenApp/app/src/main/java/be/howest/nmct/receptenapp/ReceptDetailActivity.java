@@ -4,11 +4,14 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +61,17 @@ public class ReceptDetailActivity extends FragmentActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if(mContent != null){
+            getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+        }
 
-        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.recept_detail, menu);
+
         return true;
     }
 
