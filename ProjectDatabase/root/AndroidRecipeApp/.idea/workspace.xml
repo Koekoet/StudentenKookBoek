@@ -36,7 +36,9 @@
       <list>
         <option value="$PROJECT_DIR$/dbConfig.php" />
         <option value="$PROJECT_DIR$/databaseFunctions.php" />
+        <option value="$PROJECT_DIR$/update.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/create.php" />
       </list>
     </option>
   </component>
@@ -73,6 +75,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -93,7 +96,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -102,6 +104,26 @@
     <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -118,7 +140,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1058" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1058" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -159,7 +181,9 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="5" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -167,7 +191,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="666" max-vertical-offset="2002">
           <caret line="80" column="92" selection-start-line="80" selection-start-column="92" selection-end-line="80" selection-end-column="92" />
-          <folding />
+          <folding>
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..tableName..." />
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO.._tableName WHERE..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -175,10 +202,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -186,7 +210,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="666" max-vertical-offset="2002">
           <caret line="80" column="92" selection-start-line="80" selection-start-column="92" selection-end-line="80" selection-end-column="92" />
-          <folding />
+          <folding>
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..tableName..." />
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO.._tableName WHERE..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -194,10 +221,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="506">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -205,7 +229,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1672">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..tableName..." />
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO.._tableName WHERE..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -213,10 +240,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="44" max-vertical-offset="506">
           <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
-          <folding>
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -234,22 +258,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/create.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.88100684" vertical-offset="0" max-vertical-offset="1012">
+          <caret line="232" column="7" selection-start-line="229" selection-start-column="30" selection-end-line="232" selection-end-column="7" />
+          <folding>
+            <element signature="e#135#443#0#PHP" expanded="false" />
+            <element signature="e#452#772#0#PHP" expanded="false" />
+            <element signature="e#781#1089#0#PHP" expanded="false" />
+            <element signature="e#1098#1798#0#PHP" expanded="false" />
+            <element signature="e#1807#2083#0#PHP" expanded="false" />
+            <element signature="e#2092#2173#0#PHP" expanded="false" />
+            <element signature="n#createNewIngredient#0;n#!!top" expanded="false" />
+            <element signature="n#createNewCategory#0;n#!!top" expanded="false" />
+            <element signature="n#createNewRecipe#0;n#!!top" expanded="false" />
+            <element signature="n#createNewDifficulty#0;n#!!top" expanded="false" />
+            <element signature="n#createNewUnit#0;n#!!top" expanded="false" />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1416073205075" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12585813" vertical-offset="0" max-vertical-offset="874">
-          <caret line="5" column="64" selection-start-line="5" selection-start-column="64" selection-end-line="5" selection-end-column="64" />
-          <folding>
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1415182998738" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.6544622" vertical-offset="0" max-vertical-offset="874">
+          <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/databaseFunctions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2517163" vertical-offset="666" max-vertical-offset="2002">
-          <caret line="80" column="92" selection-start-line="80" selection-start-column="92" selection-end-line="80" selection-end-column="92" />
-          <folding />
+        <state vertical-scroll-proportion="0.5720824" vertical-offset="1128" max-vertical-offset="2002">
+          <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
+          <folding>
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..tableName..." />
+            <marker date="1415176485710" expanded="true" signature="-1:-1" placeholder="SELECT * FRO.._tableName WHERE..." />
+          </folding>
         </state>
       </provider>
     </entry>
