@@ -13,5 +13,7 @@
     <string name="riNumRecipe"># personen:</string>
     <string name="riDiffRecipe">Moeilijkheid:</string>
     <string name="riUploadedRecipe">Geüpload door:</string>
+    <string name="swipeToAddBasket">Swipe rechts: toevoegen aan mandje</string>
+    <string name="AddBasket">addBasket</string>
 
 </resources>

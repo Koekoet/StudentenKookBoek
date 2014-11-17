@@ -9,12 +9,19 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import data.Ingredient;
 import data.Recept;
 
 public class MainActivity extends Activity {
     private String[] arrNavigation;
     private DrawerLayout mDrawerLayout;
     private ListView mNavigationList;
+
+    //Globale vars
+    //  Boodschappenlijstje
+    public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
 
 
     @Override

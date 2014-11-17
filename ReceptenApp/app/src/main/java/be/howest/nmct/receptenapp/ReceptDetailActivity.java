@@ -26,11 +26,16 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
     public static Recept selectedRecipe = null;
     List<Fragment> tabFragmentList = new ArrayList();
+    android.support.v4.app.Fragment mContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_recept_detail);
+
+        if(savedInstanceState != null){
+            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+        }
 
         //We krijgen een Recept binnen...
         Intent intent = getIntent();
@@ -50,6 +55,12 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,12 +111,6 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
         @Override
         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            /*if(mFragment == null){
-                mFragment = Fragment.instantiate(mActivity, mClass.getName());
-                fragmentTransaction.add(android.R.id.content, mFragment, mTag);
-            } else {
-                fragmentTransaction.attach(mFragment);
-            }*/
             Fragment tf = null;
             if(tabFragmentList.size() > tab.getPosition())
                 mFragment = tabFragmentList.get(tab.getPosition());
@@ -125,7 +130,7 @@ public class ReceptDetailActivity extends FragmentActivity implements
                 }
 
                 bundle.putParcelable("MYSELECTEDRECIPE", selectedRecipe);
-                bundle.putParcelableArrayList("SELECTEDRECIPEINGREDIENTS", selectedRecipe.getIngredients());
+                //bundle.putParcelableArrayList("SELECTEDRECIPEINGREDIENTS", selectedRecipe.getIngredients());
                 tf.setArguments(bundle);
                 tabFragmentList.add(tf);
             } else{
@@ -137,9 +142,6 @@ public class ReceptDetailActivity extends FragmentActivity implements
 
         @Override
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            /*if(mFragment != null){
-                fragmentTransaction.detach(mFragment);
-            }*/
             if(tabFragmentList.size() > tab.getPosition()){
                 fragmentTransaction.remove(tabFragmentList.get(tab.getPosition()));
             }

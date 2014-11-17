@@ -24,7 +24,7 @@ public class Ingredient implements Parcelable{
         parcel.writeString(Name);
     }
 
-    public final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
+    public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
         @Override
         public Ingredient createFromParcel(Parcel parcel) {
             return new Ingredient(parcel);
