@@ -80,17 +80,17 @@
                 </string>
                 <string name="hello_blank_fragment" >Hello blank fragment
                 </string>
-                <string name="riDurationRecipe" >Duur:
+                <string name="app_name" >ReceptenApp
                 </string>
                 <string name="title_activity_recept_detail" >ReceptDetailActivity
                 </string>
-                <string name="app_name" >ReceptenApp
+                <string name="riDurationRecipe" >Duur:
                 </string>
                 <string name="riDiffRecipe" >Moeilijkheid:
                 </string>
-                <string name="riCostRecipe" >Kost:
-                </string>
                 <string name="riPictureRecipe" >Picture Recipe
+                </string>
+                <string name="riCostRecipe" >Kost:
                 </string>
                 <string name="hello_world" >Hello world!
                 </string>
@@ -114,6 +114,52 @@
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\values\array.xml"
+                qualifiers="" >
+                <string-array name="MenuUser" >
+                    <item>
+Bladeren
+                    </item>
+                    <item>
+Boodschappenlijstje
+                    </item>
+                    <item>
+Favorieten
+                    </item>
+                    <item>
+Recept toevoegen
+                    </item>
+                    <item>
+Vrienden
+                    </item>
+                    <item>
+Profiel bewerken
+                    </item>
+                    <item>
+Uitloggen
+                    </item>
+                </string-array>
+                <string-array name="MenuBasic" >
+                    <item>
+Bladeren
+                    </item>
+                    <item>
+Boodschappenlijstje
+                    </item>
+                    <item>
+Favorieten
+                    </item>
+                    <item>
+Inloggen
+                    </item>
+                </string-array>
+            </file>
+            <file
+                name="navigation_list_item"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\navigation_list_item.xml"
+                qualifiers=""
+                type="layout" />
         </source>
         <source path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\build\generated\res\generated\debug" />
