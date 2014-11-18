@@ -5,5 +5,9 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/action_TestRecepi"
+        android:title="Recepi test"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>
-<!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/menu/main.xml -->
+<!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/menu/main.xml -->
