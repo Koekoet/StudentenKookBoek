@@ -2,122 +2,217 @@
 <merger version="2" >
 
     <dataSet config="20.0.0" >
-        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\res" />
+        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\res" />
     </dataSet>
     <dataSet config="main" >
-        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res" >
+        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res" >
             <file
-                name="ic_action_new"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_new.png"
+                name="ic_action_discard"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_discard.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
-                name="ic_launcher"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-hdpi\ic_launcher.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_tick"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-hdpi\ic_tick.png"
+                name="ic_action_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_favorite.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_action_new"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_new.png"
-                qualifiers="mdpi-v4"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_new.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_search"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_search.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_share"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_share.png"
+                qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-mdpi\ic_launcher.png"
-                qualifiers="mdpi-v4"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_launcher.png"
+                qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_tick"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-mdpi\ic_tick.png"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_tick.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_discard"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_discard.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_favorite.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_action_new"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_new.png"
-                qualifiers="xhdpi-v4"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_new.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_search"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_search.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_share"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_share.png"
+                qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_launcher.png"
-                qualifiers="xhdpi-v4"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_launcher.png"
+                qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_tick"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_tick.png"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_tick.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_discard"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_discard.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_favorite.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_action_new"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_new.png"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_new.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_search"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_search.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_share"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_share.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_tick"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_tick.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_discard"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_discard.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_favorite.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_new"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_new.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_search"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_search.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_action_share"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_share.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_tick"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_tick.png"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_tick.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_tick"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\drawable-xxxhdpi\ic_tick.png"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxxhdpi\ic_tick.png"
                 qualifiers="xxxhdpi-v4"
                 type="drawable" />
             <file
+                name="activity_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_favorite.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="activity_main"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\activity_main.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_main.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="activity_recept_detail"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\activity_recept_detail.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_recept_detail.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_recept_bereiding"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\fragment_recept_bereiding.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_recept_bereiding.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_recept_info"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\fragment_recept_info.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_recept_info.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_recept_ingredienten"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\fragment_recept_ingredienten.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_recept_ingredienten.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="navigation_list_item"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\navigation_list_item.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\navigation_list_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="row_favorites"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\row_favorites.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="row_ingredients"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\row_ingredients.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\row_ingredients.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="main"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\menu\main.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\menu\main.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="menu_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\menu\menu_favorite.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="recept_detail"
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\menu\recept_detail.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\menu\recept_detail.xml"
                 qualifiers=""
                 type="menu" />
             <file
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\values\array.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\values\array.xml"
                 qualifiers="" >
                 <string-array name="MenuUser" >
                     <item>
@@ -158,49 +253,33 @@ Inloggen
                 </string-array>
             </file>
             <file
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\values\dimens.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\values\dimens.xml"
                 qualifiers="" >
-                <dimen name="activity_horizontal_margin" >16dp
-                </dimen>
                 <dimen name="activity_vertical_margin" >16dp
+                </dimen>
+                <dimen name="activity_horizontal_margin" >16dp
                 </dimen>
             </file>
             <file
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\values\strings.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\values\strings.xml"
                 qualifiers="" >
-                <string name="riUploadedRecipe" >Geüpload door:
-                </string>
-                <string name="riNumRecipe" ># personen:
-                </string>
-                <string name="action_settings" >Settings
-                </string>
-<<<<<<< HEAD
-                <string name="hello_blank_fragment" >Hello blank fragment
+                <string name="hello_world" >Hello world!
                 </string>
                 <string name="swipeToAddBasket" >Swipe rechts: toevoegen aan mandje
-=======
-<<<<<<< HEAD
+                </string>
+                <string name="riDiffRecipe" >Moeilijkheid:
+                </string>
                 <string name="action_delete" >Ledig favorieten
                 </string>
-=======
-<<<<<<< HEAD
-                <string name="hello_blank_fragment" >Hello blank fragment
-=======
->>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
                 <string name="action_settings" >Settings
->>>>>>> 32fd36a76dc89816d5d8735c207a616a4a19e7fd
                 </string>
                 <string name="title_activity_favorite" >FavoriteActivity
                 </string>
                 <string name="app_name" >ReceptenApp
                 </string>
-<<<<<<< HEAD
                 <string name="favorieten" >Favorieten
                 </string>
                 <string name="riNameRecipe" >Name Recipe
-=======
-                <string name="title_activity_recept_detail" >ReceptDetailActivity
->>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
                 </string>
                 <string name="search_hint" >Zoekterm
                 </string>
@@ -209,35 +288,28 @@ Inloggen
                 <string name="title_activity_search_results" >SearchResultsActivity
                 </string>
                 <string name="action_share" >Delen
->>>>>>> 50adb6e60b5473fff9867ad27c8b950d8d251fab
                 </string>
-                <string name="riDurationRecipe" >Duur:
-                </string>
-                <string name="AddBasket" >addBasket
-                </string>
-                <string name="riCostRecipe" >Kost:
-                </string>
-                <string name="app_name" >ReceptenApp
-                </string>
-<<<<<<< HEAD
                 <string name="title_activity_recept_detail" >ReceptDetailActivity
-=======
-                <string name="title_activity_search" >SearchActivity
-                </string>
-                <string name="riDurationRecipe" >Duur:
->>>>>>> 50adb6e60b5473fff9867ad27c8b950d8d251fab
-                </string>
-                <string name="riDiffRecipe" >Moeilijkheid:
                 </string>
                 <string name="riPictureRecipe" >Picture Recipe
                 </string>
-                <string name="hello_world" >Hello world!
+                <string name="riCostRecipe" >Kost:
                 </string>
-                <string name="riNameRecipe" >Name Recipe
+                <string name="AddBasket" >addBasket
+                </string>
+                <string name="hello_blank_fragment" >Hello blank fragment
+                </string>
+                <string name="title_activity_search" >SearchActivity
+                </string>
+                <string name="riDurationRecipe" >Duur:
+                </string>
+                <string name="riNumRecipe" ># personen:
+                </string>
+                <string name="riUploadedRecipe" >Geüpload door:
                 </string>
             </file>
             <file
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\values\styles.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\values\styles.xml"
                 qualifiers="" >
 
                 <style
@@ -248,163 +320,17 @@ Inloggen
                 </style>
             </file>
             <file
-                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\values-w820dp\dimens.xml"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\values-w820dp\dimens.xml"
                 qualifiers="w820dp-v13" >
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
-<<<<<<< HEAD
-=======
-            <file
-<<<<<<< HEAD
-                name="ic_action_search"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_search.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_search"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_search.png"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_search"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_search.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_search"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_search.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_share"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_share.png"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_share"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_share.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_share"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_share.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_share"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_share.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_favorite.png"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_favorite.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_favorite.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="row_favorites"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\row_favorites.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="menu_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\menu\menu_favorite.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                name="ic_action_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_favorite.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="activity_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_favorite.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="ic_action_discard"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xhdpi\ic_action_discard.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_discard"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-mdpi\ic_action_discard.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_discard"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-xxhdpi\ic_action_discard.png"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_action_discard"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\drawable-hdpi\ic_action_discard.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-=======
-                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\values\array.xml"
-                qualifiers="" >
-                <string-array name="MenuUser" >
-                    <item>
-Bladeren
-                    </item>
-                    <item>
-Boodschappenlijstje
-                    </item>
-                    <item>
-Favorieten
-                    </item>
-                    <item>
-Recept toevoegen
-                    </item>
-                    <item>
-Vrienden
-                    </item>
-                    <item>
-Profiel bewerken
-                    </item>
-                    <item>
-Uitloggen
-                    </item>
-                </string-array>
-                <string-array name="MenuBasic" >
-                    <item>
-Bladeren
-                    </item>
-                    <item>
-Boodschappenlijstje
-                    </item>
-                    <item>
-Favorieten
-                    </item>
-                    <item>
-Inloggen
-                    </item>
-                </string-array>
-            </file>
-            <file
-                name="navigation_list_item"
-                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\navigation_list_item.xml"
-                qualifiers=""
-                type="layout" />
->>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
->>>>>>> 50adb6e60b5473fff9867ad27c8b950d8d251fab
         </source>
-        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\build\generated\res\rs\debug" />
-        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\build\generated\res\generated\debug" />
+        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\generated\res\rs\debug" />
+        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\generated\res\generated\debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\debug\res" />
+        <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\debug\res" />
     </dataSet>
 
 </merger>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/array.xml -->
+    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/array.xml -->
     <eat-comment />
 
     <string-array name="MenuBasic">
@@ -19,12 +19,12 @@
         <item>Profiel bewerken</item>
         <item>Uitloggen</item>
     </string-array>
-    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="AddBasket">addBasket</string>
@@ -47,17 +47,9 @@
     <string name="swipeToAddBasket">Swipe rechts: toevoegen aan mandje</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
-<<<<<<< HEAD
-    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/styles.xml -->
-=======
-<<<<<<< HEAD
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
     <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/styles.xml -->
-=======
-    <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/styles.xml -->
->>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
->>>>>>> 50adb6e60b5473fff9867ad27c8b950d8d251fab
     <eat-comment />
 
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
