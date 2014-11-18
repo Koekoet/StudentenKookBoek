@@ -28,8 +28,11 @@
     <eat-comment />
 
     <string name="AddBasket">addBasket</string>
+    <string name="action_delete">Ledig favorieten</string>
     <string name="action_settings">Settings</string>
+    <string name="action_share">Delen</string>
     <string name="app_name">ReceptenApp</string>
+    <string name="favorieten">Favorieten</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="riCostRecipe">Kost:</string>
@@ -39,9 +42,22 @@
     <string name="riNumRecipe"># personen:</string>
     <string name="riPictureRecipe">Picture Recipe</string>
     <string name="riUploadedRecipe">Geüpload door:</string>
+    <string name="search_hint">Zoekterm</string>
+    <string name="search_title">Zoeken</string>
     <string name="swipeToAddBasket">Swipe rechts: toevoegen aan mandje</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
+<<<<<<< HEAD
     <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/styles.xml -->
+=======
+<<<<<<< HEAD
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/styles.xml -->
+=======
+    <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/styles.xml -->
+>>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
+>>>>>>> 50adb6e60b5473fff9867ad27c8b950d8d251fab
     <eat-comment />
 
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">

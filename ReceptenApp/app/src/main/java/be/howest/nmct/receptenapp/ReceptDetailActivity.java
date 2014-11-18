@@ -4,11 +4,15 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.ShareActionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,8 @@ public class ReceptDetailActivity extends FragmentActivity implements
     public static Recept selectedRecipe = null;
     List<Fragment> tabFragmentList = new ArrayList();
     android.support.v4.app.Fragment mContent;
+    private ShareActionProvider mShareActionProvider;
+    private Intent mShareIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,7 @@ public class ReceptDetailActivity extends FragmentActivity implements
         //We krijgen een Recept binnen...
         Intent intent = getIntent();
         selectedRecipe = (Recept) intent.getParcelableExtra("selectedRecipe");
-
+        setTitle(selectedRecipe.getName());
         ActionBar actionbar = getActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -52,20 +58,35 @@ public class ReceptDetailActivity extends FragmentActivity implements
         actionbar.addTab(tab2);
         actionbar.addTab(tab3);
 
+        mShareIntent = new Intent();
+        mShareIntent.setAction(Intent.ACTION_SEND);
+        mShareIntent.setType("text/plain");
+        mShareIntent.putExtra(Intent.EXTRA_TEXT, "Ik vond een leuk receptje genaamd: " + selectedRecipe.getName() + "!");
 
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if(mContent != null){
+            getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+        }
 
-        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.recept_detail, menu);
+
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+
+        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+
+        if(mShareActionProvider != null){
+            mShareActionProvider.setShareIntent(mShareIntent);
+        }
+
         return true;
     }
 

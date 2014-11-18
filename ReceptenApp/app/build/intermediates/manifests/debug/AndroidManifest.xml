@@ -26,6 +26,10 @@
             android:name="be.howest.nmct.receptenapp.ReceptDetailActivity"
             android:label="@string/title_activity_recept_detail" >
         </activity>
+        <activity
+            android:name="be.howest.nmct.receptenapp.FavoriteActivity"
+            android:label="@string/title_activity_favorite" >
+        </activity>
     </application>
 
 </manifest>

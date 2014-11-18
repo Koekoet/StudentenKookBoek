@@ -1,13 +1,21 @@
 package be.howest.nmct.receptenapp;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
+import android.view.View;
+import android.widget.Button;
+import android.widget.SearchView;
+=======
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+>>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
 
 import java.util.ArrayList;
 
@@ -33,11 +41,25 @@ public class MainActivity extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationList = (ListView) findViewById(R.id.left_drawer);
 
+<<<<<<< HEAD
+        Button testButton = (Button) findViewById(R.id.testButton);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+                intent.putExtra("selectedRecipe", new Recept());
+                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                startActivity(intent);
+            }
+        });
+=======
         // Set the adapter for the list view
         mNavigationList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.navigation_list_item, R.id.menuItem ,arrNavigation));
         // Set the list's click listener
         //mNavigationList.setOnItemClickListener(new DrawerItemClickListener(){});
+>>>>>>> 11c28274185abbafa64d6169655497e0412c6ebe
 
         }
 
@@ -46,6 +68,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
