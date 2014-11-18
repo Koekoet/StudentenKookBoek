@@ -36,8 +36,10 @@ public class MainActivity extends Activity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+                /*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
                 intent.putExtra("selectedRecipe", new Recept());
+                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
                 startActivity(intent);
             }
         });

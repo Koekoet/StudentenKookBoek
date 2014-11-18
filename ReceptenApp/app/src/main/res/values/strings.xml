@@ -19,5 +19,9 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="search_title">Zoeken</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="action_share">Delen</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="favorieten">Favorieten</string>
+    <string name="action_delete">Ledig favorieten</string>
 
 </resources>
