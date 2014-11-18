@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fragments.ReceptInfoFragment">
+
+    <ImageView
+        android:contentDescription="@string/riPictureRecipe"
+        android:layout_width="fill_parent"
+        android:layout_height="50sp"
+        android:id="@+id/ivPictureRecipe"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/riNameRecipe"
+        android:id="@+id/riNameRecipe"
+        android:layout_below="@+id/ivPictureRecipe"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textIsSelectable="false"
+        android:singleLine="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riDurationRecipe"
+        android:id="@+id/riDurationRecipe"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riCostRecipe"
+        android:id="@+id/riCostRecipe"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/riDurationRecipe"
+        android:layout_alignLeft="@+id/riDurationRecipe"
+        android:layout_alignStart="@+id/riDurationRecipe" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riNumRecipe"
+        android:id="@+id/riNumRecipe"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/riCostRecipe"
+        android:layout_alignLeft="@+id/riCostRecipe"
+        android:layout_alignStart="@+id/riCostRecipe" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riUploadedRecipe"
+        android:id="@+id/riUploadedRecipe"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/riNumRecipe"
+        android:layout_alignLeft="@+id/riNumRecipe"
+        android:layout_alignStart="@+id/riNumRecipe" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riDurationRecipe"
+        android:id="@+id/tvDurationRecipe"
+        android:layout_alignBottom="@+id/riDurationRecipe"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="110dp"
+        android:layout_marginEnd="110dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riCostRecipe"
+        android:id="@+id/tvCostRecipe"
+        android:layout_alignTop="@+id/riCostRecipe"
+        android:layout_alignLeft="@+id/tvDurationRecipe"
+        android:layout_alignStart="@+id/tvDurationRecipe" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riNumRecipe"
+        android:id="@+id/tvNumRecipe"
+        android:layout_above="@+id/riUploadedRecipe"
+        android:layout_alignLeft="@+id/tvCostRecipe"
+        android:layout_alignStart="@+id/tvCostRecipe" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/riUploadedRecipe"
+        android:id="@+id/tvUploadedRecipe"
+        android:layout_alignTop="@+id/riUploadedRecipe"
+        android:layout_alignLeft="@+id/tvNumRecipe"
+        android:layout_alignStart="@+id/tvNumRecipe" />
+
+</RelativeLayout>
