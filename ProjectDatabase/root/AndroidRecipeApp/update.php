@@ -26,10 +26,10 @@ if (!empty ($_POST["tableName"]) && !empty ($_POST["id"])) {
             }
             break;
         case "ap_recipe":
-            if (!empty ($_POST["Name"]) && !empty($_POST["Author"]) && !empty($_POST["Duration"]) && !empty($_POST["Cost"]) && !empty($_POST["Persons"]) && !empty($_POST["Difficulty"]) && !empty($_POST["Picture"]) && !empty($_POST["Ingredients"]) && !empty($_POST["RecipeText"]) && !empty($_POST["Category"])) {
-                $array = updateRecipe($_POST["Name"], $_POST["Author"], $_POST["Duration"], $_POST["Cost"], $_POST["Persons"], $_POST["Difficulty"], $_POST["Picture"], $_POST["Ingredients"], $_POST["RecipeText"], $_POST["Category"], $_POST["id"]);
+            if (!empty ($_POST["Name"]) && !empty($_POST["Author"]) && !empty($_POST["Duration"]) && !empty($_POST["Cost"]) && !empty($_POST["Persons"]) && !empty($_POST["Difficulty"]) && !empty($_POST["Picture"]) && !empty($_POST["Ingredients"]) && !empty($_POST["RecipeText"])) {
+                $array = updateRecipe($_POST["Name"], $_POST["Author"], $_POST["Duration"], $_POST["Cost"], $_POST["Persons"], $_POST["Difficulty"], $_POST["Picture"], $_POST["Ingredients"], $_POST["RecipeText"], $_POST["id"]);
             } else {
-                $array["error"] = "Not all values are given: Name, Author, Duration, Cost, Persons, Difficulty, Picture, Ingredients, RecipeText, Category";
+                $array["error"] = "Not all values are given: Name, Author, Duration, Cost, Persons, Difficulty, Picture, Ingredients, RecipeText";
             }
             break;
         case "ap_difficulty_recept":
@@ -39,6 +39,12 @@ if (!empty ($_POST["tableName"]) && !empty ($_POST["id"])) {
                 $array["error"] = "Not all values are given: Description";
             }
             break;
+        case "ap_recipes_by_category":
+            if(!empty ($_POST["CategoryId"]) && !empty ($_POST["RecipeIDs"])){
+                $array = updateRecipesByCategory($_POST["CategoryId"],$_POST["RecipeIDs"],$id);
+            }else{
+                $array["error"] = "Not all values are given: categoryId, recipeId's";
+            }
         default:
             $array["error"] = "Tablename incorrect.";
             break;
@@ -153,7 +159,7 @@ function updateDifficulty($description,$id)
     return $data;
 }
 
-function updateRecipe($name, $author, $duration, $cost, $persons, $difficulty, $picture, $ingredients, $recipe, $category, $id)
+function updateRecipe($name, $author, $duration, $cost, $persons, $difficulty, $picture, $ingredients, $recipe, $id)
 {
     include("dbConfig.php");
     $data = [];
@@ -161,12 +167,12 @@ function updateRecipe($name, $author, $duration, $cost, $persons, $difficulty, $
     if (mysqli_connect_errno()) {
         $data["error"] = "Failed to connect to MySQL: " . mysqli_connect_error();
     } else {
-        $sql = "UPDATE `ap_recipe` SET `Recipename` = ?, `AuthorId` = ?, `Duration` = ?, `Cost` = ?, `NumberOfPersons` = ?, `DifficultyId` = ?, `Picture` = ?, `Ingredients` = ?, `RecipeText` = ?, `CategoryId` = ? WHERE `ID` = ?";
+        $sql = "UPDATE `ap_recipe` SET `Recipename` = ?, `AuthorId` = ?, `Duration` = ?, `Cost` = ?, `NumberOfPersons` = ?, `DifficultyId` = ?, `Picture` = ?, `Ingredients` = ?, `RecipeText` = ? WHERE `ID` = ?";
         $query = $con->prepare($sql);
         if ($query === false) {
             $data["error"] = "Failed to prepare the query: " . $con->error;
         } else {
-            $bp = $query->bind_param("sissiisssii", $name, $author, $duration, $cost, $persons, $difficulty, $picture, $ingredients, $recipe, $category, $id);
+            $bp = $query->bind_param("sissiisssii", $name, $author, $duration, $cost, $persons, $difficulty, $picture, $ingredients, $recipe, $id);
             if ($bp === false) {
                 $data["error"] = "Failed to bind params: " . $query->error;
             } else {
@@ -202,6 +208,41 @@ function updateUnit($name, $abbr, $id)
             $data["error"] = "Failed to prepare the query: " . $con->error;
         } else {
             $bp = $query->bind_param("ssi", $name, $abbr, $id);
+            if ($bp === false) {
+                $data["error"] = "Failed to bind params: " . $query->error;
+            } else {
+                $exec = $query->execute();
+                if ($exec === false) {
+                    $data["error"] = "Failed to execute the query: " . $query->error;
+                } else {
+                    if ($query->affected_rows === 1) {
+                        $data["succeeded"] = "Query successfully executed";
+                    } else {
+                        $data["error"] = "Something went wrong while executing query. Please try again.";
+                    }
+                }
+            }
+            $query->close();
+        }
+        $con->close();
+    }
+    return $data;
+}
+
+function updateRecipesByCategory($category, $recipeIds, $id)
+{
+    include("dbConfig.php");
+    $data = [];
+    $con = new mysqli($dbServer, $dbUsername, $dbPassword, $dbDatabase);
+    if (mysqli_connect_errno()) {
+        $data["error"] = "Failed to connect to MySQL: " . mysqli_connect_error();
+    } else {
+        $sql = "UPDATE `ap_recipes_by_category` SET `CategoryId` = ?, `RecipeIds` = ? WHERE `ID` = ?";
+        $query = $con->prepare($sql);
+        if ($query === false) {
+            $data["error"] = "Failed to prepare the query: " . $con->error;
+        } else {
+            $bp = $query->bind_param("isi", $category, $recipeIds, $id);
             if ($bp === false) {
                 $data["error"] = "Failed to bind params: " . $query->error;
             } else {
