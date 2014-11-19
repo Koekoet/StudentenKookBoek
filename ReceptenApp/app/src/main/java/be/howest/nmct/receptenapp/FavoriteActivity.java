@@ -32,12 +32,18 @@ public class FavoriteActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 
-        //Hier lezen we da favorieten in
+        //Hier lezen we de favorieten in
+        //---TEST
         favorietenLijst = new ArrayList<Recept>();
         favorietenLijst.add(new Recept());
         favorietenLijst.add(new Recept());
         favorietenLijst.add(new Recept());
         favorietenLijst.add(new Recept());
+        favorietenLijst.get(0).setName("Name1");
+        favorietenLijst.get(1).setName("Name2");
+        favorietenLijst.get(2).setName("Name3");
+        favorietenLijst.get(3).setName("Name4");
+        //---TEST FINISHED
 
         mAdapter = new FavoriteAdapter();
         setListAdapter(mAdapter);
@@ -63,7 +69,15 @@ public class FavoriteActivity extends ListActivity {
         listView.setOnScrollListener(touchListener.makeScrollListener());
     }
 
-
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Recept selectedRecipe = favorietenLijst.get(position);
+        //Toast.makeText(FavoriteActivity.this, selectedRecipe.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(FavoriteActivity.this, ReceptDetailActivity.class);
+        intent.putExtra("selectedRecipe", selectedRecipe);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
