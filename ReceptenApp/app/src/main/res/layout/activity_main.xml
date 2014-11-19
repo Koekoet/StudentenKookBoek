@@ -22,7 +22,7 @@
         >
 
         <fragment android:name="fragments.ReceptNavigationFragment"
-            android:id="@+id/fragment_brouwerij"
+            android:id="@+id/fragment_navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

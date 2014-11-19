@@ -1,7 +1,7 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +19,14 @@ public class ReceptNavigationFragment extends ListFragment {
     private String[] arrNavigation;
     public NavigationAdapter navigationAdapter;
 
+    //temp
+    private boolean isLogin = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        arrNavigation = getResources().getStringArray(R.array.MenuBasic);
+
         ShowNavigation();
     }
 
@@ -35,7 +38,7 @@ public class ReceptNavigationFragment extends ListFragment {
 
     // Container Activity must implement this interface
     public interface OnNavigationSelectedListener {
-        public void onNavigationSelected(int position);
+        public void onNavigationSelected(int position, boolean isLogin);
     }
     @Override
     public void onAttach(Activity activity) {
@@ -50,13 +53,20 @@ public class ReceptNavigationFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.onNavigationSelected(position);
+        mCallback.onNavigationSelected(position, isLogin);
     }
 
 
     // Toon Navigation
-    private void ShowNavigation()
+    public void ShowNavigation()
     {
+        if(isLogin){
+            arrNavigation = getResources().getStringArray(R.array.MenuBasic);
+            isLogin = false;
+        } else {
+            arrNavigation = getResources().getStringArray(R.array.MenuUser);
+            isLogin = true;
+        }
 
         navigationAdapter = new NavigationAdapter();
         setListAdapter(navigationAdapter);
