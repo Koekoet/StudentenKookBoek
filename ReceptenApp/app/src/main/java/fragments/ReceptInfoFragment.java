@@ -2,16 +2,21 @@ package fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
@@ -52,6 +57,8 @@ public class ReceptInfoFragment extends Fragment {
         TextView tvCostRecipe = (TextView) v.findViewById(R.id.tvCostRecipe);
         TextView tvNumPersons = (TextView) v.findViewById(R.id.tvNumRecipe);
         TextView tvUploadedRecipe = (TextView) v.findViewById(R.id.tvUploadedRecipe);
+        ImageView ivImageRecipe = (ImageView) v.findViewById(R.id.ivPictureRecipe);
+
 
         //Set text
         riName.setText(selectedRecipe.getName());
@@ -59,7 +66,11 @@ public class ReceptInfoFragment extends Fragment {
         tvCostRecipe.setText(selectedRecipe.getCost()+"€");
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
         tvUploadedRecipe.setText(""+selectedRecipe.getAuthor().getName());
+        if(selectedRecipe.getPicture() != null){
 
+        } else {
+            ivImageRecipe.setImageResource(R.drawable.ic_noimage);
+        }
 
         return v;
     }
@@ -70,4 +81,17 @@ public class ReceptInfoFragment extends Fragment {
         Bundle args = getArguments();
         selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
     }
+
+    public byte[] ConvertImageToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public Bitmap ConvertByteArrayToImage(byte[] byteArray){
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        return bitmap;
+    }
+
 }
