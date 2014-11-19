@@ -6,11 +6,13 @@
 
     <ImageView
         android:contentDescription="@string/riPictureRecipe"
-        android:layout_width="fill_parent"
-        android:layout_height="50sp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:id="@+id/ivPictureRecipe"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#F9F9F9"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,6 +24,7 @@
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textSize="25sp"
+        android:layout_marginTop="10dp"
         android:textIsSelectable="false"
         android:singleLine="false" />
 
