@@ -71,6 +71,10 @@ public class MainActivity extends Activity {
                 Intent intent2 = new Intent(MainActivity.this, FavoriteActivity.class);
                 startActivity(intent2);
                 return true;
+            case R.id.action_TestDiff:
+                Intent intent3 = new Intent(MainActivity.this, TestActivity.class);
+                startActivity(intent3);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

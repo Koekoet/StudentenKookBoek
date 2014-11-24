@@ -23,5 +23,6 @@
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="favorieten">Favorieten</string>
     <string name="action_delete">Ledig favorieten</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>
