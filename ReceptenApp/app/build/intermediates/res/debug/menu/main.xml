@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity" >
+    <!--<item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never" />-->
+    <item android:id="@+id/action_TestRecepi"
+        android:title="Recepi test"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_TestFavorite"
+        android:title="Favorieten"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_TestDiff"
+        android:title="Favorieten"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+</menu>
+<!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/menu/main.xml -->

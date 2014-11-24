@@ -24,5 +24,7 @@
     <string name="favorieten">Favorieten</string>
     <string name="action_delete">Ledig favorieten</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer close</string>
 
 </resources>

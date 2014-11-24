@@ -1,5 +1,6 @@
 package data;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -37,7 +38,7 @@ public class Recept implements Parcelable{
         setNumberOfPersons(in.readInt());
         setDifficultyID(in.readInt());
         setDifficulty((data.Difficulty) in.readParcelable(data.Difficulty.class.getClassLoader()));
-        setPicture(in.readString());
+        //setPicture(in.readString());
         setRecipeText(in.readString());
         setCategoryID(in.readInt());
         setCategory((data.Category) in.readParcelable(data.Category.class.getClassLoader()));
@@ -53,7 +54,7 @@ public class Recept implements Parcelable{
         setCost("15");
         setNumberOfPersons(4);
         setDifficultyID(3);
-        setPicture("test");
+        //setPicture("test");
         setRecipeText("Bereiding gaat azo:");
         setCategoryID(0);
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -95,7 +96,7 @@ public class Recept implements Parcelable{
         out.writeInt(getNumberOfPersons());
         out.writeInt(getDifficultyID());
         out.writeParcelable(getDifficulty(),flags);
-        out.writeString(getPicture());
+        //out.writeString(getPicture());
         out.writeString(getRecipeText());
         out.writeInt(getCategoryID());
         out.writeParcelable(getCategory(), flags);

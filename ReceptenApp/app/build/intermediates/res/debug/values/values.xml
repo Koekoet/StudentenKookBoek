@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/array.xml -->
+    <eat-comment />
+
+    <string-array name="MenuBasic">
+        <item>Bladeren</item>
+        <item>Boodschappenlijstje</item>
+        <item>Favorieten</item>
+        <item>Inloggen</item>
+    </string-array>
+    <string-array name="MenuUser">
+        <item>Bladeren</item>
+        <item>Boodschappenlijstje</item>
+        <item>Favorieten</item>
+        <item>Recept toevoegen</item>
+        <item>Vrienden</item>
+        <item>Profiel bewerken</item>
+        <item>Uitloggen</item>
+    </string-array>
+    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/dimens.xml -->
+    <eat-comment />
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="AddBasket">addBasket</string>
+    <string name="action_delete">Ledig favorieten</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Delen</string>
+    <string name="app_name">ReceptenApp</string>
+    <string name="drawer_close">Drawer close</string>
+    <string name="drawer_open">Drawer open</string>
+    <string name="favorieten">Favorieten</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="riCostRecipe">Kost:</string>
+    <string name="riDiffRecipe">Moeilijkheid:</string>
+    <string name="riDurationRecipe">Duur:</string>
+    <string name="riNameRecipe">Name Recipe</string>
+    <string name="riNumRecipe"># personen:</string>
+    <string name="riPictureRecipe">Picture Recipe</string>
+    <string name="riUploadedRecipe">Geüpload door:</string>
+    <string name="search_hint">Zoekterm</string>
+    <string name="search_title">Zoeken</string>
+    <string name="swipeToAddBasket">Swipe rechts: toevoegen aan mandje</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_recept_detail">ReceptDetailActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+</resources>
