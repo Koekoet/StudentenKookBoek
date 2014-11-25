@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import data.Ingredient;
 import data.Recept;
+import fragments.FavoriteFragment;
 import fragments.ReceptBereidingFragment;
 import fragments.ReceptDetailFragment;
 import fragments.ReceptInfoFragment;
@@ -84,8 +85,8 @@ public class MainActivity extends FragmentActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.item_detail_container,fragment).addToBackStack(null).commit();
                 return true;
             case R.id.action_TestFavorite:
-                Intent intent2 = new Intent(MainActivity.this, FavoriteActivity.class);
-                startActivity(intent2);
+                FavoriteFragment fragment1 = new FavoriteFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.item_detail_container, fragment1).addToBackStack(null).commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -96,16 +97,16 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onReceptBereidingSelected(String tekst) {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+        /*Fragment fragment = getFragmentManager().findFragmentById(R.id.fragmen);*/
     }
 
     @Override
     public void onReceptInfoSelected(String tekst) {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+        /*Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);*/
     }
 
     @Override
     public void onReceptIngredientSelectedListener(String tekst) {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+        /*Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);*/
     }
 }

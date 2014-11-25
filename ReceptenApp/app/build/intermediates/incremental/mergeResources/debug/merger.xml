@@ -172,11 +172,6 @@
                 qualifiers="xxxhdpi-v4"
                 type="drawable" />
             <file
-                name="activity_favorite"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_favorite.xml"
-                qualifiers=""
-                type="layout" />
-            <file
                 name="activity_main"
                 path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_main.xml"
                 qualifiers=""
@@ -184,11 +179,6 @@
             <file
                 name="activity_main_test"
                 path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_main_test.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="activity_recept_detail"
-                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_recept_detail.xml"
                 qualifiers=""
                 type="layout" />
             <file
@@ -355,6 +345,11 @@ Inloggen
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                name="fragment_favorite"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\fragment_favorite.xml"
+                qualifiers=""
+                type="layout" />
         </source>
         <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\generated\res\generated\debug" />

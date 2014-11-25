@@ -1,36 +1,39 @@
-package be.howest.nmct.receptenapp;
+package fragments;
 
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.ActionProvider;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import be.howest.nmct.receptenapp.R;
 import data.Recept;
 import data.helpers.SwipeDismissListViewTouchListener;
 
-
-public class FavoriteActivity extends ListActivity {
+/**
+ * Created by Toine on 25/11/2014.
+ */
+public class FavoriteFragment extends ListFragment {
     private ArrayList<Recept> favorietenLijst;
     private FavoriteAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+        setHasOptionsMenu(true);
 
         //Hier lezen we de favorieten in
         //---TEST
@@ -45,11 +48,41 @@ public class FavoriteActivity extends ListActivity {
         favorietenLijst.get(3).setName("Name4");
         //---TEST FINISHED
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_favorite, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.action_TestRecepi:
+                return false;
+            case R.id.action_TestFavorite:
+                return false;
+            case R.id.action_delete:
+                //Moet nog AlertDialog komen
+                mAdapter.clearAdapter();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         mAdapter = new FavoriteAdapter();
         setListAdapter(mAdapter);
 
-
         ListView listView = getListView();
+        listView.setAdapter(mAdapter);
         SwipeDismissListViewTouchListener touchListener = new SwipeDismissListViewTouchListener(
                 listView,
                 new SwipeDismissListViewTouchListener.DismissCallbacks() {
@@ -67,72 +100,23 @@ public class FavoriteActivity extends ListActivity {
                 });
         listView.setOnTouchListener(touchListener);
         listView.setOnScrollListener(touchListener.makeScrollListener());
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        Recept selectedRecipe = favorietenLijst.get(position);
-        Toast.makeText(FavoriteActivity.this, selectedRecipe.getName(), Toast.LENGTH_SHORT).show();
-        /*Intent intent = new Intent(FavoriteActivity.this, ReceptDetailActivity.class);
-        intent.putExtra("selectedRecipe", selectedRecipe);
-        startActivity(intent);*/
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_favorite, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (item.getItemId()){
-            case R.id.action_delete:
-                DeleteFavoritesList();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void AddToFavorites(Recept recept){
-        favorietenLijst.add(recept);
-        mAdapter.NotifyAdapter();
-    }
-
-    private void DeleteFavoritesList() {
-        //ShowDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(FavoriteActivity.this);
-        builder.setTitle("Favorieten leegmaken");
-        builder.setMessage("Bent u zeker dat u alle opgeslagen recepten wilt verwijderen?");
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mAdapter.clear();
-                dialogInterface.cancel();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), favorietenLijst.get(i).getName(), Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setNegativeButton("Nee", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_favorite, null, false);
     }
 
     public class FavoriteAdapter extends ArrayAdapter<Recept> {
-        public FavoriteAdapter() {
-            super(FavoriteActivity.this,R.layout.row_favorites, R.id.favoriteRecipeName, favorietenLijst);
+
+        public FavoriteAdapter(){
+            super(getActivity(), R.layout.row_favorites, R.id.favoriteRecipeName, favorietenLijst);
         }
 
         @Override
