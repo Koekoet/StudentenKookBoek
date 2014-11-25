@@ -1,10 +1,13 @@
 package be.howest.nmct.receptenapp;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +21,15 @@ import java.util.ArrayList;
 
 import data.Ingredient;
 import data.Recept;
+import fragments.ReceptBereidingFragment;
+import fragments.ReceptDetailFragment;
+import fragments.ReceptInfoFragment;
+import fragments.ReceptIngredientenFragment;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity
+        implements ReceptInfoFragment.onReceptInfoSelectedListener,
+        ReceptIngredientenFragment.onReceptIngredientSelectedListener,
+        ReceptBereidingFragment.onReceptBereidingSelectedListener{
     private String[] arrNavigation;
     private DrawerLayout mDrawerLayout;
     private ListView mNavigationList;
@@ -32,7 +42,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_test);
 
         arrNavigation = getResources().getStringArray(R.array.MenuBasic);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -63,9 +73,15 @@ public class MainActivity extends Activity {
 
         switch (id){
             case R.id.action_TestRecepi:
-                Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+                /*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
                 intent.putExtra("selectedRecipe", new Recept());
-                startActivity(intent);
+                startActivity(intent);*/
+                ReceptDetailFragment fragment = new ReceptDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("MYSELECTEDRECIPE", new Recept());
+                fragment.setArguments(bundle);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.item_detail_container,fragment).addToBackStack(null).commit();
                 return true;
             case R.id.action_TestFavorite:
                 Intent intent2 = new Intent(MainActivity.this, FavoriteActivity.class);
@@ -76,5 +92,20 @@ public class MainActivity extends Activity {
         }
 
 
+    }
+
+    @Override
+    public void onReceptBereidingSelected(String tekst) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+    }
+
+    @Override
+    public void onReceptInfoSelected(String tekst) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+    }
+
+    @Override
+    public void onReceptIngredientSelectedListener(String tekst) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
     }
 }

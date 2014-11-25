@@ -34,11 +34,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/riDurationRecipe"
         android:id="@+id/riDurationRecipe"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="27dp"
+        android:layout_below="@+id/riNameRecipe"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

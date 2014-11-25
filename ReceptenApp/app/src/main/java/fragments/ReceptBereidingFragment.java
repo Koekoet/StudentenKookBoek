@@ -2,7 +2,7 @@ package fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +51,6 @@ public class ReceptBereidingFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
+        selectedRecipe = new Recept();//args.getParcelable("MYSELECTEDRECIPE");
     }
 }

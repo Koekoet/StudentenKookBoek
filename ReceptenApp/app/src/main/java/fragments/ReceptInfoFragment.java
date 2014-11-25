@@ -1,11 +1,11 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +79,7 @@ public class ReceptInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
+        selectedRecipe = new Recept();//args.getParcelable("MYSELECTEDRECIPE");
     }
 
     public byte[] ConvertImageToByteArray(Bitmap bitmap){

@@ -73,10 +73,10 @@ public class FavoriteActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Recept selectedRecipe = favorietenLijst.get(position);
-        //Toast.makeText(FavoriteActivity.this, selectedRecipe.getName(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(FavoriteActivity.this, ReceptDetailActivity.class);
+        Toast.makeText(FavoriteActivity.this, selectedRecipe.getName(), Toast.LENGTH_SHORT).show();
+        /*Intent intent = new Intent(FavoriteActivity.this, ReceptDetailActivity.class);
         intent.putExtra("selectedRecipe", selectedRecipe);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

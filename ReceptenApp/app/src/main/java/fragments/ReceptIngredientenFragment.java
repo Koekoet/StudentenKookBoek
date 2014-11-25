@@ -1,12 +1,11 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Parcelable;
+import android.support.v4.app.ListFragment;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -92,7 +91,7 @@ public class ReceptIngredientenFragment extends ListFragment {
         }
 
         Bundle args = getArguments();
-        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
+        selectedRecipe = new Recept();//args.getParcelable("MYSELECTEDRECIPE");
 
 
 
