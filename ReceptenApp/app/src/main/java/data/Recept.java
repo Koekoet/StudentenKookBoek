@@ -46,7 +46,7 @@ public class Recept implements Parcelable{
 
     public Recept(){
         //Dummy-data
-
+        //ArrayList<Difficulty> lijst = Difficulty.getAllDifficulties();
         setID(0);
         setName("Name");
         setAuthorID(0);

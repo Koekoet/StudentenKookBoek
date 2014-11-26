@@ -13,5 +13,9 @@
         android:title="Favorieten"
         android:orderInCategory="100"
         android:showAsAction="never"/>
+    <item android:id="@+id/action_TestDiff"
+        android:title="Favorieten"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
 </menu>
 <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/menu/main.xml -->

@@ -130,7 +130,7 @@ public class FavoriteFragment extends ListFragment {
                 fragment.setArguments(bundle);
 
 
-                getFragmentManager().beginTransaction().replace(R.id.item_detail_container,fragment).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
             }
         });
     }
