@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -127,7 +128,11 @@ public class MainActivity extends FragmentActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        return true;
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -156,6 +161,9 @@ public class MainActivity extends FragmentActivity
             case R.id.action_TestDiff:
                 Intent intent3 = new Intent(MainActivity.this, TestActivity.class);
                 startActivity(intent3);
+                return true;
+            case R.id.menu_item_search:
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

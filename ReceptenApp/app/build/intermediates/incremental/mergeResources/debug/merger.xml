@@ -297,6 +297,11 @@
                 qualifiers=""
                 type="layout" />
             <file
+                name="activity_search_results"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_search_results.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="activity_test"
                 path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\layout\activity_test.xml"
                 qualifiers=""
@@ -506,6 +511,11 @@ Inloggen
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                name="searchable"
+                path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\src\main\res\xml\searchable.xml"
+                qualifiers=""
+                type="xml" />
         </source>
         <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Toine\Dropbox\School\3e jaar\S1\App Dev Android\Opdracht\Project\ReceptenApp\app\build\generated\res\generated\debug" />

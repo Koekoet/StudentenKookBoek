@@ -54,7 +54,7 @@ public class Recept implements Parcelable{
         setCost("15");
         setNumberOfPersons(4);
         setDifficultyID(3);
-        setPicture("test");
+        setPicture("");
         setRecipeText("Bereiding gaat azo:");
         setCategoryID(0);
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
