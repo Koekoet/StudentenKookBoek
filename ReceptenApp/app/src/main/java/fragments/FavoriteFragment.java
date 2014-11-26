@@ -1,6 +1,8 @@
 package fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -66,8 +68,25 @@ public class FavoriteFragment extends ListFragment {
             case R.id.action_TestFavorite:
                 return false;
             case R.id.action_delete:
-                //Moet nog AlertDialog komen
-                mAdapter.clearAdapter();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Alles verwijderen");
+                builder.setMessage("Bent u zeker dat u alle items in favorieten wilt verwijderen?");
+                builder.setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mAdapter.clearAdapter();
+
+                            }
+                        })
+                        .setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -103,7 +122,15 @@ public class FavoriteFragment extends ListFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), favorietenLijst.get(i).getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), favorietenLijst.get(i).getName(), Toast.LENGTH_SHORT).show();
+
+                ReceptDetailFragment fragment = new ReceptDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("MYSELECTEDRECIPE", favorietenLijst.get(i));
+                fragment.setArguments(bundle);
+
+
+                getFragmentManager().beginTransaction().replace(R.id.item_detail_container,fragment).addToBackStack(null).commit();
             }
         });
     }

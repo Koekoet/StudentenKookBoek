@@ -79,7 +79,7 @@ public class ReceptInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        selectedRecipe = new Recept();//args.getParcelable("MYSELECTEDRECIPE");
+        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
     }
 
     public byte[] ConvertImageToByteArray(Bitmap bitmap){

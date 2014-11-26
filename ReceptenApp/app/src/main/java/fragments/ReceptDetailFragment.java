@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ShareActionProvider;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +54,13 @@ public class ReceptDetailFragment extends Fragment{
 
         mTabHost = (FragmentTabHost) view.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_recept_detail);
-        mTabHost.addTab(mTabHost.newTabSpec("receptInfo").setIndicator("Info"),ReceptInfoFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("receptIngredienten").setIndicator("Ingredienten"),ReceptIngredientenFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("receptBereiding").setIndicator("Bereiding"),ReceptBereidingFragment.class, null);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("MYSELECTEDRECIPE", selectedRecipe);
+
+        mTabHost.addTab(mTabHost.newTabSpec("receptInfo").setIndicator("Info"),ReceptInfoFragment.class, bundle);
+        mTabHost.addTab(mTabHost.newTabSpec("receptIngredienten").setIndicator("Ingredienten"),ReceptIngredientenFragment.class, bundle);
+        mTabHost.addTab(mTabHost.newTabSpec("receptBereiding").setIndicator("Bereiding"),ReceptBereidingFragment.class, bundle);
 
         return view;
     }
