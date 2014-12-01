@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import data.Difficulty;
 
 
@@ -42,7 +44,7 @@ public class TestActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Difficulty.getAllDifficulties();
+            ArrayList<Difficulty> lijst = Difficulty.getAllDifficulties("ap_recept_category");
             return null;
         }
     }

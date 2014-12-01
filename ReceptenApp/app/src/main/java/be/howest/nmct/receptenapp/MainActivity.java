@@ -49,6 +49,7 @@ public class MainActivity extends FragmentActivity
     private CharSequence mTitle;
     private View navigationView;
 
+    public static ArrayList<Category> arrCats;
     //globale vars here:
     private ArrayList<Category> arrCategories;
 
@@ -99,11 +100,16 @@ public class MainActivity extends FragmentActivity
 
         if (savedInstanceState == null) {
             //get cats
-            arrCategories = ReceptCategoriesFragment.GetCategorie();
+            //arrCategories = ReceptCategoriesFragment.GetCategorie();
 
             ReceptCategoriesFragment catFrag = new ReceptCategoriesFragment();
+            //catFrag.
+            catFrag.onCreate(new Bundle());
+            catFrag.getActivity();
+            //ArrayList<Category> arrCats= catFrag.arrCategories;
+            ArrayList<Category> lijst = arrCats;
             Bundle args = new Bundle();
-            args.putParcelableArrayList(catFrag.ARR_CATEGORIE, arrCategories);
+            args.putParcelableArrayList(catFrag.ARR_CATEGORIE, arrCats);
             catFrag.setArguments(args);
             getSupportFragmentManager().beginTransaction().add(R.id.mainfragment, catFrag).commit();
         }

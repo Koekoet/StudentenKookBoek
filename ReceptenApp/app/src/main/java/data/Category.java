@@ -3,6 +3,11 @@ package data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by Toine on 5/11/2014.
  */
@@ -11,7 +16,11 @@ public class Category implements Parcelable{
     private String Picture;
     private String Name;
 
-
+    public Category(int id, String picture, String name){
+        this.ID = id;
+        this.Picture = picture;
+        this.Name = name;
+    }
     public Category(){
 
     }
@@ -66,5 +75,25 @@ public class Category implements Parcelable{
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public static ArrayList<Category> getAllCategories(String tableName) {
+        ArrayList<Category> list = new ArrayList<Category>();
+        JSONArray categories = data.helpers.onlineData.selectAllData(tableName);
+        if(categories != null) {
+            for (int i = 0; i < categories.length(); i++) {
+                try {
+                    JSONObject c = categories.getJSONObject(i);
+                    int id = c.getInt("ID");
+                    String name = c.getString("Name");
+                    Category diff = new Category(id, "", name);
+                    list.add(diff);
+                } catch (Exception e) {
+                }
+            }
+            return list;
+        }else{
+            return null;
+        }
     }
 }

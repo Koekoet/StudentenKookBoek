@@ -20,18 +20,20 @@ import data.helpers.ServiceHandler;
 /**
  * Created by Toine on 5/11/2014.
  */
-public class Difficulty implements Parcelable{
+public class Difficulty implements Parcelable {
     private int ID;
     private String Description;
 
-    public Difficulty(int id, String description){
+    public Difficulty(int id, String description) {
         this.ID = id;
         this.Description = description;
     }
-    public Difficulty(){
+
+    public Difficulty() {
 
     }
-    private Difficulty(Parcel in){
+
+    private Difficulty(Parcel in) {
         setID(in.readInt());
         setDescription(in.readString());
     }
@@ -75,43 +77,23 @@ public class Difficulty implements Parcelable{
         out.writeString(getDescription());
     }
 
-    public static ArrayList<Difficulty> getAllDifficulties (){
+    public static ArrayList<Difficulty> getAllDifficulties(String tableName) {
         ArrayList<Difficulty> list = new ArrayList<Difficulty>();
-        // Creating service handler class instance
-        ServiceHandler sh = new ServiceHandler();
-
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("tableName", "ap_difficulty_recept"));
-        // Making a request to url and getting response
-        String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/index.php", ServiceHandler.POST, params);
-
-        Log.d("Response: ", "> " + jsonStr);
-
-        if (jsonStr != null) {
-            try {
-                JSONObject jsonObj = new JSONObject(jsonStr);
-                Iterator<String> iterator = jsonObj.keys();
-                //String test = "result";
-                String name = iterator.next();
-                if(name.toString().equals(String.valueOf("result"))) {
-                    JSONArray difficulties = jsonObj.getJSONArray("result");
-                    for (int i = 0; i < difficulties.length(); i++) {
-                        JSONObject c = difficulties.getJSONObject(i);
-                        int id = c.getInt("ID");
-                        String description = c.getString("Description");
-                        Difficulty diff = new Difficulty(id, description);
-                        list.add(diff);
-                    }
-                }else if(name.toString().equals(String.valueOf("error"))){
-                    String error = jsonObj.getString("error");
-                    Log.d("Error: ",error);
+        JSONArray difficulties = data.helpers.onlineData.selectAllData(tableName);
+        if(difficulties != null) {
+            for (int i = 0; i < difficulties.length(); i++) {
+                try {
+                    JSONObject c = difficulties.getJSONObject(i);
+                    int id = c.getInt("ID");
+                    String description = c.getString("Description");
+                    Difficulty diff = new Difficulty(id, description);
+                    list.add(diff);
+                } catch (Exception e) {
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-        } else {
-            Log.e("ServiceHandler", "Couldn't get any data from the url");
+            return list;
+        }else{
+            return null;
         }
-        return list;
     }
 }
