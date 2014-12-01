@@ -66,8 +66,8 @@ public class ReceptInfoFragment extends Fragment {
         tvCostRecipe.setText(selectedRecipe.getCost()+"€");
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
         tvUploadedRecipe.setText(""+selectedRecipe.getAuthor().getName());
-        if(selectedRecipe.getPicture() != null){
-
+        if(selectedRecipe.getPicture() != null || !selectedRecipe.getPicture().equals("")){
+            ivImageRecipe.setImageResource(Integer.parseInt(selectedRecipe.getPicture()));
         } else {
             ivImageRecipe.setImageResource(R.drawable.ic_noimage);
         }
@@ -82,7 +82,7 @@ public class ReceptInfoFragment extends Fragment {
         selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
     }
 
-    public byte[] ConvertImageToByteArray(Bitmap bitmap){
+    /*public byte[] ConvertImageToByteArray(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
@@ -92,6 +92,6 @@ public class ReceptInfoFragment extends Fragment {
     public Bitmap ConvertByteArrayToImage(byte[] byteArray){
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         return bitmap;
-    }
+    }*/
 
 }

@@ -30,12 +30,9 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     CategorieAdapter categorieAdapter;
     private TextView txvTitle;
-    private Boolean isLoaded = true;
 
     //global here:
     public ArrayList<Category> arrCategories;
-
-    //GLOBAL
     public static final String ARR_CATEGORIE = "";
 
 
@@ -49,30 +46,22 @@ public class ReceptCategoriesFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_categorie, container, false);
         ((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
         ShowCategoriesTask task = new ShowCategoriesTask();
         task.execute();
-        //updateCategorie();
-        while (isLoaded) {
-
-        }
         return view;
 
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-
         ShowCategoriesTask task = new ShowCategoriesTask();
         task.execute();
 
     }
-
-
     /*public static ArrayList<Category> GetCategorie(){
         //txvTitle.setText("Recepten");
         ArrayList<Category> temp = new ArrayList<Category>();
@@ -102,37 +91,37 @@ public class ReceptCategoriesFragment extends ListFragment {
     }*/
 
     //1. Asynctask
-    private ProgressDialog pDialog;
+
 
     class ShowCategoriesTask extends AsyncTask<String, Void, ArrayList<Category>> {
+        private ProgressDialog pDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Showing Categories...");
             pDialog.setCancelable(false);
             pDialog.show();
         }
-
         @Override
         protected ArrayList<Category> doInBackground(String... params) {
+
             ArrayList<Category> categories = data.Category.getAllCategories("ap_recept_category");
+            for (Category cat : categories){
+                cat.setPicture("" + R.drawable.cat_vleesgerechten);
+            }
             return categories;
         }
-
         @Override
         protected void onPostExecute(ArrayList<Category> result) {
+            super.onPostExecute(result);
             if (pDialog.isShowing()) {
                 pDialog.dismiss();
             }
-            super.onPostExecute(result);
             arrCategories = result;
-            MainActivity.arrCats = result;
             categorieAdapter = new CategorieAdapter();
             setListAdapter(categorieAdapter);
             Toast.makeText(getActivity(), "Categories ready.", Toast.LENGTH_SHORT).show();
-            isLoaded = false;
         }
     }
 
