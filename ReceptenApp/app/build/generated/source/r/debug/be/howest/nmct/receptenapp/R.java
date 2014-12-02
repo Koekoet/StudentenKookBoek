@@ -19,7 +19,6 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-<<<<<<< HEAD
         public static final int cat_dessert=0x7f020000;
         public static final int cat_visgerechten=0x7f020001;
         public static final int cat_vleesgerechten=0x7f020002;
@@ -32,27 +31,17 @@ public final class R {
         public static final int ic_action_share=0x7f020009;
         public static final int ic_drawer=0x7f02000a;
         public static final int ic_launcher=0x7f02000b;
-        public static final int ic_tick=0x7f02000c;
-        public static final int rec_bananasplit=0x7f02000d;
-        public static final int rec_chocoladetaart=0x7f02000e;
-        public static final int rec_fruittaart=0x7f02000f;
-        public static final int rec_hamburger=0x7f020010;
-        public static final int rec_kipmetrijst=0x7f020011;
-        public static final int rec_pudding=0x7f020012;
-        public static final int rec_scampi=0x7f020013;
-        public static final int rec_steakmetfrieten=0x7f020014;
-        public static final int rec_zalmrolletjes=0x7f020015;
-        public static final int rec_zalmrolletjesjpe=0x7f020016;
-=======
-        public static final int ic_action_discard=0x7f020000;
-        public static final int ic_action_favorite=0x7f020001;
-        public static final int ic_action_new=0x7f020002;
-        public static final int ic_action_search=0x7f020003;
-        public static final int ic_action_share=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int ic_noimage=0x7f020006;
-        public static final int ic_tick=0x7f020007;
->>>>>>> af570a2cc14e13118b88903bdc4473e1492fc224
+        public static final int ic_noimage=0x7f02000c;
+        public static final int ic_tick=0x7f02000d;
+        public static final int rec_bananasplit=0x7f02000e;
+        public static final int rec_chocoladetaart=0x7f02000f;
+        public static final int rec_fruittaart=0x7f020010;
+        public static final int rec_hamburger=0x7f020011;
+        public static final int rec_kipmetrijst=0x7f020012;
+        public static final int rec_pudding=0x7f020013;
+        public static final int rec_scampi=0x7f020014;
+        public static final int rec_steakmetfrieten=0x7f020015;
+        public static final int rec_zalmrolletjes=0x7f020016;
     }
     public static final class id {
         public static final int BrouwerijImage=0x7f090014;
