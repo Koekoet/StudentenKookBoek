@@ -1,7 +1,9 @@
 package fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -59,24 +62,6 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     }
 
-
-
-<<<<<<< HEAD
-=======
-        Category cat2 = new Category();
-        cat2.setID(2);
-        cat2.setName("Desserts");
-        cat2.setPicture("" + R.drawable.cat_dessert);
-
-
-        temp.add(cat0);
-        temp.add(cat1);
-        temp.add(cat2);
-
-        return temp;
-
-    }*/
-
     //1. Asynctask
 
 
@@ -86,7 +71,7 @@ public class ReceptCategoriesFragment extends ListFragment {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Showing Categories...");
+            pDialog.setMessage("Loading data");
             pDialog.setCancelable(false);
             pDialog.show();
         }
@@ -111,7 +96,6 @@ public class ReceptCategoriesFragment extends ListFragment {
             Toast.makeText(getActivity(), "Categories ready.", Toast.LENGTH_SHORT).show();
         }
     }
->>>>>>> ae27e7b243aa726354924b3f6d5bcad8373a8f43
 
     class CategorieAdapter extends ArrayAdapter<Category> {
         public CategorieAdapter() {

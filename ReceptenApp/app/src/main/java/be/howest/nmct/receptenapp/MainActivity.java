@@ -142,7 +142,7 @@ public class MainActivity extends FragmentActivity
         @Override
         protected ArrayList<Category> doInBackground(String... params) {
 
-            ArrayList<Category> categories = data.Category.getAllCategories("ap_recept_category");
+            ArrayList<Category> categories = data.Category.getAllCategories();
             for (Category cat : categories){
                 cat.setPicture("" + R.drawable.cat_vleesgerechten);
             }
