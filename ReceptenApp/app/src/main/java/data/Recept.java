@@ -273,24 +273,46 @@ public class Recept implements Parcelable{
         return list;
     }
 
-    /*public static Category getCategoryById(int id) {
-        Category cat = new Category();
-        JSONArray category = data.helpers.onlineData.selectDataById("ap_recept_category", id);
-        if (category != null && category.length() == 1) {
+    public static Recept getRecipeById(int id) {
+        Recept newRec = new Recept();
+        JSONArray recipes = data.helpers.onlineData.selectDataById("ap_recipe", id);
+        if (recipes != null && recipes.length() == 1) {
             try {
-                JSONObject c = category.getJSONObject(0);
+                JSONObject c = recipes.getJSONObject(0);
+                //ophalen data
                 int _id = c.getInt("ID");
-                String name = c.getString("Name");
+                String name = c.getString("Recipename");
+                int authorId = c.getInt("AuthorId");
+                String duration = c.getString("Duration");
+                String cost = c.getString("Cost");
+                int numberOfPersons = c.getInt("NumberOfPersons");
+                int difficultyId = c.getInt("DifficultyId");
+                data.Difficulty dif = data.Difficulty.getDifficultyById(difficultyId);
                 String picture = c.getString("Picture");
-                Category newCat = new Category(_id, picture, name);
-                cat = newCat;
+                ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
+                String recipeText = c.getString("RecipeText");
+
+                //invullen in nieuw recept
+                Recept rec = new Recept();
+                rec.ID = _id;
+                rec.Name = name;
+                rec.AuthorID = authorId;
+                rec.Duration = duration;
+                rec.Cost = cost;
+                rec.NumberOfPersons = numberOfPersons;
+                rec.DifficultyID = difficultyId;
+                rec.Difficulty = dif;
+                rec.Picture = picture;
+                rec.Ingredients = ingredients;
+                rec.RecipeText = recipeText;
+                newRec = rec;
             } catch (Exception e) {
             }
         } else {
             return null;
         }
-        return cat;
-    }*/
+        return newRec;
+    }
 
     private static ArrayList<Ingredient> makeIngredientsList(String ingredients) {
         ArrayList<Ingredient> ingrList = new ArrayList<Ingredient>();
