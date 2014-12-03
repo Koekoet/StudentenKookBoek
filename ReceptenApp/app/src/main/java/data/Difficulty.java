@@ -77,9 +77,9 @@ public class Difficulty implements Parcelable {
         out.writeString(getDescription());
     }
 
-    public static ArrayList<Difficulty> getAllDifficulties(String tableName) {
+    public static ArrayList<Difficulty> getAllDifficulties() {
         ArrayList<Difficulty> list = new ArrayList<Difficulty>();
-        JSONArray difficulties = data.helpers.onlineData.selectAllData(tableName);
+        JSONArray difficulties = data.helpers.onlineData.selectAllData("ap_difficulty_recept");
         if(difficulties != null) {
             for (int i = 0; i < difficulties.length(); i++) {
                 try {
@@ -95,5 +95,22 @@ public class Difficulty implements Parcelable {
         }else{
             return null;
         }
+    }
+    public static Difficulty getDifficultyById(int id) {
+        Difficulty d = new Difficulty();
+        JSONArray difficulty = data.helpers.onlineData.selectDataById("ap_difficulty_recept", id);
+        if (difficulty != null && difficulty.length() == 1) {
+            try {
+                JSONObject c = difficulty.getJSONObject(0);
+                int _id = c.getInt("ID");
+                String name = c.getString("Description");
+                Difficulty newDif = new Difficulty(_id, name);
+                d = newDif;
+            } catch (Exception e) {
+            }
+        } else {
+            return null;
+        }
+        return d;
     }
 }

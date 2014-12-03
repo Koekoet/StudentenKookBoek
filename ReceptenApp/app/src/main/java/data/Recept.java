@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -15,7 +18,7 @@ public class Recept implements Parcelable{
     private int ID;
     private String Name;
     private int AuthorID;
-    private Author Author;
+    //private Author Author;
     private String Duration;
     private String Cost;
     private int NumberOfPersons;
@@ -24,14 +27,13 @@ public class Recept implements Parcelable{
     private String Picture;
     private ArrayList<Ingredient> Ingredients;
     private String RecipeText;
-    private int CategoryID;
-    private Category Category;
+
 
     private Recept(Parcel in){
         setID(in.readInt());
         setName(in.readString());
         setAuthorID(in.readInt());
-        setAuthor((Author) in.readParcelable(Author.class.getClassLoader()));
+        //setAuthor((Author) in.readParcelable(Author.class.getClassLoader()));
         setIngredients(in.readArrayList(Ingredient.class.getClassLoader()));
         setDuration(in.readString());
         setCost(in.readString());
@@ -40,44 +42,8 @@ public class Recept implements Parcelable{
         setDifficulty((data.Difficulty) in.readParcelable(data.Difficulty.class.getClassLoader()));
         setPicture(in.readString());
         setRecipeText(in.readString());
-        setCategoryID(in.readInt());
-        setCategory((data.Category) in.readParcelable(data.Category.class.getClassLoader()));
     }
-
-    public Recept(){
-        //Dummy-data
-        //ArrayList<Difficulty> lijst = Difficulty.getAllDifficulties();
-        setID(0);
-        setName("Name");
-        setAuthorID(0);
-        setDuration("30");
-        setCost("15");
-        setNumberOfPersons(4);
-        setDifficultyID(3);
-        setPicture("");
-        setRecipeText("Bereiding gaat azo:");
-        setCategoryID(0);
-        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-        ingredients.add(new Ingredient(0,"Ing1"));
-        ingredients.add(new Ingredient(1,"Ing2"));
-        ingredients.add(new Ingredient(2,"Ing3"));
-        setIngredients(ingredients);
-        data.Author author = new Author();
-        author.setID(0);
-        author.setName("Koekoet");
-        author.setEmail("toinekoekoet@gmail.com");
-        author.setPassword("nope");
-        setAuthor(author);
-        data.Difficulty diff = new Difficulty();
-        diff.setID(3);
-        diff.setDescription("Moeilijk");
-        setDifficulty(diff);
-        data.Category cat = new Category();
-        cat.setID(0);
-        cat.setName("Categorie 0");
-        cat.setPicture("iets");
-        setCategory(cat);
-    }
+    public Recept(){}
 
     @Override
     public int describeContents() {
@@ -89,17 +55,15 @@ public class Recept implements Parcelable{
         out.writeInt(getID());
         out.writeString(getName());
         out.writeInt(getAuthorID());
-        out.writeParcelable(getAuthor(), 0);
+        //out.writeParcelable(getAuthor(), 0);
         out.writeList(getIngredients());
         out.writeString(getDuration());
         out.writeString(getCost());
         out.writeInt(getNumberOfPersons());
         out.writeInt(getDifficultyID());
-        out.writeParcelable(getDifficulty(),flags);
+        out.writeParcelable(getDifficulty(), flags);
         out.writeString(getPicture());
         out.writeString(getRecipeText());
-        out.writeInt(getCategoryID());
-        out.writeParcelable(getCategory(), flags);
     }
 
     public static final Creator<Recept> CREATOR = new Creator<Recept>() {
@@ -114,6 +78,7 @@ public class Recept implements Parcelable{
         }
     };
 
+    //region getters and setters
     public int getID() {
         return ID;
     }
@@ -186,14 +151,6 @@ public class Recept implements Parcelable{
         RecipeText = recipeText;
     }
 
-    public int getCategoryID() {
-        return CategoryID;
-    }
-
-    public void setCategoryID(int categoryID) {
-        CategoryID = categoryID;
-    }
-
     public ArrayList<Ingredient> getIngredients() {
         return Ingredients;
     }
@@ -202,13 +159,13 @@ public class Recept implements Parcelable{
         Ingredients = ingredients;
     }
 
-    public Author getAuthor() {
+    /*public Author getAuthor() {
         return Author;
     }
 
     public void setAuthor(Author author) {
         Author = author;
-    }
+    }*/
 
     public Difficulty getDifficulty() {
         return Difficulty;
@@ -217,14 +174,7 @@ public class Recept implements Parcelable{
     public void setDifficulty(Difficulty difficulty) {
         Difficulty = difficulty;
     }
-
-    public Category getCategory() {
-        return Category;
-    }
-
-    public void setCategory(Category category) {
-        Category = category;
-    }
+    //endregion
 
     public class IngredientList extends ArrayList<Ingredient> implements Parcelable{
 
@@ -263,7 +213,6 @@ public class Recept implements Parcelable{
             }
         };
 
-
         @Override
         public void writeToParcel(Parcel parcel, int flags) {
             int size = this.size();
@@ -278,4 +227,81 @@ public class Recept implements Parcelable{
             }
         }
     }
+
+    public static ArrayList<Recept> getAllRecipes() {
+        ArrayList<Recept> list = new ArrayList<Recept>();
+        JSONArray recipes = data.helpers.onlineData.selectAllData("ap_recipe");
+        if(recipes != null) {
+            for (int i = 0; i < recipes.length(); i++) {
+                try {
+                    JSONObject c = recipes.getJSONObject(i);
+                    //ophalen data
+                    int id = c.getInt("ID");
+                    String name = c.getString("Recipename");
+                    int authorId = c.getInt("AuthorId");
+                    String duration = c.getString("Duration");
+                    String cost = c.getString("Cost");
+                    int numberOfPersons = c.getInt("NumberOfPersons");
+                    int difficultyId = c.getInt("DifficultyId");
+                    data.Difficulty dif = data.Difficulty.getDifficultyById(difficultyId);
+                    String picture = c.getString("Picture");
+                    ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
+                    String recipeText = c.getString("RecipeText");
+
+                    //invullen in nieuw recept
+                    Recept rec = new Recept();
+                    rec.ID = id;
+                    rec.Name = name;
+                    rec.AuthorID = authorId;
+                    rec.Duration = duration;
+                    rec.Cost = cost;
+                    rec.NumberOfPersons = numberOfPersons;
+                    rec.DifficultyID = difficultyId;
+                    rec.Difficulty = dif;
+                    rec.Picture = picture;
+                    rec.Ingredients = ingredients;
+                    rec.RecipeText = recipeText;
+
+                    list.add(rec);
+                } catch (Exception e) {
+                }
+            }
+
+        }else{
+            return null;
+        }
+        return list;
+    }
+
+    /*public static Category getCategoryById(int id) {
+        Category cat = new Category();
+        JSONArray category = data.helpers.onlineData.selectDataById("ap_recept_category", id);
+        if (category != null && category.length() == 1) {
+            try {
+                JSONObject c = category.getJSONObject(0);
+                int _id = c.getInt("ID");
+                String name = c.getString("Name");
+                String picture = c.getString("Picture");
+                Category newCat = new Category(_id, picture, name);
+                cat = newCat;
+            } catch (Exception e) {
+            }
+        } else {
+            return null;
+        }
+        return cat;
+    }*/
+
+    private static ArrayList<Ingredient> makeIngredientsList(String ingredients) {
+        ArrayList<Ingredient> ingrList = new ArrayList<Ingredient>();
+        String[] sDelen = ingredients.split(";");
+        for(int i = 0; i < sDelen.length; i++){
+            try{
+                Ingredient ingr = Ingredient.getIngredientById(Integer.parseInt(sDelen[i]));
+                ingrList.add(ingr);
+            }catch (Exception ex){}
+        }
+        return ingrList;
+    }
+
 }

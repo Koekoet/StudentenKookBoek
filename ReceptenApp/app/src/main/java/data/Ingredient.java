@@ -3,6 +3,10 @@ package data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -60,6 +64,7 @@ public class Ingredient implements Parcelable{
         AllowedUnits = allowedUnits;
     }
 
+    public Ingredient(){}
     public Ingredient(Parcel in){
         this.ID = in.readInt();
         this.Name = in.readString();
@@ -67,5 +72,58 @@ public class Ingredient implements Parcelable{
     public Ingredient(int id, String Name){
         this.ID = id;
         this.Name = Name;
+    }
+    public Ingredient(int id, String Name, ArrayList<Unit> allowedUnits){
+        this.ID = id;
+        this.Name = Name;
+        this.AllowedUnits = allowedUnits;
+    }
+
+    public static ArrayList<Ingredient> getAllIngredients() {
+        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        JSONArray ingredients = data.helpers.onlineData.selectAllData("ap_ingredient");
+        if(ingredients != null) {
+            for (int i = 0; i < ingredients.length(); i++) {
+                try {
+                    JSONObject c = ingredients.getJSONObject(i);
+                    int id = c.getInt("ID");
+                    String name = c.getString("Name");
+                    ArrayList<Unit> allowedUnits = makeArrayUnits(c.getString("AllowedUnits"));
+                    Ingredient ingr = new Ingredient(id, name, allowedUnits);
+                    list.add(ingr);
+                } catch (Exception e) {
+                }
+            }
+            return list;
+        }else{
+            return null;
+        }
+    }
+    public static Ingredient getIngredientById(int id) {
+        Ingredient i = new Ingredient();
+        JSONArray ingredient = data.helpers.onlineData.selectDataById("ap_ingredient", id);
+        if (ingredient != null && ingredient.length() == 1) {
+            try {
+                JSONObject c = ingredient.getJSONObject(0);
+                int _id = c.getInt("ID");
+                String name = c.getString("Name");
+                ArrayList<Unit> allowedUnits = makeArrayUnits(c.getString("AllowedUnits"));
+                Ingredient newIngr = new Ingredient(_id, name, allowedUnits);
+                i = newIngr;
+            } catch (Exception e) {
+            }
+        } else {
+            return null;
+        }
+        return i;
+    }
+    private static ArrayList<Unit> makeArrayUnits(String allowedUnits) {
+        ArrayList<Unit> units = new ArrayList<Unit>();
+        String[] sDelen = allowedUnits.split(";");
+        for(int i = 0; i < sDelen.length; i++){
+            Unit u = Unit.getUnitById(Integer.parseInt(sDelen[i]));
+            units.add(u);
+        }
+        return units;
     }
 }

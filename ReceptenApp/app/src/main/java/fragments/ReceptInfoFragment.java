@@ -65,7 +65,7 @@ public class ReceptInfoFragment extends Fragment {
         tvDuration.setText(selectedRecipe.getDuration()+"min");
         tvCostRecipe.setText(selectedRecipe.getCost()+"€");
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
-        tvUploadedRecipe.setText(""+selectedRecipe.getAuthor().getName());
+        tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
         if(selectedRecipe.getPicture() != null || !selectedRecipe.getPicture().equals("")){
             ivImageRecipe.setImageResource(Integer.parseInt(selectedRecipe.getPicture()));
         } else {
