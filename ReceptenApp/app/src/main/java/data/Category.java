@@ -77,9 +77,9 @@ public class Category implements Parcelable{
         Name = name;
     }
 
-    public static ArrayList<Category> getAllCategories(String tableName) {
+    public static ArrayList<Category> getAllCategories() {
         ArrayList<Category> list = new ArrayList<Category>();
-        JSONArray categories = data.helpers.onlineData.selectAllData(tableName);
+        JSONArray categories = data.helpers.onlineData.selectAllData("ap_recept_category");
         if(categories != null) {
             for (int i = 0; i < categories.length(); i++) {
                 try {
@@ -95,5 +95,23 @@ public class Category implements Parcelable{
         }else{
             return null;
         }
+    }
+    public static Category getCategoryById(int id) {
+        Category cat = new Category();
+        JSONArray category = data.helpers.onlineData.selectDataById("ap_recept_category", id);
+        if (category != null && category.length() == 1) {
+            try {
+                JSONObject c = category.getJSONObject(0);
+                int _id = c.getInt("ID");
+                String name = c.getString("Name");
+                String picture = c.getString("Picture");
+                Category newCat = new Category(_id, picture, name);
+                cat = newCat;
+            } catch (Exception e) {
+            }
+        } else {
+            return null;
+        }
+        return cat;
     }
 }

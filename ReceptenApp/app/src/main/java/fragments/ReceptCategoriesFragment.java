@@ -61,6 +61,57 @@ public class ReceptCategoriesFragment extends ListFragment {
 
 
 
+<<<<<<< HEAD
+=======
+        Category cat2 = new Category();
+        cat2.setID(2);
+        cat2.setName("Desserts");
+        cat2.setPicture("" + R.drawable.cat_dessert);
+
+
+        temp.add(cat0);
+        temp.add(cat1);
+        temp.add(cat2);
+
+        return temp;
+
+    }*/
+
+    //1. Asynctask
+
+
+    class ShowCategoriesTask extends AsyncTask<String, Void, ArrayList<Category>> {
+        private ProgressDialog pDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Showing Categories...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+        @Override
+        protected ArrayList<Category> doInBackground(String... params) {
+
+            ArrayList<Category> categories = data.Category.getAllCategories();
+            for (Category cat : categories){
+                cat.setPicture("" + R.drawable.cat_vleesgerechten);
+            }
+            return categories;
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Category> result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+            arrCategories = result;
+            categorieAdapter = new CategorieAdapter();
+            setListAdapter(categorieAdapter);
+            Toast.makeText(getActivity(), "Categories ready.", Toast.LENGTH_SHORT).show();
+        }
+    }
+>>>>>>> ae27e7b243aa726354924b3f6d5bcad8373a8f43
 
     class CategorieAdapter extends ArrayAdapter<Category> {
         public CategorieAdapter() {

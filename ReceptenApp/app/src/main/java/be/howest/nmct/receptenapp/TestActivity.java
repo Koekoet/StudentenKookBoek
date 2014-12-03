@@ -6,9 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import data.Category;
 import data.Difficulty;
+import data.Ingredient;
+import data.Recept;
+import data.RecipesByCategory;
+import data.Unit;
 
 
 public class TestActivity extends Activity {
@@ -44,7 +50,7 @@ public class TestActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            ArrayList<Difficulty> lijst = Difficulty.getAllDifficulties("ap_recept_category");
+            RecipesByCategory lijst = RecipesByCategory.getRecipeByCatId(2);
             return null;
         }
     }
