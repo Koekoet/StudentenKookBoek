@@ -9,9 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/ivPictureRecipe"
+        android:src="@drawable/rec_hamburger"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#F9F9F9"
+        android:cropToPadding="false"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop"
         />
 
     <TextView
@@ -34,11 +38,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/riDurationRecipe"
         android:id="@+id/riDurationRecipe"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="27dp"
+        android:layout_below="@+id/riNameRecipe"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 <?php
-include("dbconfig.php");
+header('Content-Type: application/json');
+include("dbConfig.php");
 $data = "";
 $array = [];
 $teller = 0;
@@ -35,7 +36,7 @@ if (!empty ($_POST["tableName"])) {
                                 $array["error"] = "Er zijn geen overeenkomstige rijen gevonden.";
                             } else {
                                 do {
-                                    $array[$teller] = $row;
+                                    $array["result"][$teller] = $row;
                                     $teller++;
                                 } while ($query->fetch());
                             }
@@ -63,7 +64,7 @@ if (!empty ($_POST["tableName"])) {
                     $array["error"] = "No rows found";
                 } else {
                     do {
-                        $array[$teller] = $row;
+                        $array["result"][$teller] = $row;
                         $teller++;
                     } while ($row = $query->fetch_array(MYSQLI_ASSOC));
                 }
@@ -75,18 +76,6 @@ if (!empty ($_POST["tableName"])) {
 } else {
     $array["error"] = "Tablename not found.";
 }
-$data = json_encode($array);
+print json_encode($array);
+//$data = json_encode($array);
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Select Data</title>
-</head>
-<body>
-<pre id="json"></pre>
-<script type="text/javascript">
-    document.getElementById('json').innerHTML = JSON.stringify(<?php print $data; ?>, null, 4);
-</script>
-</body>
-</html>

@@ -292,23 +292,28 @@
                 qualifiers="xxxhdpi-v4"
                 type="drawable" />
             <file
-                name="activity_favorite"
-                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\activity_favorite.xml"
-                qualifiers=""
-                type="layout" />
-            <file
                 name="activity_main"
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\activity_main.xml"
                 qualifiers=""
                 type="layout" />
             <file
-                name="activity_recept_detail"
-                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\activity_recept_detail.xml"
+                name="activity_search_results"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\activity_search_results.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="activity_test"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\activity_test.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_categorie"
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_categorie.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="fragment_favorite"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_favorite.xml"
                 qualifiers=""
                 type="layout" />
             <file
@@ -324,6 +329,11 @@
             <file
                 name="fragment_recept_bereiding"
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_recept_bereiding.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="fragment_recept_detail"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_recept_detail.xml"
                 qualifiers=""
                 type="layout" />
             <file
@@ -374,6 +384,11 @@
             <file
                 name="recept_detail"
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\menu\recept_detail.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="test"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\menu\test.xml"
                 qualifiers=""
                 type="menu" />
             <file
@@ -454,6 +469,8 @@ Inloggen
                 </string>
                 <string name="riCostRecipe" >Kost:
                 </string>
+                <string name="title_activity_test" >TestActivity
+                </string>
                 <string name="drawer_close" >Drawer close
                 </string>
                 <string name="search_title" >Zoeken
@@ -494,6 +511,11 @@ Inloggen
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                name="searchable"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\xml\searchable.xml"
+                qualifiers=""
+                type="xml" />
         </source>
         <source path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\build\generated\res\generated\debug" />

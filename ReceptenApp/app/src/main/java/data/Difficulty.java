@@ -2,18 +2,38 @@ package data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import data.helpers.ServiceHandler;
 
 /**
  * Created by Toine on 5/11/2014.
  */
-public class Difficulty implements Parcelable{
+public class Difficulty implements Parcelable {
     private int ID;
     private String Description;
 
-    public Difficulty(){
+    public Difficulty(int id, String description) {
+        this.ID = id;
+        this.Description = description;
+    }
+
+    public Difficulty() {
 
     }
-    private Difficulty(Parcel in){
+
+    private Difficulty(Parcel in) {
         setID(in.readInt());
         setDescription(in.readString());
     }
@@ -55,5 +75,25 @@ public class Difficulty implements Parcelable{
     public void writeToParcel(Parcel out, int i) {
         out.writeInt(getID());
         out.writeString(getDescription());
+    }
+
+    public static ArrayList<Difficulty> getAllDifficulties(String tableName) {
+        ArrayList<Difficulty> list = new ArrayList<Difficulty>();
+        JSONArray difficulties = data.helpers.onlineData.selectAllData(tableName);
+        if(difficulties != null) {
+            for (int i = 0; i < difficulties.length(); i++) {
+                try {
+                    JSONObject c = difficulties.getJSONObject(i);
+                    int id = c.getInt("ID");
+                    String description = c.getString("Description");
+                    Difficulty diff = new Difficulty(id, description);
+                    list.add(diff);
+                } catch (Exception e) {
+                }
+            }
+            return list;
+        }else{
+            return null;
+        }
     }
 }

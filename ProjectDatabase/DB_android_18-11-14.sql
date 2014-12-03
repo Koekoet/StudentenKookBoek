@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.0.4.2
 -- http://www.phpmyadmin.net
 --
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Databank: `androidproject`
+-- Databank: `tijsdelameaep4ae
 --
-CREATE DATABASE IF NOT EXISTS `androidproject` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `androidproject`;
+CREATE DATABASE IF NOT EXISTS `tijsdelameaep4ae` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `tijsdelameaep4ae`;
 
 -- --------------------------------------------------------
 

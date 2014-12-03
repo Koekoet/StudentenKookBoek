@@ -51,6 +51,7 @@
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="title_activity_test">TestActivity</string>
     <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/styles.xml -->
     <eat-comment />
 

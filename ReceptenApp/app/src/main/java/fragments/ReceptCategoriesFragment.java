@@ -1,9 +1,7 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -24,17 +22,16 @@ import data.Category;
  */
 public class ReceptCategoriesFragment extends ListFragment {
     final Context context = getActivity();
+    //public ArrayList<Category> categoryList = new ArrayList<Category>();
 
     CategorieAdapter categorieAdapter;
     private TextView txvTitle;
 
     //global here:
-    ArrayList<Category> arrCategories;
-
-    //GLOBAL
+    public ArrayList<Category> arrCategories;
     public static final String ARR_CATEGORIE = "";
 
-    public ReceptCategoriesFragment(){}
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,98 +42,33 @@ public class ReceptCategoriesFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_categorie, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_categorie, container, false);
         ((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
-
-        //updateCategorie();
+        categorieAdapter = new CategorieAdapter();
+        setListAdapter(categorieAdapter);
         return view;
-
-
 
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-
-        ShowCategoriesTask task = new ShowCategoriesTask();
-        task.execute();
-
-    }
-
-
-    public static ArrayList<Category> GetCategorie(){
-        //txvTitle.setText("Recepten");
-        ArrayList<Category> temp = new ArrayList<Category>();
-
-        Category cat0 = new Category();
-        cat0.setID(0);
-        cat0.setName("VleesGerechten");
-        cat0.setPicture("" + R.drawable.cat_vleesgerechten);
-
-        Category cat1 = new Category();
-        cat1.setID(1);
-        cat1.setName("Visgerechten");
-        cat1.setPicture("" + R.drawable.cat_visgerechten);
-
-        Category cat2 = new Category();
-        cat2.setID(2);
-        cat2.setName("Desserts");
-        cat2.setPicture("" + R.drawable.cat_dessert);
-
-
-        temp.add(cat0);
-        temp.add(cat1);
-        temp.add(cat2);
-
-        return temp;
+        //ShowCategoriesTask task = new ShowCategoriesTask();
+        //task.execute();
 
     }
 
-    //1. Asynctask
-    private ProgressDialog pDialog;
-    class ShowCategoriesTask extends AsyncTask<String, Void, ArrayList<Category>> {
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
 
-            pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Showing Categories...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
 
-        @Override
-        protected ArrayList<Category> doInBackground(String... params)
-        {
 
-            return arrCategories;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Category> result){
-            if(pDialog.isShowing()){ pDialog.dismiss();}
-            super.onPostExecute(result);
-            categorieAdapter = new CategorieAdapter();
-            setListAdapter(categorieAdapter);
-
-            //Toast.makeText(getActivity(), "Categories ready.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    class CategorieAdapter extends ArrayAdapter<Category>
-    {
-        public CategorieAdapter()
-        {
+    class CategorieAdapter extends ArrayAdapter<Category> {
+        public CategorieAdapter() {
             super(getActivity(), R.layout.row_categories, R.id.txvCategorieNaam, arrCategories);
         }
 
 
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
             View row = super.getView(position, convertView, parent);
 
             Category cat = arrCategories.get(position);
@@ -160,6 +92,7 @@ public class ReceptCategoriesFragment extends ListFragment {
     public interface OnCategorieSelectedListener {
         public void OnCategorieSelectedListener(Category category);
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
