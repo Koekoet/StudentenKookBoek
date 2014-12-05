@@ -124,4 +124,10 @@ public class Category implements Parcelable{
         params.add(new BasicNameValuePair("Name", _name));
         data.helpers.onlineData.create(params);
     }
+    public static void deleteCategory(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recept_category"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
+    }
 }

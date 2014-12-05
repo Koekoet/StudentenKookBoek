@@ -117,6 +117,31 @@ public class onlineData {
         }
     }
 
+    public static void delete(List<NameValuePair> params){
+        ServiceHandler sh = new ServiceHandler();
+        String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/delete.php", ServiceHandler.POST, params);
+
+        Log.d("Response: ", ">>> " + jsonStr);
+
+        if (jsonStr != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
+                Iterator<String> iterator = jsonObj.keys();
+                String name = iterator.next();
+                if (name.toString().equals(String.valueOf("result"))) {
+                    String succeeded = jsonObj.getString("succeeded");
+                    Log.d("Succeeded: ", succeeded);
+                } else if (name.toString().equals(String.valueOf("error"))) {
+                    String error = jsonObj.getString("error");
+                    Log.d("Error: ", error);
+                }
+            } catch (JSONException e) {
+            }
+        } else {
+            Log.e("ServiceHandler", "Couldn't get any data from the url");
+        }
+    }
+
     public static JSONArray selectRecipesByCatId(String tableName, int catId) {
         JSONArray array = new JSONArray();
         // Creating service handler class instance

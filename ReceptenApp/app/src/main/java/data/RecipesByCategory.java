@@ -92,4 +92,10 @@ public class RecipesByCategory {
         params.add(new BasicNameValuePair("RecipeIds", _listOfRecipeIds));
         data.helpers.onlineData.create(params);
     }
+    public static void deleteRecipesByCategory(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recipes_by_category"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
+    }
 }

@@ -73,4 +73,10 @@ public class Unit {
         params.add(new BasicNameValuePair("Abbreviation", _abbr));
         data.helpers.onlineData.create(params);
     }
+    public static void deleteUnit(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_unit"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
+    }
 }

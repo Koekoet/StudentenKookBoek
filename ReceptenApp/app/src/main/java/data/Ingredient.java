@@ -137,4 +137,11 @@ public class Ingredient implements Parcelable{
         params.add(new BasicNameValuePair("AllowedUnits",_allowedUnits));
         data.helpers.onlineData.create(params);
     }
+
+    public static void deleteIngredient(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_ingredient"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
+    }
 }

@@ -355,4 +355,11 @@ public class Recept implements Parcelable {
         onlineData.create(params);
     }
 
+    public static void delete(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recipe"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
+    }
+
 }
