@@ -19,23 +19,25 @@ import java.util.ArrayList;
 import be.howest.nmct.receptenapp.R;
 import data.Category;
 import data.Recept;
+import data.RecipeView;
 
 /**
  * Created by Mattias on 17/11/2014.
  */
 public class ReceptReceptenFragment extends ListFragment {
     final Context context = getActivity();
-    ArrayList<Recept> recepten;
     ReceptenAdapter receptenAdapter;
     private TextView txvTitle;
+
     //global date here:
-    private Category category;
-    private ArrayList<Category> arrCategories;
+    Category category;
+    ArrayList<Recept> arrRecipes;
+    RecipeView data;
 
     //KEYS
     public static final String SELECTED_CATEGORIE = "";
-    public static final String ARR_CATEGORIE = "";
-
+    public static final String ARR_RECIPES = "";
+    public static final String RECIPE_VIEW = "";
 
     public ReceptReceptenFragment(){}
 
@@ -43,8 +45,9 @@ public class ReceptReceptenFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getArguments();
-        category = bundle.getParcelable(SELECTED_CATEGORIE);
-        //arrCategories = bundle.getParcelableArrayList(ARR_CATEGORIE);
+        data = bundle.getParcelable(RECIPE_VIEW);
+        category = data.getCategorie();
+        arrRecipes = data.getArrRecipes();
     }
 
     @Override
@@ -53,29 +56,20 @@ public class ReceptReceptenFragment extends ListFragment {
         View view =  inflater.inflate(R.layout.fragment_recepten, container, false);
         ((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
-
-        updateRecepten();
         return view;
-
-
-
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-
-        ShowReceptenTask task = new ShowReceptenTask();
-        task.execute();
-
+        txvTitle.setText("Recepten (" + category.getName() + "))");
+        //ShowReceptenTask task = new ShowReceptenTask();
+        //task.execute();
+        receptenAdapter = new ReceptenAdapter();
+        setListAdapter(receptenAdapter);
     }
 
 
-    public void updateRecepten(){
-        txvTitle.setText("Recepten (" + category.getName() + ")");
-        ArrayList<ArrayList<Recept>> allRecepten = getRecepten();
 
-        recepten = allRecepten.get(category.getID());
-    }
 
     //TEMP
     private ArrayList<ArrayList<Recept>> getRecepten(){
@@ -136,9 +130,10 @@ public class ReceptReceptenFragment extends ListFragment {
         dessert.add(rec7);
         dessert.add(rec8);
 
+        allRecepis.add(dessert);
         allRecepis.add(vlees);
         allRecepis.add(vis);
-        allRecepis.add(dessert);
+
 
         return allRecepis;
     }
@@ -161,7 +156,7 @@ public class ReceptReceptenFragment extends ListFragment {
         protected ArrayList<Recept> doInBackground(String... params)
         {
 
-            return recepten;
+            return arrRecipes;
         }
 
         @Override
@@ -179,7 +174,7 @@ public class ReceptReceptenFragment extends ListFragment {
     {
         public ReceptenAdapter()
         {
-            super(getActivity(), R.layout.row_recept, R.id.recept_naam, recepten);
+            super(getActivity(), R.layout.row_recept, R.id.recept_naam, arrRecipes);
         }
 
 
@@ -187,7 +182,7 @@ public class ReceptReceptenFragment extends ListFragment {
         {
             View row = super.getView(position, convertView, parent);
 
-            Recept rec = recepten.get(position);
+            Recept rec = arrRecipes.get(position);
 
             TextView naam = (TextView) row.findViewById(R.id.recept_naam);
             naam.setText(rec.getName());
@@ -221,7 +216,7 @@ public class ReceptReceptenFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.OnReceptenSelectedListener(recepten.get(position));
+        mCallback.OnReceptenSelectedListener(arrRecipes.get(position));
     }
 
 

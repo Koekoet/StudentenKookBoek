@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
 import data.Category;
 
@@ -40,8 +39,8 @@ public class ReceptCategoriesFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Bundle bundle = this.getArguments();
-        //arrCategories = bundle.getParcelableArrayList(ARR_CATEGORIE);
+        Bundle bundle = this.getArguments();
+        arrCategories = bundle.getParcelableArrayList(ARR_CATEGORIE);
 
     }
 
@@ -50,45 +49,18 @@ public class ReceptCategoriesFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_categorie, container, false);
         ((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
-        ShowCategoriesTask task = new ShowCategoriesTask();
-        task.execute();
+        categorieAdapter = new CategorieAdapter();
+        setListAdapter(categorieAdapter);
         return view;
 
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        ShowCategoriesTask task = new ShowCategoriesTask();
-        task.execute();
+        //ShowCategoriesTask task = new ShowCategoriesTask();
+        //task.execute();
 
     }
-    /*public static ArrayList<Category> GetCategorie(){
-        //txvTitle.setText("Recepten");
-        ArrayList<Category> temp = new ArrayList<Category>();
-
-        Category cat0 = new Category();
-        cat0.setID(0);
-        cat0.setName("VleesGerechten");
-        cat0.setPicture("" + R.drawable.cat_vleesgerechten);
-
-        Category cat1 = new Category();
-        cat1.setID(1);
-        cat1.setName("Visgerechten");
-        cat1.setPicture("" + R.drawable.cat_visgerechten);
-
-        Category cat2 = new Category();
-        cat2.setID(2);
-        cat2.setName("Desserts");
-        cat2.setPicture("" + R.drawable.cat_dessert);
-
-
-        temp.add(cat0);
-        temp.add(cat1);
-        temp.add(cat2);
-
-        return temp;
-
-    }*/
 
     //1. Asynctask
 
@@ -99,7 +71,7 @@ public class ReceptCategoriesFragment extends ListFragment {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Showing Categories...");
+            pDialog.setMessage("Loading data");
             pDialog.setCancelable(false);
             pDialog.show();
         }
