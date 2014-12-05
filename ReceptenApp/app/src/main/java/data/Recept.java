@@ -3,18 +3,27 @@ package data;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
+
+import data.helpers.ServiceHandler;
+import data.helpers.onlineData;
 
 /**
  * Created by Toine on 5/11/2014.
  */
-public class Recept implements Parcelable{
+public class Recept implements Parcelable {
     private int ID;
     private String Name;
     private int AuthorID;
@@ -29,7 +38,7 @@ public class Recept implements Parcelable{
     private String RecipeText;
 
 
-    private Recept(Parcel in){
+    private Recept(Parcel in) {
         setID(in.readInt());
         setName(in.readString());
         setAuthorID(in.readInt());
@@ -43,7 +52,9 @@ public class Recept implements Parcelable{
         setPicture(in.readString());
         setRecipeText(in.readString());
     }
-    public Recept(){}
+
+    public Recept() {
+    }
 
     @Override
     public int describeContents() {
@@ -176,10 +187,12 @@ public class Recept implements Parcelable{
     }
     //endregion
 
-    public class IngredientList extends ArrayList<Ingredient> implements Parcelable{
+    public class IngredientList extends ArrayList<Ingredient> implements Parcelable {
 
-        public IngredientList(){}
-        public IngredientList(Parcel in){
+        public IngredientList() {
+        }
+
+        public IngredientList(Parcel in) {
             this();
             readFromParcel(in);
         }
@@ -190,7 +203,7 @@ public class Recept implements Parcelable{
             //lezen van de list size
             int size = in.readInt();
 
-            for(int i = 0; i<size; i++){
+            for (int i = 0; i < size; i++) {
                 Ingredient ingredient = new Ingredient(in.readInt(), in.readString());
                 this.add(ingredient);
             }
@@ -219,7 +232,7 @@ public class Recept implements Parcelable{
 
             parcel.writeInt(size);
 
-            for(int i =0; i<size;i++){
+            for (int i = 0; i < size; i++) {
                 Ingredient ingredient = this.get(i);
 
                 parcel.writeInt(ingredient.getID());
@@ -231,7 +244,7 @@ public class Recept implements Parcelable{
     public static ArrayList<Recept> getAllRecipes() {
         ArrayList<Recept> list = new ArrayList<Recept>();
         JSONArray recipes = data.helpers.onlineData.selectAllData("ap_recipe");
-        if(recipes != null) {
+        if (recipes != null) {
             for (int i = 0; i < recipes.length(); i++) {
                 try {
                     JSONObject c = recipes.getJSONObject(i);
@@ -267,7 +280,7 @@ public class Recept implements Parcelable{
                 }
             }
 
-        }else{
+        } else {
             return null;
         }
         return list;
@@ -317,13 +330,29 @@ public class Recept implements Parcelable{
     private static ArrayList<Ingredient> makeIngredientsList(String ingredients) {
         ArrayList<Ingredient> ingrList = new ArrayList<Ingredient>();
         String[] sDelen = ingredients.split(";");
-        for(int i = 0; i < sDelen.length; i++){
-            try{
+        for (int i = 0; i < sDelen.length; i++) {
+            try {
                 Ingredient ingr = Ingredient.getIngredientById(Integer.parseInt(sDelen[i]));
                 ingrList.add(ingr);
-            }catch (Exception ex){}
+            } catch (Exception ex) {
+            }
         }
         return ingrList;
+    }
+
+    public static void createNewRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText) {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recipe"));
+        params.add(new BasicNameValuePair("Name", "" + _name));
+        params.add(new BasicNameValuePair("Author", "" + _author));
+        params.add(new BasicNameValuePair("Duration", "" + _duration));
+        params.add(new BasicNameValuePair("Cost", "" + _cost));
+        params.add(new BasicNameValuePair("Persons", "" + _persons));
+        params.add(new BasicNameValuePair("Difficulty", "" + _difficultyId));
+        params.add(new BasicNameValuePair("Picture", "" + _picture));
+        params.add(new BasicNameValuePair("Ingredients", "" + _ingredients));
+        params.add(new BasicNameValuePair("RecipeText", "" + _recipeText));
+        onlineData.create(params);
     }
 
 }

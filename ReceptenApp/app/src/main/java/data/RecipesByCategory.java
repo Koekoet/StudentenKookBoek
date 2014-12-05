@@ -1,9 +1,12 @@
 package data;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tijs1 on 3-12-2014.
@@ -49,7 +52,6 @@ public class RecipesByCategory {
         }
         return list;
     }
-
     public static RecipesByCategory getRecipeByCatId(int catId) {
         RecipesByCategory recByCat = new RecipesByCategory();
         JSONArray recipesByCategory = data.helpers.onlineData.selectRecipesByCatId("ap_recipes_by_category", catId);
@@ -69,12 +71,10 @@ public class RecipesByCategory {
         }
         return recByCat;
     }
-
     private static Category makeCategory(int catId) {
         Category cat = data.Category.getCategoryById(catId);
         return cat;
     }
-
     private static ArrayList<Recept> makeRecipes(String recipeIds) {
         ArrayList<Recept> lijst = new ArrayList<Recept>();
         String[] sDelen = recipeIds.split(";");
@@ -85,5 +85,11 @@ public class RecipesByCategory {
         return lijst;
     }
 
-
+    public static void createRecipesByCategory(int _categoryId, String _listOfRecipeIds){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recipes_by_category"));
+        params.add(new BasicNameValuePair("CategoryId", ""+_categoryId));
+        params.add(new BasicNameValuePair("RecipeIds", _listOfRecipeIds));
+        data.helpers.onlineData.create(params);
+    }
 }

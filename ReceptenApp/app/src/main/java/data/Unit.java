@@ -1,9 +1,12 @@
 package data;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -42,7 +45,6 @@ public class Unit {
             return null;
         }
     }
-
     public static Unit getUnitById(int id) {
         Unit u = new Unit();
         JSONArray unit = data.helpers.onlineData.selectDataById("ap_unit", id);
@@ -63,5 +65,12 @@ public class Unit {
             return null;
         }
         return u;
+    }
+    public static void createUnit(String _name, String _abbr){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_unit"));
+        params.add(new BasicNameValuePair("Name",_name));
+        params.add(new BasicNameValuePair("Abbreviation", _abbr));
+        data.helpers.onlineData.create(params);
     }
 }

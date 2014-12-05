@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 include("dbConfig.php");
 $data = "";
 $array = [];
@@ -26,7 +27,7 @@ if (!empty ($_POST["tableName"])) {
             }
             break;
         case "ap_recipe":
-            if (!empty ($_POST["Name"]) && !empty($_POST["Author"]) && !empty($_POST["Duration"]) && !empty($_POST["Cost"]) && !empty($_POST["Persons"]) && !empty($_POST["Difficulty"]) && !empty($_POST["Picture"]) && !empty($_POST["Ingredients"]) && !empty($_POST["RecipeText"])) {
+            if (!empty ($_POST["Name"]) && !empty($_POST["Author"]) && !empty($_POST["Duration"]) && !empty($_POST["Cost"]) && !empty($_POST["Persons"]) && !empty($_POST["Difficulty"]) && isset ($_POST["Picture"]) && !empty($_POST["Ingredients"]) && !empty($_POST["RecipeText"])) {
                 $array = createNewRecipe($_POST["Name"], $_POST["Author"], $_POST["Duration"], $_POST["Cost"], $_POST["Persons"], $_POST["Difficulty"], $_POST["Picture"], $_POST["Ingredients"], $_POST["RecipeText"]);
             } else {
                 $array["error"] = "Not all values are given: Name, Author, Duration, Cost, Persons, Difficulty, Picture, Ingredients, RecipeText";
@@ -53,7 +54,7 @@ if (!empty ($_POST["tableName"])) {
 } else {
     $array["error"] = "Tablename not found.";
 }
-$data = json_encode($array);
+print json_encode($array);
 
 function createNewIngredient($name, $allowedUnits)
 {
@@ -173,7 +174,7 @@ function createNewRecipe($name, $author,$duration,$cost,$persons,$difficulty,$pi
         if ($query === false) {
             $data["error"] = "Failed to prepare the query: " . $con->error;
         } else {
-            $bp = $query->bind_param("sissiisssi", $name,$author,$duration,$cost,$persons,$difficulty,$picture,$ingredients,$recipe);
+            $bp = $query->bind_param("sissiisss", $name,$author,$duration,$cost,$persons,$difficulty,$picture,$ingredients,$recipe);
             if ($bp === false) {
                 $data["error"] = "Failed to bind params: " . $query->error;
             } else {
@@ -265,16 +266,3 @@ function createNewRecipesByCategory($category, $recipeIDs)
     return $data;
 }
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Insert data</title>
-</head>
-<body>
-<pre id="json"></pre>
-<script type="text/javascript">
-    document.getElementById('json').innerHTML = JSON.stringify(<?php print $data; ?>, null, 4);
-</script>
-</body>
-</html>

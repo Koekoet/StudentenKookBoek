@@ -461,13 +461,13 @@ Inloggen
                 </string>
                 <string name="riDurationRecipe" >Duur:
                 </string>
+                <string name="riCostRecipe" >Kost:
+                </string>
                 <string name="title_activity_search_results" >SearchResultsActivity
                 </string>
                 <string name="search_hint" >Zoekterm
                 </string>
                 <string name="AddBasket" >addBasket
-                </string>
-                <string name="riCostRecipe" >Kost:
                 </string>
                 <string name="title_activity_test" >TestActivity
                 </string>
@@ -475,17 +475,17 @@ Inloggen
                 </string>
                 <string name="search_title" >Zoeken
                 </string>
-                <string name="app_name" >ReceptenApp
-                </string>
                 <string name="title_activity_recept_detail" >ReceptDetailActivity
+                </string>
+                <string name="app_name" >ReceptenApp
                 </string>
                 <string name="riDiffRecipe" >Moeilijkheid:
                 </string>
                 <string name="riPictureRecipe" >Picture Recipe
                 </string>
-                <string name="drawer_open" >Drawer open
-                </string>
                 <string name="hello_world" >Hello world!
+                </string>
+                <string name="drawer_open" >Drawer open
                 </string>
                 <string name="action_delete" >Ledig favorieten
                 </string>

@@ -50,7 +50,7 @@ public class TestActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RecipesByCategory lijst = RecipesByCategory.getRecipeByCatId(2);
+            Recept lijst = Recept.getRecipeById(4);
             return null;
         }
     }

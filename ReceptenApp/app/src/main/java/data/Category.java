@@ -3,10 +3,13 @@ package data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -113,5 +116,12 @@ public class Category implements Parcelable{
             return null;
         }
         return cat;
+    }
+    public static void createCategory(String _picture, String _name){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recept_category"));
+        params.add(new BasicNameValuePair("Picture", _picture));
+        params.add(new BasicNameValuePair("Name", _name));
+        data.helpers.onlineData.create(params);
     }
 }
