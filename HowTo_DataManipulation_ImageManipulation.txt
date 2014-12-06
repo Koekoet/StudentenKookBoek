@@ -1,0 +1,22 @@
+How To
+------
+1) Data ophalen:
+- "dataklasse".getAllRecipes(); --> returns ArrayList<Dataklasse>
+- "dataklasse".getRecipeById(int id); --> returns object van Dataklasse
+
+2) Data verwijderen:
+- "dataklasse".delete(int id); --> returns void
+
+3) Data maken:
+- "dataklasse".create"Dataklasse"(alle data die nodig is (zie intellisense)); --> returns void
+
+4) Data updaten:
+- "dataklasse".update"Dataklasse"(alle data die nodig is (zie intellisense)); --> returns void
+---->>> werkt nog niet momenteel
+
+5) String (uit db) omzetten naar bitmap:
+- data.helpers.ImageConverter.StringToBitmap(db-string); --> returns Bitmap
+(vb. zie ReceptCategoriesFragment -> CategoryAdapter -> getView -> image-stuff)
+
+6) Bitmap omzetten naar String (voor db-opslag):
+- data.helpers.ImageConverter.BitmapToString(Bitmap); --> returns String

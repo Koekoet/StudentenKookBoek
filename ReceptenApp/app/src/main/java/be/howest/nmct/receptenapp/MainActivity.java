@@ -143,9 +143,9 @@ public class MainActivity extends FragmentActivity
         protected ArrayList<Category> doInBackground(String... params) {
 
             ArrayList<Category> categories = data.Category.getAllCategories();
-            for (Category cat : categories){
+            /*for (Category cat : categories){
                 cat.setPicture("" + R.drawable.cat_vleesgerechten);
-            }
+            }*/
             return categories;
         }
         @Override

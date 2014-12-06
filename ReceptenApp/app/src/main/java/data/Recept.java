@@ -340,7 +340,7 @@ public class Recept implements Parcelable {
         return ingrList;
     }
 
-    public static void createNewRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText) {
+    public static void createRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", "ap_recipe"));
         params.add(new BasicNameValuePair("Name", "" + _name));
