@@ -26,6 +26,7 @@ import data.Recept;
 import data.RecipeView;
 import fragments.FavoriteFragment;
 import fragments.ReceptBereidingFragment;
+import fragments.ReceptBoodschappenlijstjeFragment;
 import fragments.ReceptCategoriesFragment;
 import fragments.ReceptDetailFragment;
 import fragments.ReceptInfoFragment;
@@ -230,7 +231,8 @@ public class MainActivity extends FragmentActivity
                 break;
 
             case 1: //Boodschappenlijstje
-                Toast.makeText(MainActivity.this, "Boodschappenlijstje", Toast.LENGTH_SHORT).show();
+                ReceptBoodschappenlijstjeFragment frBoodschap = new ReceptBoodschappenlijstjeFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, frBoodschap).addToBackStack(null).commit();
                 break;
 
             case 2: //Favorieten
