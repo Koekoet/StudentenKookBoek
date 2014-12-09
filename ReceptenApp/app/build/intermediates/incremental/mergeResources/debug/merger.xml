@@ -451,13 +451,13 @@ Inloggen
                 </string>
                 <string name="riDurationRecipe" >Duur:
                 </string>
-                <string name="AddBasket" >addBasket
-                </string>
-                <string name="riCostRecipe" >Kost:
-                </string>
                 <string name="title_activity_search_results" >SearchResultsActivity
                 </string>
                 <string name="search_hint" >Zoekterm
+                </string>
+                <string name="AddBasket" >addBasket
+                </string>
+                <string name="riCostRecipe" >Kost:
                 </string>
                 <string name="title_activity_test" >TestActivity
                 </string>
