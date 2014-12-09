@@ -451,14 +451,22 @@ Inloggen
                 </string>
                 <string name="riDurationRecipe" >Duur:
                 </string>
+<<<<<<< HEAD
                 <string name="riCostRecipe" >Kost:
                 </string>
+=======
+>>>>>>> 29c789d87e5b4f4d303824731db9dbc3878ceb3b
                 <string name="title_activity_search_results" >SearchResultsActivity
                 </string>
                 <string name="search_hint" >Zoekterm
                 </string>
                 <string name="AddBasket" >addBasket
                 </string>
+<<<<<<< HEAD
+=======
+                <string name="riCostRecipe" >Kost:
+                </string>
+>>>>>>> 29c789d87e5b4f4d303824731db9dbc3878ceb3b
                 <string name="title_activity_test" >TestActivity
                 </string>
                 <string name="drawer_close" >Drawer close
