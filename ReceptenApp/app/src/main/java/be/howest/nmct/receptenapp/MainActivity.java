@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -208,18 +209,23 @@ public class MainActivity extends FragmentActivity
 
     }
 
+
+    //onNavigationSelect
     @Override
     public void onNavigationSelected(int position, boolean isLogin) {
         //case 0-2 (blijft hetzelfde)
         if(navigationDrawer.isDrawerOpen(navigationView)){
             navigationDrawer.closeDrawer(navigationView);}
 
+        clearBackstack();
         switch (position){
             case 0: //Categories
                 ReceptCategoriesFragment catFrag = new ReceptCategoriesFragment();
                 Bundle args = new Bundle();
                 args.putParcelableArrayList(catFrag.ARR_CATEGORIE, arrCategories );
                 catFrag.setArguments(args);
+
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, catFrag).commit();
                 break;
 
@@ -265,8 +271,10 @@ public class MainActivity extends FragmentActivity
                 fragment.ShowNavigation();
             }
         }
-        //uiteindelijk
 
+    }
+    public void clearBackstack() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     //ON CATEGORIE SELECTED
@@ -369,9 +377,6 @@ public class MainActivity extends FragmentActivity
         return data;
     }
 
-
-
-
     @Override
     public void OnReceptenSelectedListener(Recept recept) {
         /*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
@@ -398,6 +403,34 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onReceptIngredientSelectedListener(String tekst) {
         /*Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);*/
+    }
+
+    //EXITING APPLICATION
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0)
+        {
+            super.onBackPressed();
+            return;
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+        }
+
     }
 
 
