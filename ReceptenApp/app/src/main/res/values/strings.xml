@@ -26,5 +26,18 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
+    <string name="action_rate">Rate</string>
+    <string name="txtUwScore">Uw punten:</string>
+    <string name="txtUwMening">Uw mening:</string>
+    <string name="txtUwMeningHint">Vul mening in...</string>
+    <string name="create_name_recipe">Naam:</string>
+    <string name="crRecipe_name">Recept naam</string>
+    <string name="crRecept_duur">Bereidingstijd (in min)</string>
+    <string name="aantal_personen">Aantal personen</string>
+    <string name="next">Volgende</string>
+    <string name="previous">Vorige</string>
+    <string name="Ingredients">Ingrediënten:</string>
+    <string name="addIngredients">Ingrediënten toevoegen</string>
+    <string name="bereiding">Bereiding:</string>
 
 </resources>

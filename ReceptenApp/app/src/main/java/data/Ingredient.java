@@ -126,4 +126,13 @@ public class Ingredient implements Parcelable{
         }
         return units;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean sameSame = false;
+        if(o != null && o instanceof Ingredient){
+            sameSame = this.Name == ((Ingredient)o).Name;
+        }
+        return sameSame;
+    }
 }

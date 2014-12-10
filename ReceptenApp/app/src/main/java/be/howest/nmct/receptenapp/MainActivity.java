@@ -1,9 +1,11 @@
 package be.howest.nmct.receptenapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -25,6 +27,9 @@ import data.Recept;
 
 import fragments.FavoriteFragment;
 import fragments.ReceptBereidingFragment;
+import fragments.ReceptCreateBereidingFragment;
+import fragments.ReceptCreateInfoFragment;
+import fragments.ReceptCreateIngredientFragment;
 import fragments.ReceptDetailFragment;
 import fragments.ReceptInfoFragment;
 import fragments.ReceptIngredientenFragment;
@@ -39,7 +44,10 @@ public class MainActivity extends FragmentActivity
         ReceptBereidingFragment.onReceptBereidingSelectedListener,
         ReceptNavigationFragment.OnNavigationSelectedListener,
         ReceptCategoriesFragment.OnCategorieSelectedListener,
-        ReceptReceptenFragment.OnReceptenSelectedListener{
+        ReceptReceptenFragment.OnReceptenSelectedListener,
+        ReceptCreateInfoFragment.OnNextCreateInfoSelectedListener,
+        ReceptCreateIngredientFragment.OnNextCreateIngredientSelectedListener,
+        ReceptCreateBereidingFragment.OnNextCreateBereidingSelectedListener{
 
     private String[] arrNavigation;
 
@@ -58,6 +66,9 @@ public class MainActivity extends FragmentActivity
     //  Boodschappenlijstje
     public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
     public static ArrayList<Category> ARRCATEGORIES = new ArrayList<Category>();
+
+    //Create Recipe
+    private Recept recCreateRecipe;
     //tijdelijk
 
 
@@ -110,6 +121,7 @@ public class MainActivity extends FragmentActivity
             catFrag.setArguments(args);
             getSupportFragmentManager().beginTransaction().add(R.id.mainfragment, catFrag).commit();
         }
+
     }
 
     @Override
@@ -145,10 +157,10 @@ public class MainActivity extends FragmentActivity
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_TestRecepi:
-                /*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
+            /*case R.id.action_TestRecepi:
+                *//*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
                 intent.putExtra("selectedRecipe", new Recept());
-                startActivity(intent);*/
+                startActivity(intent);*//*
                 ReceptDetailFragment fragment = new ReceptDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("MYSELECTEDRECIPE", new Recept());
@@ -163,10 +175,7 @@ public class MainActivity extends FragmentActivity
             case R.id.action_TestDiff:
                 Intent intent3 = new Intent(MainActivity.this, TestActivity.class);
                 startActivity(intent3);
-                return true;
-            case R.id.menu_item_search:
-
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -203,7 +212,8 @@ public class MainActivity extends FragmentActivity
         if(isLogin){
             switch (position){
                 case 3:
-                    Toast.makeText(MainActivity.this, "Recept toevoegen", Toast.LENGTH_SHORT).show();
+                    ReceptCreateInfoFragment receptCreateInfoFragment = new ReceptCreateInfoFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateInfoFragment).addToBackStack(null).commit();
                     break;
 
                 case 4:
@@ -276,4 +286,80 @@ public class MainActivity extends FragmentActivity
     }
 
 
+    @Override
+    public void onNextCreateInfoSelectedListener(Recept recept) {
+        this.recCreateRecipe = recept;
+        ReceptCreateIngredientFragment receptCreateIngredientFragment = new ReceptCreateIngredientFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("CREATERECIPEVALUES", recCreateRecipe);
+        receptCreateIngredientFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateIngredientFragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onNextCreateIngredientSelectedListener(Recept recept, String button) {
+        this.recCreateRecipe = recept;
+        if(button.equals("next")){
+            //dan recept = goed, next
+            ReceptCreateBereidingFragment receptCreateBereidingFragment = new ReceptCreateBereidingFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
+            receptCreateBereidingFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateBereidingFragment).addToBackStack(null).commit();
+        } else {
+            //vorige pagina
+            ReceptCreateInfoFragment receptCreateInfoFragment = new ReceptCreateInfoFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
+            receptCreateInfoFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateInfoFragment).addToBackStack(null).commit();
+        }
+
+    }
+
+
+    @Override
+    public void onNextCreateBereidingSelectedListener(Recept recept, String button) {
+        this.recCreateRecipe = recept;
+        if(button.equals("next")){
+            //Dialog maken
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Recept toevoegen");
+            builder.setMessage("Bent u zeker dat u dit recept wilt toevoegen?");
+            builder.setCancelable(true)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Recept wegschrijven
+
+                            //Recept detail tonen
+                            ReceptDetailFragment receptDetailFragment = new ReceptDetailFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("MYSELECTEDRECIPE", recCreateRecipe);
+                            receptDetailFragment.setArguments(bundle);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptDetailFragment).addToBackStack(null).commit();
+                            getSupportFragmentManager().popBackStack();
+                        }
+                    })
+                    .setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+
+        } else {
+            ReceptCreateIngredientFragment receptCreateIngredientFragment = new ReceptCreateIngredientFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
+            receptCreateIngredientFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateIngredientFragment).addToBackStack(null).commit();
+        }
+    }
 }

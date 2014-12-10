@@ -63,10 +63,10 @@ public class ReceptInfoFragment extends Fragment {
         //Set text
         riName.setText(selectedRecipe.getName());
         tvDuration.setText(selectedRecipe.getDuration()+"min");
-        tvCostRecipe.setText(selectedRecipe.getCost()+"€");
+        tvCostRecipe.setText(selectedRecipe.getCost());
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
         tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
-        if(selectedRecipe.getPicture() != null || !selectedRecipe.getPicture().equals("")){
+        if(selectedRecipe.getPicture() != null){
             ivImageRecipe.setImageResource(Integer.parseInt(selectedRecipe.getPicture()));
         } else {
             ivImageRecipe.setImageResource(R.drawable.ic_noimage);
