@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import be.howest.nmct.receptenapp.R;
 import data.Difficulty;
 import data.Recept;
+import data.helpers.ImageConverter;
 
 /**
  * Created by Toine on 3/12/2014.
@@ -118,7 +121,10 @@ public class ReceptCreateInfoFragment extends Fragment {
                     recCreateRecipe.setDuration(txtDuration.getText().toString());
                     recCreateRecipe.setCost(spinnerCost.getSelectedItem().toString());
                     recCreateRecipe.setNumberOfPersons(Integer.parseInt(txtPersons.getText().toString()));
-
+                    BitmapDrawable bmDrawable = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bm = bmDrawable.getBitmap();
+                    String imageString = ImageConverter.BitmapToString(bm);
+                    recCreateRecipe.setPicture(imageString);
                     //Nog difficulty
                     recCreateRecipe.setDifficultyID((int) spinnerDiff.getSelectedItemId());
                     //recept.setDifficulty(Difficulty.getDifficultyById((int) spinnerDiff.getSelectedItemId()));

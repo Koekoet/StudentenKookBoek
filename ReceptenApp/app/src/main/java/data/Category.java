@@ -3,10 +3,13 @@ package data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -84,9 +87,10 @@ public class Category implements Parcelable{
             for (int i = 0; i < categories.length(); i++) {
                 try {
                     JSONObject c = categories.getJSONObject(i);
-                    int id = c.getInt("ID");
+                    int id = c.getInt("ID") -1;
                     String name = c.getString("Name");
-                    Category diff = new Category(id, "", name);
+                    String picture = c.getString("Picture");
+                    Category diff = new Category(id, picture, name);
                     list.add(diff);
                 } catch (Exception e) {
                 }
@@ -113,5 +117,18 @@ public class Category implements Parcelable{
             return null;
         }
         return cat;
+    }
+    public static void createCategory(String _picture, String _name){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recept_category"));
+        params.add(new BasicNameValuePair("Picture", _picture));
+        params.add(new BasicNameValuePair("Name", _name));
+        data.helpers.onlineData.create(params);
+    }
+    public static void deleteCategory(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recept_category"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
     }
 }

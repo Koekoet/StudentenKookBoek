@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 include("dbConfig.php");
 $data = "";
 $array = [];
@@ -26,7 +27,7 @@ if (!empty ($_POST["tableName"])) {
             }
             break;
         case "ap_recipe":
-            if (!empty ($_POST["Name"]) && !empty($_POST["Author"]) && !empty($_POST["Duration"]) && !empty($_POST["Cost"]) && !empty($_POST["Persons"]) && !empty($_POST["Difficulty"]) && !empty($_POST["Picture"]) && !empty($_POST["Ingredients"]) && !empty($_POST["RecipeText"])) {
+            if (!empty ($_POST["Name"]) && !empty($_POST["Author"]) && !empty($_POST["Duration"]) && !empty($_POST["Cost"]) && !empty($_POST["Persons"]) && !empty($_POST["Difficulty"]) && isset ($_POST["Picture"]) && !empty($_POST["Ingredients"]) && !empty($_POST["RecipeText"])) {
                 $array = createNewRecipe($_POST["Name"], $_POST["Author"], $_POST["Duration"], $_POST["Cost"], $_POST["Persons"], $_POST["Difficulty"], $_POST["Picture"], $_POST["Ingredients"], $_POST["RecipeText"]);
             } else {
                 $array["error"] = "Not all values are given: Name, Author, Duration, Cost, Persons, Difficulty, Picture, Ingredients, RecipeText";
@@ -46,6 +47,12 @@ if (!empty ($_POST["tableName"])) {
                 $array["error"] = "Not all values are given: CategoryId, RecipeIDs";
             }
             break;
+        case "ap_rating":
+            if(!empty($_POST["AccountId"]) && !empty($_POST["RecipeId"]) && !empty($_POST["Rating"])&& !empty($_POST["Review"])){
+                $array = createNewRating($_POST["AccountId"],$_POST["RecipeId"],$_POST["Rating"],$_POST["Review"]);
+            }else{
+                $array["error"] = "Not all values are given: AccountId, RecipeId, Rating, Review";
+            }
         default:
             $array["error"] = "Tablename incorrect.";
             break;
@@ -53,7 +60,7 @@ if (!empty ($_POST["tableName"])) {
 } else {
     $array["error"] = "Tablename not found.";
 }
-$data = json_encode($array);
+print json_encode($array);
 
 function createNewIngredient($name, $allowedUnits)
 {
@@ -173,7 +180,7 @@ function createNewRecipe($name, $author,$duration,$cost,$persons,$difficulty,$pi
         if ($query === false) {
             $data["error"] = "Failed to prepare the query: " . $con->error;
         } else {
-            $bp = $query->bind_param("sissiisssi", $name,$author,$duration,$cost,$persons,$difficulty,$picture,$ingredients,$recipe);
+            $bp = $query->bind_param("sissiisss", $name,$author,$duration,$cost,$persons,$difficulty,$picture,$ingredients,$recipe);
             if ($bp === false) {
                 $data["error"] = "Failed to bind params: " . $query->error;
             } else {
@@ -264,17 +271,39 @@ function createNewRecipesByCategory($category, $recipeIDs)
     }
     return $data;
 }
+
+function createNewRating($accountId,$recipeId,$rating,$review){
+    include("dbConfig.php");
+    $data = [];
+    $con = new mysqli($dbServer, $dbUsername, $dbPassword, $dbDatabase);
+    if (mysqli_connect_errno()) {
+        $data["error"] = "Failed to connect to MySQL: " . mysqli_connect_error();
+    } else {
+        $sql = "INSERT INTO `ap_rating` (`AccountId`,`RecipeId`,`Rating`,`Review`) VALUES (?,?,?,?)";
+        $query = $con->prepare($sql);
+        if ($query === false) {
+            $data["error"] = "Failed to prepare the query: " . $con->error;
+        } else {
+            $bp = $query->bind_param("iiss",$accountId,$recipeId,$rating,$review);
+            if ($bp === false) {
+                $data["error"] = "Failed to bind params: " . $query->error;
+            } else {
+                $exec = $query->execute();
+                if ($exec === false) {
+                    $data["error"] = "Failed to execute the query: " . $query->error;
+                } else {
+                    if($query->affected_rows === 1){
+                        $data["succeeded"] = "Query successfully executed";
+                    }else{
+                        $data["error"] = "Something went wrong while executing query. Please try again.";
+                    }
+                }
+            }
+            $query->close();
+        }
+        $con->close();
+    }
+    return $data;
+}
+
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Insert data</title>
-</head>
-<body>
-<pre id="json"></pre>
-<script type="text/javascript">
-    document.getElementById('json').innerHTML = JSON.stringify(<?php print $data; ?>, null, 4);
-</script>
-</body>
-</html>

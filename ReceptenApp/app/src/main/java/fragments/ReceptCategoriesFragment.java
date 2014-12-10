@@ -3,9 +3,12 @@ package fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +18,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
 import data.Category;
 
@@ -40,8 +44,8 @@ public class ReceptCategoriesFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Bundle bundle = this.getArguments();
-        //arrCategories = bundle.getParcelableArrayList(ARR_CATEGORIE);
+        Bundle bundle = this.getArguments();
+        arrCategories = bundle.getParcelableArrayList(ARR_CATEGORIE);
 
     }
 
@@ -50,45 +54,18 @@ public class ReceptCategoriesFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_categorie, container, false);
         ((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
-        ShowCategoriesTask task = new ShowCategoriesTask();
-        task.execute();
+        categorieAdapter = new CategorieAdapter();
+        setListAdapter(categorieAdapter);
         return view;
 
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        ShowCategoriesTask task = new ShowCategoriesTask();
-        task.execute();
+        //ShowCategoriesTask task = new ShowCategoriesTask();
+        //task.execute();
 
     }
-    /*public static ArrayList<Category> GetCategorie(){
-        //txvTitle.setText("Recepten");
-        ArrayList<Category> temp = new ArrayList<Category>();
-
-        Category cat0 = new Category();
-        cat0.setID(0);
-        cat0.setName("VleesGerechten");
-        cat0.setPicture("" + R.drawable.cat_vleesgerechten);
-
-        Category cat1 = new Category();
-        cat1.setID(1);
-        cat1.setName("Visgerechten");
-        cat1.setPicture("" + R.drawable.cat_visgerechten);
-
-        Category cat2 = new Category();
-        cat2.setID(2);
-        cat2.setName("Desserts");
-        cat2.setPicture("" + R.drawable.cat_dessert);
-
-
-        temp.add(cat0);
-        temp.add(cat1);
-        temp.add(cat2);
-
-        return temp;
-
-    }*/
 
     //1. Asynctask
 
@@ -99,7 +76,7 @@ public class ReceptCategoriesFragment extends ListFragment {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Showing Categories...");
+            pDialog.setMessage("Loading data");
             pDialog.setCancelable(false);
             pDialog.show();
         }
@@ -108,7 +85,7 @@ public class ReceptCategoriesFragment extends ListFragment {
 
             ArrayList<Category> categories = data.Category.getAllCategories();
             for (Category cat : categories){
-                cat.setPicture("" + R.drawable.cat_vleesgerechten);
+                cat.setPicture("" + R.drawable.ic_noimage);
             }
             return categories;
         }
@@ -121,7 +98,7 @@ public class ReceptCategoriesFragment extends ListFragment {
             arrCategories = result;
             categorieAdapter = new CategorieAdapter();
             setListAdapter(categorieAdapter);
-            Toast.makeText(getActivity(), "Categories ready.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Categories readies.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -139,10 +116,18 @@ public class ReceptCategoriesFragment extends ListFragment {
             TextView naam = (TextView) row.findViewById(R.id.txvCategorieNaam);
             naam.setText(cat.getName());
 
+            //image-stuff
             ImageView image = (ImageView) row.findViewById(R.id.CategorieImage);
-            int img = Integer.parseInt(cat.getPicture());
-            image.setImageResource(img);
-
+            Bitmap bmp;
+            //controleer of er een afbeelding werd geplaatst in db
+            if(cat.getPicture().isEmpty()){
+                //geen afbeelding opgegeven --> no_image weergeven
+                bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage); //zit standaard in de app, dus hoeft niet als string worden geconverteerd
+            }else{
+                //afbeelding zit in database (als string)
+                bmp = data.helpers.ImageConverter.StringToBitmap(cat.getPicture());
+            }
+            image.setImageBitmap(bmp);
             return row;
         }
 

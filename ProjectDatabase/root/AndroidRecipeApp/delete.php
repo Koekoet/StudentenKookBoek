@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 $data = "";
 $array = [];
 if (!empty ($_POST["tableName"]) && !empty ($_POST["id"])) {
@@ -41,18 +42,6 @@ if (!empty ($_POST["tableName"]) && !empty ($_POST["id"])) {
 } else {
     $array["error"] = "Tablename or id not found.";
 }
-$data = json_encode($array);
+print json_encode($array);
+//$data = json_encode($array);
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete data</title>
-</head>
-<body>
-<pre id="json"></pre>
-<script type="text/javascript">
-    document.getElementById('json').innerHTML = JSON.stringify(<?php print $data; ?>, null, 4);
-</script>
-</body>
-</html>

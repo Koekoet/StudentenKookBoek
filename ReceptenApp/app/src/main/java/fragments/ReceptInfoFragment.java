@@ -67,7 +67,8 @@ public class ReceptInfoFragment extends Fragment {
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
         tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
         if(selectedRecipe.getPicture() != null){
-            ivImageRecipe.setImageResource(Integer.parseInt(selectedRecipe.getPicture()));
+            Bitmap bm = data.helpers.ImageConverter.StringToBitmap(selectedRecipe.getPicture());
+            ivImageRecipe.setImageBitmap(bm);
         } else {
             ivImageRecipe.setImageResource(R.drawable.ic_noimage);
         }

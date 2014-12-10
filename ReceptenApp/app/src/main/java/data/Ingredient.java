@@ -3,11 +3,14 @@ package data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -130,9 +133,23 @@ public class Ingredient implements Parcelable{
     @Override
     public boolean equals(Object o) {
         boolean sameSame = false;
-        if(o != null && o instanceof Ingredient){
-            sameSame = this.Name == ((Ingredient)o).Name;
+        if (o != null && o instanceof Ingredient) {
+            sameSame = this.Name == ((Ingredient) o).Name;
         }
         return sameSame;
+    }
+    public static void createIngredient(String _name, String _allowedUnits){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_ingredient"));
+        params.add(new BasicNameValuePair("Name", _name));
+        params.add(new BasicNameValuePair("AllowedUnits",_allowedUnits));
+        data.helpers.onlineData.create(params);
+    }
+
+    public static void deleteIngredient(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_ingredient"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
     }
 }

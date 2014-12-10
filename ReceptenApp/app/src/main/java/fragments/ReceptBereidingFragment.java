@@ -51,6 +51,6 @@ public class ReceptBereidingFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        selectedRecipe = new Recept();//args.getParcelable("MYSELECTEDRECIPE");
+        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
     }
 }

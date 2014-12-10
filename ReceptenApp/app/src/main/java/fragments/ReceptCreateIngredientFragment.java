@@ -3,6 +3,7 @@ package fragments;
 import android.app.Activity;
 import android.database.DataSetObserver;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class ReceptCreateIngredientFragment extends Fragment {
     OnNextCreateIngredientSelectedListener mCallback;
     ArrayList<Ingredient> selectedIngredients = new ArrayList<Ingredient>();
     IngredientAdapter mAdapter;
+    ListView lvIngredients;
 
     public ReceptCreateIngredientFragment() {
         // Required empty public constructor
@@ -41,6 +43,13 @@ public class ReceptCreateIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+
+        new GetAllIngredients.execute();
+
+         */
+
+
         Bundle args = getArguments();
         recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
         if(recCreateRecipe.getIngredients() != null){
@@ -69,8 +78,10 @@ public class ReceptCreateIngredientFragment extends Fragment {
             }
         });
 
-        ListView lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
-        //allIngredients = Ingredient.getAllIngredients();
+        lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
+
+        mAdapter = new IngredientAdapter();
+        lvIngredients.setAdapter(mAdapter);
 
         //-----Temp data
         Ingredient patat = new Ingredient(0,"Aardappelen");
@@ -85,8 +96,6 @@ public class ReceptCreateIngredientFragment extends Fragment {
         allIngredients.add(boter);
         allIngredients.add(water);
         //-----End Temp data
-        mAdapter = new IngredientAdapter();
-        lvIngredients.setAdapter(mAdapter);
 
         lvIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -145,6 +154,22 @@ public class ReceptCreateIngredientFragment extends Fragment {
             }
 
             return row;
+        }
+    }
+    class GetAllIngredients extends AsyncTask<Void,Void,ArrayList<Ingredient>>{
+
+        @Override
+        protected ArrayList<Ingredient> doInBackground(Void... voids) {
+            ArrayList<Ingredient> allIngredients = Ingredient.getAllIngredients();
+            return allIngredients;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Ingredient> ingredients) {
+            super.onPostExecute(ingredients);
+            allIngredients = ingredients;
+            mAdapter = new IngredientAdapter();
+            lvIngredients.setAdapter(mAdapter);
         }
     }
 }

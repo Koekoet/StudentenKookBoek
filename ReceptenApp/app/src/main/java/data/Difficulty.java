@@ -113,4 +113,18 @@ public class Difficulty implements Parcelable {
         }
         return d;
     }
+
+    public static void createDifficulty(String _description){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_difficulty_recept"));
+        params.add(new BasicNameValuePair("Description", _description));
+        data.helpers.onlineData.create(params);
+    }
+
+    public static void deleteDifficulty(int _id){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_difficulty_recept"));
+        params.add(new BasicNameValuePair("id", ""+_id));
+        data.helpers.onlineData.delete(params);
+    }
 }

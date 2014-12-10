@@ -13,6 +13,7 @@ import data.Category;
 import data.Difficulty;
 import data.Ingredient;
 import data.Recept;
+import data.RecipesByCategory;
 import data.Unit;
 
 
@@ -49,7 +50,7 @@ public class TestActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            ArrayList<Recept> lijst = Recept.getAllRecipes();
+            Ingredient.deleteIngredient(7);
             return null;
         }
     }
