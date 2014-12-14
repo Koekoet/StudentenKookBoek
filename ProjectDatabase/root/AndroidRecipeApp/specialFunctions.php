@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 include("dbConfig.php");
 $data = "";
 $array = [];
@@ -105,3 +105,18 @@ if (!empty ($_POST["tableName"])) {
 print json_encode($array);
 //$data = json_encode($array);
 ?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<form action="specialFunctions.php" method="post">
+    <input type="text" name="tableName" value="ap_recipe" />
+    <input type="text" name="catId" value="" />
+    <input type="submit" value="test"/>
+</form>
+</body>
+</html>

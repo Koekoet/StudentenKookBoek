@@ -50,6 +50,7 @@ if (!empty ($_POST["tableName"])) {
             $array["error"] = "ID is not a number";
         }
     } else {
+
         $con = new mysqli($dbServer, $dbUsername, $dbPassword, $dbDatabase);
         if (mysqli_connect_errno()) {
             $array["error"] = "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -64,6 +65,7 @@ if (!empty ($_POST["tableName"])) {
                     $array["error"] = "No rows found";
                 } else {
                     do {
+
                         $array["result"][$teller] = $row;
                         $teller++;
                     } while ($row = $query->fetch_array(MYSQLI_ASSOC));

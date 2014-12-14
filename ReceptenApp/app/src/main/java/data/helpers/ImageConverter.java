@@ -3,6 +3,7 @@ package data.helpers;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 
@@ -21,7 +22,10 @@ public class ImageConverter {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         _picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        picture = new String(Base64.encode(byteArray,0));
+        //picture = new String(Base64.encode(byteArray,0));
+        picture = Base64.encodeToString(byteArray,Base64.DEFAULT);
+        Log.e("ImageAsString: ", picture);
+        //String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
         return picture;
     }
 }

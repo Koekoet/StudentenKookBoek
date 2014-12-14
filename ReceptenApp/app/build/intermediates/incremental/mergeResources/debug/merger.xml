@@ -297,6 +297,11 @@
                 qualifiers=""
                 type="layout" />
             <file
+                name="fragment_boodschappenlijstje"
+                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\fragment_boodschappenlijstje.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="fragment_categorie"
                 path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\fragment_categorie.xml"
                 qualifiers=""
@@ -339,6 +344,11 @@
             <file
                 name="navigation_list_item"
                 path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\navigation_list_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="row_boodschappenlijstje"
+                path="C:\Users\tijs1\Documents\3NMCT\AppDev\Project\ProjectDatabase\ReceptenApp\app\src\main\res\layout\row_boodschappenlijstje.xml"
                 qualifiers=""
                 type="layout" />
             <file

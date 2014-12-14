@@ -50,7 +50,7 @@ public class TestActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Ingredient.deleteIngredient(7);
+            ArrayList<Recept> recepts = Recept.getAllRecipes();
             return null;
         }
     }
