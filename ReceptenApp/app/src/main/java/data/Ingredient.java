@@ -8,7 +8,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +15,9 @@ import java.util.List;
  * Created by Toine on 5/11/2014.
  */
 public class Ingredient implements Parcelable{
-    private int ID;
-    private String Name;
-    private ArrayList<Unit> AllowedUnits;
+    public int ID;
+    public String Name;
+    public ArrayList<Unit> AllowedUnits;
 
     @Override
     public int describeContents() {

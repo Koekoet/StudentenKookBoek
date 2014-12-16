@@ -297,6 +297,11 @@
                 qualifiers=""
                 type="layout" />
             <file
+                name="fragment_boodschappenlijstje"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_boodschappenlijstje.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="fragment_categorie"
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_categorie.xml"
                 qualifiers=""
@@ -339,6 +344,11 @@
             <file
                 name="navigation_list_item"
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\navigation_list_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="row_boodschappenlijstje"
+                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\row_boodschappenlijstje.xml"
                 qualifiers=""
                 type="layout" />
             <file
@@ -451,22 +461,14 @@ Inloggen
                 </string>
                 <string name="riDurationRecipe" >Duur:
                 </string>
-<<<<<<< HEAD
                 <string name="riCostRecipe" >Kost:
                 </string>
-=======
->>>>>>> 29c789d87e5b4f4d303824731db9dbc3878ceb3b
                 <string name="title_activity_search_results" >SearchResultsActivity
                 </string>
                 <string name="search_hint" >Zoekterm
                 </string>
                 <string name="AddBasket" >addBasket
                 </string>
-<<<<<<< HEAD
-=======
-                <string name="riCostRecipe" >Kost:
-                </string>
->>>>>>> 29c789d87e5b4f4d303824731db9dbc3878ceb3b
                 <string name="title_activity_test" >TestActivity
                 </string>
                 <string name="drawer_close" >Drawer close
@@ -514,16 +516,6 @@ Inloggen
                 path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\xml\searchable.xml"
                 qualifiers=""
                 type="xml" />
-            <file
-                name="row_boodschappenlijstje"
-                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\row_boodschappenlijstje.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="fragment_boodschappenlijstje"
-                path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\src\main\res\layout\fragment_boodschappenlijstje.xml"
-                qualifiers=""
-                type="layout" />
         </source>
         <source path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Mattias\Dropbox\School\3NMCT\App Development for Android\opdracht\project\ReceptenApp\app\build\generated\res\generated\debug" />

@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
@@ -52,8 +49,6 @@ public class ReceptCategoriesFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_categorie, container, false);
-        ((TextView) view.findViewById(R.id.Title)).setText("");
-        txvTitle = (TextView) view.findViewById(R.id.Title);
         categorieAdapter = new CategorieAdapter();
         setListAdapter(categorieAdapter);
         return view;

@@ -20,11 +20,14 @@ import be.howest.nmct.receptenapp.R;
 import data.Category;
 import data.Recept;
 import data.RecipeView;
+import data.helpers.ImageConverter;
 
 /**
  * Created by Mattias on 17/11/2014.
  */
-public class ReceptReceptenFragment extends ListFragment {
+public class ReceptReceptenFragment extends ListFragment
+       {
+
     final Context context = getActivity();
     ReceptenAdapter receptenAdapter;
     private TextView txvTitle;
@@ -61,81 +64,11 @@ public class ReceptReceptenFragment extends ListFragment {
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        txvTitle.setText("Recepten (" + category.getName() + "))");
+        txvTitle.setText(category.getName());
         //ShowReceptenTask task = new ShowReceptenTask();
         //task.execute();
         receptenAdapter = new ReceptenAdapter();
         setListAdapter(receptenAdapter);
-    }
-
-
-
-
-    //TEMP
-    private ArrayList<ArrayList<Recept>> getRecepten(){
-        ArrayList<ArrayList<Recept>> allRecepis = new ArrayList<ArrayList<Recept>>();
-
-        ArrayList<Recept> vlees = new ArrayList<Recept>();
-        ArrayList<Recept> vis = new ArrayList<Recept>();
-        ArrayList<Recept> dessert = new ArrayList<Recept>();
-
-        //VLEES
-        Recept rec0 = new Recept();
-        rec0.setName("Hamburger op oma's wijze");
-        rec0.setPicture("" + R.drawable.rec_hamburger);
-
-        Recept rec1 = new Recept();
-        rec1.setName("Steak met frietjes");
-        rec1.setPicture("" + R.drawable.rec_steakmetfrieten);
-
-        Recept rec2 = new Recept();
-        rec2.setName("Kip met rijst");
-        rec2.setPicture("" + R.drawable.rec_kipmetrijst);
-
-        vlees.add(rec0);
-        vlees.add(rec1);
-        vlees.add(rec2);
-
-        //Vis
-        Recept rec3 = new Recept();
-        rec3.setName("Zalmrolletjes");
-        rec3.setPicture("" + R.drawable.rec_zalmrolletjes);
-
-        Recept rec4 = new Recept();
-        rec4.setName("Gebakken scampi's");
-        rec4.setPicture("" + R.drawable.rec_scampi);
-
-        vis.add(rec3);
-        vis.add(rec4);
-
-        //desserts
-        Recept rec5 = new Recept();
-        rec5.setName("Chocoladetaart");
-        rec5.setPicture("" + R.drawable.rec_chocoladetaart);
-
-        Recept rec6 = new Recept();
-        rec6.setName("Banana split");
-        rec6.setPicture("" + R.drawable.rec_bananasplit);
-
-        Recept rec7 = new Recept();
-        rec7.setName("Pudding!");
-        rec7.setPicture("" + R.drawable.rec_pudding);
-
-        Recept rec8 = new Recept();
-        rec8.setName("Fruittaart");
-        rec8.setPicture("" + R.drawable.rec_fruittaart);
-
-        dessert.add(rec5);
-        dessert.add(rec6);
-        dessert.add(rec7);
-        dessert.add(rec8);
-
-        allRecepis.add(dessert);
-        allRecepis.add(vlees);
-        allRecepis.add(vis);
-
-
-        return allRecepis;
     }
 
     //1. Asynctask
@@ -188,8 +121,7 @@ public class ReceptReceptenFragment extends ListFragment {
             naam.setText(rec.getName());
 
             ImageView image = (ImageView) row.findViewById(R.id.receptImage);
-            int img = Integer.parseInt(rec.getPicture());
-            image.setImageResource(img);
+            image.setImageBitmap(ImageConverter.StringToBitmap(rec.getPicture()));
 
             return row;
         }
@@ -218,6 +150,7 @@ public class ReceptReceptenFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         mCallback.OnReceptenSelectedListener(arrRecipes.get(position));
     }
+
 
 
 }

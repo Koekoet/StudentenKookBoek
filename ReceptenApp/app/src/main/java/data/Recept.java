@@ -1,23 +1,17 @@
 package data;
 
-import android.graphics.Bitmap;
+import android.database.MatrixCursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
-import data.helpers.ServiceHandler;
 import data.helpers.onlineData;
 
 /**
@@ -285,6 +279,54 @@ public class Recept implements Parcelable {
         }
         return list;
     }
+    public static MatrixCursor getAllRecipesCursor(){
+        String[] columnNames = {"ID", "Name", "AuthorId","Duration","Cost","NumberOfPersons","DifficultyId","Difficulty","Picture","Ingredient","RecipeText"};
+        MatrixCursor matrixCursor = new MatrixCursor(columnNames);
+
+        JSONArray recipes = data.helpers.onlineData.selectAllData("ap_recipe");
+        if (recipes != null) {
+            for (int i = 0; i < recipes.length(); i++) {
+                try {
+                    JSONObject c = recipes.getJSONObject(i);
+                    //ophalen data
+                    int id = c.getInt("ID");
+                    String name = c.getString("Recipename");
+                    int authorId = c.getInt("AuthorId");
+                    String duration = c.getString("Duration");
+                    String cost = c.getString("Cost");
+                    int numberOfPersons = c.getInt("NumberOfPersons");
+                    int difficultyId = c.getInt("DifficultyId");
+                    data.Difficulty dif = data.Difficulty.getDifficultyById(difficultyId);
+                    String picture = c.getString("Picture");
+                    ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
+                    String recipeText = c.getString("RecipeText");
+
+                    //invullen in nieuw recept
+                    Recept rec = new Recept();
+                    rec.ID = id;
+                    rec.Name = name;
+                    rec.AuthorID = authorId;
+                    rec.Duration = duration;
+                    rec.Cost = cost;
+                    rec.NumberOfPersons = numberOfPersons;
+                    rec.DifficultyID = difficultyId;
+                    rec.Difficulty = dif;
+                    rec.Picture = picture;
+                    rec.Ingredients = ingredients;
+                    rec.RecipeText = recipeText;
+
+                    //matrixCursor.addRow(new String[]{"value1", "value2"});
+                    matrixCursor.addRow(new Recept[]{rec});
+                } catch (Exception e) {
+                }
+            }
+
+        } else {
+            return null;
+        }
+        return matrixCursor;
+    }
+
 
     public static Recept getRecipeById(int id) {
         Recept newRec = new Recept();
@@ -352,6 +394,20 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("Picture", "" + _picture));
         params.add(new BasicNameValuePair("Ingredients", "" + _ingredients));
         params.add(new BasicNameValuePair("RecipeText", "" + _recipeText));
+        onlineData.create(params);
+    }
+    public static void createRecipe(Recept recept, String ingredients){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tableName", "ap_recipe"));
+        params.add(new BasicNameValuePair("Name", "" + recept.getName()));
+        params.add(new BasicNameValuePair("Author", "" + recept.getAuthorID()));
+        params.add(new BasicNameValuePair("Duration", "" + recept.getDuration()));
+        params.add(new BasicNameValuePair("Cost", "" + recept.getCost()));
+        params.add(new BasicNameValuePair("Persons", "" + recept.getNumberOfPersons()));
+        params.add(new BasicNameValuePair("Difficulty", "" + recept.getDifficultyID()));
+        params.add(new BasicNameValuePair("Picture", "" + recept.getPicture()));
+        params.add(new BasicNameValuePair("Ingredients", "" + ingredients));
+        params.add(new BasicNameValuePair("RecipeText", "" + recept.getRecipeText()));
         onlineData.create(params);
     }
 

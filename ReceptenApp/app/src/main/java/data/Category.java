@@ -87,7 +87,7 @@ public class Category implements Parcelable{
             for (int i = 0; i < categories.length(); i++) {
                 try {
                     JSONObject c = categories.getJSONObject(i);
-                    int id = c.getInt("ID") -1;
+                    int id = c.getInt("ID");
                     String name = c.getString("Name");
                     String picture = c.getString("Picture");
                     Category diff = new Category(id, picture, name);

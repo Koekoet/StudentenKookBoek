@@ -21,7 +21,8 @@ public class ImageConverter {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         _picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        picture = new String(Base64.encode(byteArray,0));
+        //picture = new String(Base64.encode(byteArray,0));
+        picture = Base64.encodeToString(byteArray,Base64.DEFAULT);
         return picture;
     }
 }

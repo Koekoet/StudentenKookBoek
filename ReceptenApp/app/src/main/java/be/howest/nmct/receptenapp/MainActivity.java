@@ -5,12 +5,16 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,18 +28,21 @@ import data.Category;
 import data.Ingredient;
 import data.Recept;
 import data.RecipeView;
-import fragments.FavoriteFragment;
+import data.RecipesByCategory;
 import fragments.ReceptBereidingFragment;
 import fragments.ReceptBoodschappenlijstjeFragment;
 import fragments.ReceptCategoriesFragment;
 import fragments.ReceptDetailFragment;
+import fragments.ReceptFavoriteFragment;
 import fragments.ReceptInfoFragment;
 import fragments.ReceptIngredientenFragment;
 import fragments.ReceptNavigationFragment;
 import fragments.ReceptReceptenFragment;
 
 public class MainActivity extends FragmentActivity
-        implements ReceptInfoFragment.onReceptInfoSelectedListener,
+        implements LoaderManager.LoaderCallbacks<Cursor>,
+        //Listeners
+        ReceptInfoFragment.onReceptInfoSelectedListener,
         ReceptIngredientenFragment.onReceptIngredientSelectedListener,
         ReceptBereidingFragment.onReceptBereidingSelectedListener,
         ReceptNavigationFragment.OnNavigationSelectedListener,
@@ -54,13 +61,12 @@ public class MainActivity extends FragmentActivity
     //globale vars here:
     private ArrayList<Category> arrCategories;
     private ArrayList<ArrayList<Recept>> arrRecipes;
+    private ArrayList<Recept> arrFavoriteRecipes;
 
     //Globale vars
     //  Boodschappenlijstje
     public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
     public static ArrayList<Category> ARRCATEGORIES = new ArrayList<Category>();
-    //tijdelijk
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +106,7 @@ public class MainActivity extends FragmentActivity
 
 
         if (savedInstanceState == null) {
+            //Test cursor loader
             LoadCategoriesTask task = new LoadCategoriesTask();
             task.execute();
         }
@@ -194,7 +201,7 @@ public class MainActivity extends FragmentActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
                 return true;
             case R.id.action_TestFavorite:
-                FavoriteFragment fragment1 = new FavoriteFragment();
+                ReceptFavoriteFragment fragment1 = new ReceptFavoriteFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, fragment1).addToBackStack(null).commit();
                 return true;
             case R.id.action_TestDiff:
@@ -236,8 +243,7 @@ public class MainActivity extends FragmentActivity
                 break;
 
             case 2: //Favorieten
-                FavoriteFragment fragment1 = new FavoriteFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, fragment1).addToBackStack(null).commit();
+                checkFavoritesData();
                 break;
         }
 
@@ -279,17 +285,77 @@ public class MainActivity extends FragmentActivity
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
+    //FAVORITES
+    private void checkFavoritesData() {
+        if(arrFavoriteRecipes == null){
+            //set favorites
+            LoadFavoritesTask task = new LoadFavoritesTask();
+            task.execute();
+
+        }else {
+            ShowFavorites();
+        }
+
+    }
+    private void ShowFavorites(){
+        ReceptFavoriteFragment favoriteFragment = new ReceptFavoriteFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(favoriteFragment.ARR_FAVORITE_RECIPES, arrFavoriteRecipes);
+        favoriteFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, favoriteFragment).addToBackStack(null).commit();
+    }
+    class LoadFavoritesTask extends AsyncTask<String, Void, ArrayList<Recept>> {
+        private ProgressDialog pDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+        @Override
+        protected ArrayList<Recept> doInBackground(String... params) {
+
+            ArrayList<Recept> recepts = new ArrayList<Recept>();
+            recepts.add(Recept.getRecipeById(10));
+            recepts.add(Recept.getRecipeById(15));
+            recepts.add(Recept.getRecipeById(12));
+            arrFavoriteRecipes = recepts;
+            return recepts;
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Recept> result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+            arrFavoriteRecipes = result;
+            ShowFavorites();
+        }
+    }
+
     //ON CATEGORIE SELECTED
     @Override
     public void OnCategorieSelectedListener(Category category) {
         //LOAD RECIPES
-        LoadRecipes(category);
+        showReceptsOfCategory(category);
 
 
     }
-    private void LoadRecipes(Category category){
-        checkRecipes(category);
+    private void showReceptsOfCategory(Category category){
+        if(arrRecipes == null || arrRecipes.get(category.getID()).isEmpty()){
+            Toast.makeText(MainActivity.this, "Load recipe", Toast.LENGTH_LONG);
+            //get recepis of selected categorie
+            LoadReceptsOfCategoryTask task = new LoadReceptsOfCategoryTask(category);
+            task.execute();
+        } else {
+            startReceptFragment(category);
+        }
 
+
+    }
+    private void startReceptFragment(Category category){
         ReceptReceptenFragment recFrag = new ReceptReceptenFragment();
         Bundle args = new Bundle();
         args.putParcelable(recFrag.RECIPE_VIEW, prepareRecipeView(category));
@@ -297,87 +363,44 @@ public class MainActivity extends FragmentActivity
         recFrag.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, recFrag).addToBackStack(null).commit();
     }
-    //TEMP
-    private void checkRecipes(Category category){
-
-        if(arrRecipes.isEmpty()){
-            Toast.makeText(MainActivity.this, "arr recipes empty", Toast.LENGTH_SHORT);
-        }
-
-
-        if(arrRecipes == null || arrRecipes.get(category.getID()).isEmpty()){
-            Toast.makeText(MainActivity.this, "Load recipe", Toast.LENGTH_LONG);
-            //get recepis of selected categorie
-            if(category.getID() == 0){
-                ArrayList<Recept> dessert = new ArrayList<Recept>();
-                //desserts
-                Recept rec5 = new Recept();
-                rec5.setName("Chocoladetaart");
-                rec5.setPicture("" + R.drawable.rec_chocoladetaart);
-
-                Recept rec6 = new Recept();
-                rec6.setName("Banana split");
-                rec6.setPicture("" + R.drawable.rec_bananasplit);
-
-                Recept rec7 = new Recept();
-                rec7.setName("Pudding!");
-                rec7.setPicture("" + R.drawable.rec_pudding);
-
-                Recept rec8 = new Recept();
-                rec8.setName("Fruittaart");
-                rec8.setPicture("" + R.drawable.rec_fruittaart);
-
-                dessert.add(rec5);
-                dessert.add(rec6);
-                dessert.add(rec7);
-                dessert.add(rec8);
-
-                arrRecipes.set(category.getID(), dessert);
-            } else if (category.getID() == 1){
-                ArrayList<Recept> vlees = new ArrayList<Recept>();
-
-                //VLEES
-                Recept rec0 = new Recept();
-                rec0.setName("Hamburger op oma's wijze");
-                rec0.setPicture("" + R.drawable.rec_hamburger);
-
-                Recept rec1 = new Recept();
-                rec1.setName("Steak met frietjes");
-                rec1.setPicture("" + R.drawable.rec_steakmetfrieten);
-
-                Recept rec2 = new Recept();
-                rec2.setName("Kip met rijst");
-                rec2.setPicture("" + R.drawable.rec_kipmetrijst);
-
-                vlees.add(rec0);
-                vlees.add(rec1);
-                vlees.add(rec2);
-
-                arrRecipes.set(category.getID(), vlees);
-            } else if(category.getID()== 2){
-                ArrayList<Recept> vis = new ArrayList<Recept>();
-                Recept rec3 = new Recept();
-                rec3.setName("Zalmrolletjes");
-                rec3.setPicture("" + R.drawable.rec_zalmrolletjes);
-
-                Recept rec4 = new Recept();
-                rec4.setName("Gebakken scampi's");
-                rec4.setPicture("" + R.drawable.rec_scampi);
-
-                vis.add(rec3);
-                vis.add(rec4);
-
-                arrRecipes.set(category.getID(), vis);
-            }
-
-        }
-    }
     private RecipeView prepareRecipeView(Category category){
         RecipeView data = new RecipeView();
         data.setCategory(category);
         data.setArrRecipes(arrRecipes.get(category.getID()));
         return data;
     }
+    class LoadReceptsOfCategoryTask extends AsyncTask<String, Void, ArrayList<Recept>> {
+        private ProgressDialog pDialog;
+        private Category category;
+
+        public LoadReceptsOfCategoryTask(Category category){
+            this.category = category;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+        @Override
+        protected ArrayList<Recept> doInBackground(String... params) {
+            RecipesByCategory receptsByCat = RecipesByCategory.getRecipeByCatId(this.category.getID());
+            return receptsByCat.Recipes;
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Recept> result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+            arrRecipes.set(category.getID(),result);
+            startReceptFragment(category);
+        }
+    }
+
 
     @Override
     public void OnReceptenSelectedListener(Recept recept) {
@@ -422,7 +445,7 @@ public class MainActivity extends FragmentActivity
             }
 
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Press back again to leave", Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
 
@@ -434,6 +457,51 @@ public class MainActivity extends FragmentActivity
         }
 
     }
+
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            // This is called when a new Loader needs to be created.  This
+            // sample only has one Loader, so we don't care about the ID.
+            // First, pick the base URI to use depending on whether we are
+            // currently filtering.
+            Uri baseUri;
+            if(id == 1){
+                //Uri.withAppendedPath()
+
+            }
+            /*
+            if (mCurFilter != null) {
+                baseUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI,
+                        Uri.encode(mCurFilter));
+            } else {
+                baseUri = ContactsContract.Contacts.CONTENT_URI;
+            }
+
+            // Now create and return a CursorLoader that will take care of
+            // creating a Cursor for the data being displayed.
+            String select = "((" + ContactsContract.Contacts.DISPLAY_NAME + " NOTNULL) AND ("
+                    + ContactsContract.Contacts.HAS_PHONE_NUMBER + "=1) AND ("
+                    + ContactsContract.Contacts.DISPLAY_NAME + " != '' ))";
+            return new CursorLoader(getActivity(), baseUri,
+                    CONTACTS_SUMMARY_PROJECTION, select, null,
+                    ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+            */
+            return null;
+        }
+
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            // Swap the new cursor in.  (The framework will take care of closing the
+            // old cursor once we return.)
+
+            //mAdapter.swapCursor(data);
+        }
+
+        public void onLoaderReset(Loader<Cursor> loader) {
+            // This is called when the last Cursor provided to onLoadFinished()
+            // above is about to be closed.  We need to make sure we are no
+            // longer using it.
+
+            //mAdapter.swapCursor(null);
+        }
 
 
 }

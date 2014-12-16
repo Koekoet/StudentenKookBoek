@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class RecipesByCategory {
     //region properties
-    private int ID;
-    private int CategoryId;
-    private Category Category;
-    private ArrayList<Recept> Recipes;
+    public int ID;
+    public int CategoryId;
+    public Category Category;
+    public ArrayList<Recept> Recipes;
 
     //endregion
     //region constructors
