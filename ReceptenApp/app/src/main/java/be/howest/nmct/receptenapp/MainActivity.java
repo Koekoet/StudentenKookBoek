@@ -48,7 +48,7 @@ import fragments.ReceptNavigationFragment;
 import fragments.ReceptReceptenFragment;
 
 public class MainActivity extends FragmentActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>,
+        implements
         //Listeners
         ReceptInfoFragment.onReceptInfoSelectedListener,
         ReceptIngredientenFragment.onReceptIngredientSelectedListener,
@@ -78,14 +78,9 @@ public class MainActivity extends FragmentActivity
     //  Boodschappenlijstje
     public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
     public static ArrayList<Category> ARRCATEGORIES = new ArrayList<Category>();
-<<<<<<< HEAD
-=======
-
     //Create Recipe
     private Recept recCreateRecipe;
     //tijdelijk
-
->>>>>>> a0a22b82b204e587c4d8e86119bf71663d749005
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -476,50 +471,7 @@ public class MainActivity extends FragmentActivity
 
     }
 
-        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            // This is called when a new Loader needs to be created.  This
-            // sample only has one Loader, so we don't care about the ID.
-            // First, pick the base URI to use depending on whether we are
-            // currently filtering.
-            Uri baseUri;
-            if(id == 1){
-                //Uri.withAppendedPath()
 
-            }
-            /*
-            if (mCurFilter != null) {
-                baseUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI,
-                        Uri.encode(mCurFilter));
-            } else {
-                baseUri = ContactsContract.Contacts.CONTENT_URI;
-            }
-
-            // Now create and return a CursorLoader that will take care of
-            // creating a Cursor for the data being displayed.
-            String select = "((" + ContactsContract.Contacts.DISPLAY_NAME + " NOTNULL) AND ("
-                    + ContactsContract.Contacts.HAS_PHONE_NUMBER + "=1) AND ("
-                    + ContactsContract.Contacts.DISPLAY_NAME + " != '' ))";
-            return new CursorLoader(getActivity(), baseUri,
-                    CONTACTS_SUMMARY_PROJECTION, select, null,
-                    ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
-            */
-            return null;
-        }
-
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            // Swap the new cursor in.  (The framework will take care of closing the
-            // old cursor once we return.)
-
-            //mAdapter.swapCursor(data);
-        }
-
-        public void onLoaderReset(Loader<Cursor> loader) {
-            // This is called when the last Cursor provided to onLoadFinished()
-            // above is about to be closed.  We need to make sure we are no
-            // longer using it.
-
-            //mAdapter.swapCursor(null);
-        }
 
 
     @Override

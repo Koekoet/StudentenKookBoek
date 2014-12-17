@@ -1,25 +1,19 @@
 package fragments;
 
-<<<<<<< HEAD
-=======
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.DialogInterface;
->>>>>>> a0a22b82b204e587c4d8e86119bf71663d749005
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
-<<<<<<< HEAD
-=======
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
->>>>>>> a0a22b82b204e587c4d8e86119bf71663d749005
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;

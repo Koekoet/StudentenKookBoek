@@ -1,6 +1,7 @@
 package fragments;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -49,30 +50,27 @@ public class ReceptInfoFragment extends Fragment {
         TextView tvUploadedRecipe = (TextView) v.findViewById(R.id.tvUploadedRecipe);
         ImageView ivImageRecipe = (ImageView) v.findViewById(R.id.ivPictureRecipe);
 
-
         //Set text
         riName.setText(selectedRecipe.getName());
-<<<<<<< HEAD
-        tvDuration.setText(selectedRecipe.getDuration()+" min");
-        tvCostRecipe.setText(selectedRecipe.getCost()+" €");
-        tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
+        tvDuration.setText(selectedRecipe.getDuration() + " min");
+        tvCostRecipe.setText(selectedRecipe.getCost() + " €");
+        tvNumPersons.setText("" + selectedRecipe.getNumberOfPersons());
         tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
-        if(selectedRecipe.getPicture() != null && !selectedRecipe.getPicture().isEmpty()){
-           ivImageRecipe.setImageBitmap(ImageConverter.StringToBitmap(selectedRecipe.getPicture()));
-=======
-        tvDuration.setText(selectedRecipe.getDuration()+"min");
-        tvCostRecipe.setText(selectedRecipe.getCost());
-        tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
-        tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
-        if(selectedRecipe.getPicture() != null){
-            Bitmap bm = data.helpers.ImageConverter.StringToBitmap(selectedRecipe.getPicture());
-            ivImageRecipe.setImageBitmap(bm);
->>>>>>> a0a22b82b204e587c4d8e86119bf71663d749005
-        } else {
-            ivImageRecipe.setImageResource(R.drawable.ic_noimage);
-        }
+        if (selectedRecipe.getPicture() != null && !selectedRecipe.getPicture().isEmpty()) {
+            ivImageRecipe.setImageBitmap(ImageConverter.StringToBitmap(selectedRecipe.getPicture()));
+            tvDuration.setText(selectedRecipe.getDuration() + "min");
+            tvCostRecipe.setText(selectedRecipe.getCost());
+            tvNumPersons.setText("" + selectedRecipe.getNumberOfPersons());
+            tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
+            if (selectedRecipe.getPicture() != null) {
+                Bitmap bm = data.helpers.ImageConverter.StringToBitmap(selectedRecipe.getPicture());
+                ivImageRecipe.setImageBitmap(bm);
+            } else {
+                ivImageRecipe.setImageResource(R.drawable.ic_noimage);
+            }
 
-        return v;
+            return v;
+        }
     }
 
     @Override
@@ -82,16 +80,5 @@ public class ReceptInfoFragment extends Fragment {
         selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
     }
 
-    /*public byte[] ConvertImageToByteArray(Bitmap bitmap){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
-    }
-
-    public Bitmap ConvertByteArrayToImage(byte[] byteArray){
-        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        return bitmap;
-    }*/
 
 }

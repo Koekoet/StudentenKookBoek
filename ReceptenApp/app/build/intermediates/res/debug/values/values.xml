@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/array.xml -->
+    <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/array.xml -->
     <eat-comment/>
     <string-array name="MenuBasic">
         <item>Bladeren</item>
@@ -17,11 +17,11 @@
         <item>Profiel bewerken</item>
         <item>Uitloggen</item>
     </string-array>
-    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="AddBasket">addBasket</string>
     <string name="Ingredients">Ingrediënten:</string>
@@ -61,7 +61,7 @@
     <string name="txtUwMening">Uw mening:</string>
     <string name="txtUwMeningHint">Vul mening in...</string>
     <string name="txtUwScore">Uw punten:</string>
-    <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/Mattias/Dropbox/School/3NMCT/App%20Development%20for%20Android/opdracht/project/ReceptenApp/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
