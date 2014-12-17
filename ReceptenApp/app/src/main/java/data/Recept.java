@@ -30,6 +30,7 @@ public class Recept implements Parcelable {
     private String Picture;
     private ArrayList<Ingredient> Ingredients;
     private String RecipeText;
+    private ArrayList<Category> Categories;
 
 
     private Recept(Parcel in) {
@@ -45,6 +46,7 @@ public class Recept implements Parcelable {
         setDifficulty((data.Difficulty) in.readParcelable(data.Difficulty.class.getClassLoader()));
         setPicture(in.readString());
         setRecipeText(in.readString());
+        setCategories(in.readArrayList(Category.class.getClassLoader()));
     }
 
     public Recept() {
@@ -69,6 +71,7 @@ public class Recept implements Parcelable {
         out.writeParcelable(getDifficulty(), flags);
         out.writeString(getPicture());
         out.writeString(getRecipeText());
+        out.writeList(getCategories());
     }
 
     public static final Creator<Recept> CREATOR = new Creator<Recept>() {
@@ -178,6 +181,14 @@ public class Recept implements Parcelable {
 
     public void setDifficulty(Difficulty difficulty) {
         Difficulty = difficulty;
+    }
+
+    public ArrayList<Category> getCategories() {
+        return Categories;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        Categories = categories;
     }
     //endregion
 

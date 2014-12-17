@@ -43,19 +43,12 @@ public class ReceptCreateIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-
-        new GetAllIngredients.execute();
-
-         */
-
-
         Bundle args = getArguments();
         recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
         if(recCreateRecipe.getIngredients() != null){
             selectedIngredients = recCreateRecipe.getIngredients();
         }
-
+        allIngredients = MainActivity.arrIngredients;
     }
 
     @Override
@@ -83,7 +76,9 @@ public class ReceptCreateIngredientFragment extends Fragment {
         mAdapter = new IngredientAdapter();
         lvIngredients.setAdapter(mAdapter);
 
-        //-----Temp data
+
+
+        /*//-----Temp data
         Ingredient patat = new Ingredient(0,"Aardappelen");
         Ingredient gehakt = new Ingredient(1,"Gehakt");
         Ingredient bloemkool = new Ingredient(2,"Bloemkool");
@@ -95,7 +90,7 @@ public class ReceptCreateIngredientFragment extends Fragment {
         allIngredients.add(bloemkool);
         allIngredients.add(boter);
         allIngredients.add(water);
-        //-----End Temp data
+        //-----End Temp data*/
 
         lvIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -154,22 +149,6 @@ public class ReceptCreateIngredientFragment extends Fragment {
             }
 
             return row;
-        }
-    }
-    class GetAllIngredients extends AsyncTask<Void,Void,ArrayList<Ingredient>>{
-
-        @Override
-        protected ArrayList<Ingredient> doInBackground(Void... voids) {
-            ArrayList<Ingredient> allIngredients = Ingredient.getAllIngredients();
-            return allIngredients;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Ingredient> ingredients) {
-            super.onPostExecute(ingredients);
-            allIngredients = ingredients;
-            mAdapter = new IngredientAdapter();
-            lvIngredients.setAdapter(mAdapter);
         }
     }
 }

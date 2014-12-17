@@ -132,11 +132,7 @@ public class ReceptFavoriteFragment extends ListFragment {
     public class FavoriteAdapter extends ArrayAdapter<Recept> {
 
         public FavoriteAdapter(){
-<<<<<<< HEAD:ReceptenApp/app/src/main/java/fragments/ReceptFavoriteFragment.java
-            super(getActivity(), R.layout.row_favorites, R.id.favoriteRecipeName, arrFavoriteRecipes);
-=======
-            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, favorietenLijst);
->>>>>>> a0a22b82b204e587c4d8e86119bf71663d749005:ReceptenApp/app/src/main/java/fragments/FavoriteFragment.java
+            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, arrFavoriteRecipes);
         }
 
         @Override
