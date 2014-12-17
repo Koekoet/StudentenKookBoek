@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/ivPictureRecipe"
-        android:src="@drawable/rec_hamburger"
+        android:src="@drawable/cat_vleesgerechten"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#F9F9F9"
@@ -28,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:textIsSelectable="false"
         android:singleLine="false" />
 
@@ -38,9 +38,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/riDurationRecipe"
         android:id="@+id/riDurationRecipe"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="27dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/riNameRecipe"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <TextView
@@ -49,7 +50,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/riCostRecipe"
         android:id="@+id/riCostRecipe"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_below="@+id/riDurationRecipe"
         android:layout_alignLeft="@+id/riDurationRecipe"
         android:layout_alignStart="@+id/riDurationRecipe" />
@@ -59,7 +60,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/riNumRecipe"
         android:id="@+id/riNumRecipe"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_below="@+id/riCostRecipe"
         android:layout_alignLeft="@+id/riCostRecipe"
         android:layout_alignStart="@+id/riCostRecipe" />
@@ -69,7 +70,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/riUploadedRecipe"
         android:id="@+id/riUploadedRecipe"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_below="@+id/riNumRecipe"
         android:layout_alignLeft="@+id/riNumRecipe"
         android:layout_alignStart="@+id/riNumRecipe" />

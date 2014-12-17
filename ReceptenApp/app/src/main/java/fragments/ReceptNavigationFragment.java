@@ -26,7 +26,6 @@ public class ReceptNavigationFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-
         ShowNavigation();
     }
 

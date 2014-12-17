@@ -2,6 +2,9 @@ package fragments;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +14,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
@@ -29,22 +35,16 @@ public class ReceptDetailFragment extends Fragment{
 
     private FragmentTabHost mTabHost;
     public static Recept selectedRecipe = null;
-    List<Fragment> tabFragmentList = new ArrayList();
-    android.support.v4.app.Fragment mContent;
-    private ShareActionProvider mShareActionProvider;
-    private Intent mShareIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         Bundle args = getArguments();
         selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
 
-        mShareIntent = new Intent();
-        mShareIntent.setAction(Intent.ACTION_SEND);
-        mShareIntent.setType("text/plain");
-        mShareIntent.putExtra(Intent.EXTRA_TEXT, "Ik vond een leuk receptje genaamd: " + selectedRecipe.getName() + "!");
+
 
     }
 
@@ -63,5 +63,64 @@ public class ReceptDetailFragment extends Fragment{
         mTabHost.addTab(mTabHost.newTabSpec("receptBereiding").setIndicator("Bereiding"),ReceptBereidingFragment.class, bundle);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.recept_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.menu_item_share:
+                ShareIntent();
+                return true;
+            case R.id.menu_item_rate:
+                View ratingView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_rating, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setView(ratingView);
+                builder.setTitle(selectedRecipe.getName());
+                final EditText review = (EditText) ratingView.findViewById(R.id.review);
+                final RatingBar rating = (RatingBar) ratingView.findViewById(R.id.ratingBar);
+
+                builder.setCancelable(true)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //DOE IETS MET DE WAARDE
+                                float selectedRating = rating.getRating();
+                                String selectedReview = "" + review.getText();
+
+                                //OPSLAAN VAN RATING.... TIJS (*ZUCHT*);
+
+                            }
+                        }).setNegativeButton("Annuleer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+    private void ShareIntent() {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Ik vond een leuk receptje op de receptenapp! Bekijk het hier: www.tijs-dl.be");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, selectedRecipe.getName());
+        shareIntent.setType("text/plain");
+        startActivity(shareIntent);
     }
 }

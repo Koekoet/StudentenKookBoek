@@ -7,15 +7,16 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_margin="5dp"
         android:id="@+id/CategorieImage"
         android:src="@drawable/cat_vleesgerechten"
         android:scaleType="centerCrop"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
         android:layout_alignParentTop="true"
+        android:contentDescription="categorieImage"
         android:layout_marginTop="10dp"
-        android:contentDescription="categorieImage" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,36 +1,48 @@
 package data;
 
+import android.content.Context;
+
+import java.util.ArrayList;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tijs1 on 9-12-2014.
+ * Created by Toine on 3/12/2014.
  */
 public class Rating {
     private int ID;
     private int AccountId;
-    //private Account Account;
     private int RecipeId;
     private Recept Recipe;
     private double Rating;
     private String Review;
 
-    public Rating() {
+
+    public static ArrayList<Rating> readRatingsByRecipeID(Context c, int recipeID) {
+        ArrayList<Rating> ratings = new ArrayList<Rating>();
+
+        //Volgende regel moet uit comments worden gehaald...
+        //Recept recept = Recept.getRecipeByID(recipeID);
+
+        //ratings ophalen...
+
+
+        return ratings;
+
     }
+    public Rating(){}
 
     public Rating(int ID, int accountId, int recipeId, Recept recipe, double rating, String review) {
-        this.ID = ID;
-        this.AccountId = accountId;
-        this.RecipeId = recipeId;
-        this.Recipe = recipe;
-        this.Rating = rating;
-        this.Review = review;
+        this.setID(ID);
+        this.setAccountId(accountId);
+        this.setRecipeId(recipeId);
+        this.setRecipe(recipe);
+        this.setRating(rating);
+        this.setReview(review);
     }
 
     public static ArrayList<Rating> getAllRatings() {
@@ -118,5 +130,53 @@ public class Rating {
         params.add(new BasicNameValuePair("tableName", "ap_rating"));
         params.add(new BasicNameValuePair("id", "" + _id));
         data.helpers.onlineData.delete(params);
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getAccountId() {
+        return AccountId;
+    }
+
+    public void setAccountId(int accountId) {
+        AccountId = accountId;
+    }
+
+    public int getRecipeId() {
+        return RecipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        RecipeId = recipeId;
+    }
+
+    public Recept getRecipe() {
+        return Recipe;
+    }
+
+    public void setRecipe(Recept recipe) {
+        Recipe = recipe;
+    }
+
+    public double getRating() {
+        return Rating;
+    }
+
+    public void setRating(double rating) {
+        Rating = rating;
+    }
+
+    public String getReview() {
+        return Review;
+    }
+
+    public void setReview(String review) {
+        Review = review;
     }
 }

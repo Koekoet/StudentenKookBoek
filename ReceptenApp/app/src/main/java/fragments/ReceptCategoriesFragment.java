@@ -43,7 +43,7 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getActivity().setTitle("Categorieën");
         Bundle bundle = this.getArguments();
         arrCategories = bundle.getParcelableArrayList(ARR_CATEGORIE);
 
@@ -52,8 +52,8 @@ public class ReceptCategoriesFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_categorie, container, false);
-        ((TextView) view.findViewById(R.id.Title)).setText("");
-        txvTitle = (TextView) view.findViewById(R.id.Title);
+        /*((TextView) view.findViewById(R.id.Title)).setText("");
+        txvTitle = (TextView) view.findViewById(R.id.Title);*/
         categorieAdapter = new CategorieAdapter();
         setListAdapter(categorieAdapter);
         return view;
@@ -62,6 +62,7 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+        getActivity().setTitle("Categorieën");
         //ShowCategoriesTask task = new ShowCategoriesTask();
         //task.execute();
 

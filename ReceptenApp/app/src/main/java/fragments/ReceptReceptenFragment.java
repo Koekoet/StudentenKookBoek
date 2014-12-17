@@ -53,24 +53,20 @@ public class ReceptReceptenFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle(category.getName());
         View view =  inflater.inflate(R.layout.fragment_recepten, container, false);
-        ((TextView) view.findViewById(R.id.Title)).setText("");
+        /*((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
-        return view;
+        */return view;
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        txvTitle.setText("Recepten (" + category.getName() + "))");
         //ShowReceptenTask task = new ShowReceptenTask();
         //task.execute();
         receptenAdapter = new ReceptenAdapter();
         setListAdapter(receptenAdapter);
-    }
-
-
-
-
+    }/*
     //TEMP
     private ArrayList<ArrayList<Recept>> getRecepten(){
         ArrayList<ArrayList<Recept>> allRecepis = new ArrayList<ArrayList<Recept>>();
@@ -137,7 +133,7 @@ public class ReceptReceptenFragment extends ListFragment {
 
         return allRecepis;
     }
-
+*/
     //1. Asynctask
     private ProgressDialog pDialog;
     class ShowReceptenTask extends AsyncTask<String, Void, ArrayList<Recept>> {

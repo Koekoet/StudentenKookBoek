@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/recept_image">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/favoriteRecipe"
-        android:src="@drawable/ic_action_favorite"
+        android:layout_height="150dp"
+        android:id="@+id/receptImage"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/cat_vleesgerechten"
+        android:cropToPadding="false"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="RecipeName"
-        android:id="@+id/favoriteRecipeName"
-        android:layout_alignTop="@+id/favoriteRecipe"
-        android:layout_toRightOf="@+id/favoriteRecipe"
-        android:layout_toEndOf="@+id/favoriteRecipe" />
-
+        android:layout_height="30dp"
+        android:background="#c82c3e50"
+        android:textColor="#ffffff"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Hamburgers"
+        android:id="@+id/recept_naam"
+        android:layout_alignBottom="@+id/receptImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

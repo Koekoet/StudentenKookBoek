@@ -91,7 +91,7 @@ public class ReceptIngredientenFragment extends ListFragment {
         }
 
         Bundle args = getArguments();
-        selectedRecipe = new Recept();//args.getParcelable("MYSELECTEDRECIPE");
+        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
 
 
 
@@ -99,7 +99,7 @@ public class ReceptIngredientenFragment extends ListFragment {
         setListAdapter(mAdapter);
     }
 
-    class IngredientAdapter extends ArrayAdapter<Ingredient>{
+    public class IngredientAdapter extends ArrayAdapter<Ingredient>{
         public IngredientAdapter(){
             super(getActivity(),R.layout.row_ingredients, R.id.tv_ingredient_name, selectedRecipe.getIngredients());
         }

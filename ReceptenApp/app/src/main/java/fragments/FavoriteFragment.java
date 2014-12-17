@@ -32,6 +32,7 @@ public class FavoriteFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Mijn favorieten");
         setHasOptionsMenu(true);
 
         //Hier lezen we de favorieten in
@@ -60,10 +61,10 @@ public class FavoriteFragment extends ListFragment {
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_TestRecepi:
+            /*case R.id.action_TestRecepi:
                 return false;
             case R.id.action_TestFavorite:
-                return false;
+                return false;*/
             case R.id.action_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Alles verwijderen");
@@ -140,7 +141,7 @@ public class FavoriteFragment extends ListFragment {
     public class FavoriteAdapter extends ArrayAdapter<Recept> {
 
         public FavoriteAdapter(){
-            super(getActivity(), R.layout.row_favorites, R.id.favoriteRecipeName, favorietenLijst);
+            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, favorietenLijst);
         }
 
         @Override
@@ -148,9 +149,18 @@ public class FavoriteFragment extends ListFragment {
             Recept recept = favorietenLijst.get(position);
             View row = super.getView(position, convertView, parent);
 
-            ImageView imageView = (ImageView) row.findViewById(R.id.favoriteLike);
+            ImageView imageView = (ImageView) row.findViewById(R.id.receptImage);
+            int img;
+            if(recept.getPicture() != null){
+                img = Integer.parseInt(recept.getPicture());
+            } else {
+                img = R.drawable.ic_noimage;
+            }
+            imageView.setImageResource(img);
 
-            TextView textView = (TextView) row.findViewById(R.id.favoriteRecipeName);
+
+
+            TextView textView = (TextView) row.findViewById(R.id.recept_naam);
             textView.setText(recept.getName());
 
             return row;
