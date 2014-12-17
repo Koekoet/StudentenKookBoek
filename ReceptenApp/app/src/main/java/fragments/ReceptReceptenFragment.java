@@ -20,11 +20,14 @@ import be.howest.nmct.receptenapp.R;
 import data.Category;
 import data.Recept;
 import data.RecipeView;
+import data.helpers.ImageConverter;
 
 /**
  * Created by Mattias on 17/11/2014.
  */
-public class ReceptReceptenFragment extends ListFragment {
+public class ReceptReceptenFragment extends ListFragment
+       {
+
     final Context context = getActivity();
     ReceptenAdapter receptenAdapter;
     private TextView txvTitle;
@@ -62,6 +65,7 @@ public class ReceptReceptenFragment extends ListFragment {
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+        //txvTitle.setText(category.getName());
         //ShowReceptenTask task = new ShowReceptenTask();
         //task.execute();
         receptenAdapter = new ReceptenAdapter();
@@ -184,8 +188,7 @@ public class ReceptReceptenFragment extends ListFragment {
             naam.setText(rec.getName());
 
             ImageView image = (ImageView) row.findViewById(R.id.receptImage);
-            int img = Integer.parseInt(rec.getPicture());
-            image.setImageResource(img);
+            image.setImageBitmap(ImageConverter.StringToBitmap(rec.getPicture()));
 
             return row;
         }
@@ -214,6 +217,7 @@ public class ReceptReceptenFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         mCallback.OnReceptenSelectedListener(arrRecipes.get(position));
     }
+
 
 
 }

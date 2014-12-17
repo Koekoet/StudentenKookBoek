@@ -2,26 +2,17 @@ package fragments;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-
 import be.howest.nmct.receptenapp.R;
-import data.Ingredient;
 import data.Recept;
+import data.helpers.ImageConverter;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -62,8 +53,15 @@ public class ReceptInfoFragment extends Fragment {
 
         //Set text
         riName.setText(selectedRecipe.getName());
-        tvDuration.setText(selectedRecipe.getDuration()+"min");
-        tvCostRecipe.setText(selectedRecipe.getCost());
+        tvDuration.setText(selectedRecipe.getDuration()+" min");
+        tvCostRecipe.setText(selectedRecipe.getCost()+" €");
+        tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
+        tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
+        if(selectedRecipe.getPicture() != null && !selectedRecipe.getPicture().isEmpty()) {
+            ivImageRecipe.setImageBitmap(ImageConverter.StringToBitmap(selectedRecipe.getPicture()));
+        }
+        tvDuration.setText(selectedRecipe.getDuration()+" min");
+        tvCostRecipe.setText(selectedRecipe.getCost()+" €");
         tvNumPersons.setText(""+selectedRecipe.getNumberOfPersons());
         tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
         if(selectedRecipe.getPicture() != null){

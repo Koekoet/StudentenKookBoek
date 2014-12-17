@@ -37,7 +37,7 @@ public class onlineData {
                 //String test = "result";
                 String name = iterator.next();
                 if (name.toString().equals(String.valueOf("result"))) {
-                    array =  jsonObj.getJSONArray("result");
+                    array = jsonObj.getJSONArray("result");
                 } else if (name.toString().equals(String.valueOf("error"))) {
                     String error = jsonObj.getString("error");
                     Log.d("Error: ", error);
@@ -55,14 +55,14 @@ public class onlineData {
         return array;
     }
 
-    public static JSONArray selectDataById(String tableName, int Id){
+    public static JSONArray selectDataById(String tableName, int Id) {
         JSONArray array = new JSONArray();
         // Creating service handler class instance
         ServiceHandler sh = new ServiceHandler();
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", tableName));
-        params.add(new BasicNameValuePair("id", ""+Id));
+        params.add(new BasicNameValuePair("id", "" + Id));
         // Making a request to url and getting response
         String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/index.php", ServiceHandler.POST, params);
 
@@ -75,7 +75,7 @@ public class onlineData {
                 //String test = "result";
                 String name = iterator.next();
                 if (name.toString().equals(String.valueOf("result"))) {
-                    array =  jsonObj.getJSONArray("result");
+                    array = jsonObj.getJSONArray("result");
                 } else if (name.toString().equals(String.valueOf("error"))) {
                     String error = jsonObj.getString("error");
                     Log.d("Error: ", error);
@@ -93,7 +93,8 @@ public class onlineData {
         return array;
     }
 
-    public static void create(List<NameValuePair> params){
+    public static int create(List<NameValuePair> params) {
+        int id = 0;
         ServiceHandler sh = new ServiceHandler();
         String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/create.php", ServiceHandler.POST, params);
 
@@ -110,15 +111,19 @@ public class onlineData {
                 } else if (name.toString().equals(String.valueOf("error"))) {
                     String error = jsonObj.getString("error");
                     Log.d("Error: ", error);
+                } else if (name.toString().equals(String.valueOf("data"))) {
+                    String data = jsonObj.getString("data");
+                    Log.d("Data: ", data);
                 }
             } catch (JSONException e) {
             }
         } else {
             Log.e("ServiceHandler", "Couldn't get any data from the url");
         }
+        return id;
     }
 
-    public static void delete(List<NameValuePair> params){
+    public static void delete(List<NameValuePair> params) {
         ServiceHandler sh = new ServiceHandler();
         String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/delete.php", ServiceHandler.POST, params);
 
@@ -150,7 +155,7 @@ public class onlineData {
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", tableName));
-        params.add(new BasicNameValuePair("catId", ""+catId));
+        params.add(new BasicNameValuePair("catId", "" + catId));
         // Making a request to url and getting response
         String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/specialFunctions.php", ServiceHandler.POST, params);
 
@@ -163,7 +168,7 @@ public class onlineData {
                 //String test = "result";
                 String name = iterator.next();
                 if (name.toString().equals(String.valueOf("result"))) {
-                    array =  jsonObj.getJSONArray("result");
+                    array = jsonObj.getJSONArray("result");
                 } else if (name.toString().equals(String.valueOf("error"))) {
                     String error = jsonObj.getString("error");
                     Log.d("Error: ", error);
@@ -181,14 +186,14 @@ public class onlineData {
         return array;
     }
 
-    public static JSONArray selectRatingsByRecipeId(String tableName, int catId){
+    public static JSONArray selectRatingsByRecipeId(String tableName, int catId) {
         JSONArray array = new JSONArray();
         // Creating service handler class instance
         ServiceHandler sh = new ServiceHandler();
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", tableName));
-        params.add(new BasicNameValuePair("recipeId", ""+catId));
+        params.add(new BasicNameValuePair("recipeId", "" + catId));
         // Making a request to url and getting response
         String jsonStr = sh.makeServiceCall("http://student.howest.be/tijs.de.lameillieu1/AndroidRecipeApp/specialFunctions.php", ServiceHandler.POST, params);
 
@@ -201,7 +206,7 @@ public class onlineData {
                 //String test = "result";
                 String name = iterator.next();
                 if (name.toString().equals(String.valueOf("result"))) {
-                    array =  jsonObj.getJSONArray("result");
+                    array = jsonObj.getJSONArray("result");
                 } else if (name.toString().equals(String.valueOf("error"))) {
                     String error = jsonObj.getString("error");
                     Log.d("Error: ", error);

@@ -25,9 +25,13 @@ import data.helpers.SwipeDismissListViewTouchListener;
 /**
  * Created by Toine on 25/11/2014.
  */
-public class FavoriteFragment extends ListFragment {
-    private ArrayList<Recept> favorietenLijst;
+public class ReceptFavoriteFragment extends ListFragment {
+    private ArrayList<Recept> arrFavoriteRecipes;
     private FavoriteAdapter mAdapter;
+
+    //GLOBAL
+    public static final String ARR_FAVORITE_RECIPES = "";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,19 +39,8 @@ public class FavoriteFragment extends ListFragment {
         getActivity().setTitle("Mijn favorieten");
         setHasOptionsMenu(true);
 
-        //Hier lezen we de favorieten in
-        //---TEST
-        favorietenLijst = new ArrayList<Recept>();
-        favorietenLijst.add(new Recept());
-        favorietenLijst.add(new Recept());
-        favorietenLijst.add(new Recept());
-        favorietenLijst.add(new Recept());
-        favorietenLijst.get(0).setName("Name1");
-        favorietenLijst.get(1).setName("Name2");
-        favorietenLijst.get(2).setName("Name3");
-        favorietenLijst.get(3).setName("Name4");
-        //---TEST FINISHED
-
+        Bundle bundle = this.getArguments();
+        arrFavoriteRecipes = bundle.getParcelableArrayList(ARR_FAVORITE_RECIPES);
     }
 
     @Override
@@ -124,9 +117,8 @@ public class FavoriteFragment extends ListFragment {
 
                 ReceptDetailFragment fragment = new ReceptDetailFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("MYSELECTEDRECIPE", favorietenLijst.get(i));
+                bundle.putParcelable("MYSELECTEDRECIPE", arrFavoriteRecipes.get(i));
                 fragment.setArguments(bundle);
-
 
                 getFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
             }
@@ -141,12 +133,12 @@ public class FavoriteFragment extends ListFragment {
     public class FavoriteAdapter extends ArrayAdapter<Recept> {
 
         public FavoriteAdapter(){
-            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, favorietenLijst);
+            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, arrFavoriteRecipes);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Recept recept = favorietenLijst.get(position);
+            Recept recept = arrFavoriteRecipes.get(position);
             View row = super.getView(position, convertView, parent);
 
             ImageView imageView = (ImageView) row.findViewById(R.id.receptImage);
@@ -167,7 +159,7 @@ public class FavoriteFragment extends ListFragment {
         }
 
         public void clearAdapter(){
-            favorietenLijst.clear();
+            arrFavoriteRecipes.clear();
             notifyDataSetChanged();
         }
         public void NotifyAdapter(){

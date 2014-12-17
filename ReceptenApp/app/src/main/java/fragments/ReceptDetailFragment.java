@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +60,8 @@ public class ReceptDetailFragment extends Fragment{
         mTabHost.addTab(mTabHost.newTabSpec("receptInfo").setIndicator("Info"),ReceptInfoFragment.class, bundle);
         mTabHost.addTab(mTabHost.newTabSpec("receptIngredienten").setIndicator("Ingredienten"),ReceptIngredientenFragment.class, bundle);
         mTabHost.addTab(mTabHost.newTabSpec("receptBereiding").setIndicator("Bereiding"),ReceptBereidingFragment.class, bundle);
+
+
 
         return view;
     }
