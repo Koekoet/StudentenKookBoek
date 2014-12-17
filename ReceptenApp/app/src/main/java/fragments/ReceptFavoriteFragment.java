@@ -53,10 +53,10 @@ public class ReceptFavoriteFragment extends ListFragment {
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_TestRecepi:
+            /*case R.id.action_TestRecepi:
                 return false;
             case R.id.action_TestFavorite:
-                return false;
+                return false;*/
             case R.id.action_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Alles verwijderen");
@@ -132,7 +132,11 @@ public class ReceptFavoriteFragment extends ListFragment {
     public class FavoriteAdapter extends ArrayAdapter<Recept> {
 
         public FavoriteAdapter(){
+<<<<<<< HEAD:ReceptenApp/app/src/main/java/fragments/ReceptFavoriteFragment.java
             super(getActivity(), R.layout.row_favorites, R.id.favoriteRecipeName, arrFavoriteRecipes);
+=======
+            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, favorietenLijst);
+>>>>>>> a0a22b82b204e587c4d8e86119bf71663d749005:ReceptenApp/app/src/main/java/fragments/FavoriteFragment.java
         }
 
         @Override
@@ -140,9 +144,18 @@ public class ReceptFavoriteFragment extends ListFragment {
             Recept recept = arrFavoriteRecipes.get(position);
             View row = super.getView(position, convertView, parent);
 
-            ImageView imageView = (ImageView) row.findViewById(R.id.favoriteLike);
+            ImageView imageView = (ImageView) row.findViewById(R.id.receptImage);
+            int img;
+            if(recept.getPicture() != null){
+                img = Integer.parseInt(recept.getPicture());
+            } else {
+                img = R.drawable.ic_noimage;
+            }
+            imageView.setImageResource(img);
 
-            TextView textView = (TextView) row.findViewById(R.id.favoriteRecipeName);
+
+
+            TextView textView = (TextView) row.findViewById(R.id.recept_naam);
             textView.setText(recept.getName());
 
             return row;
