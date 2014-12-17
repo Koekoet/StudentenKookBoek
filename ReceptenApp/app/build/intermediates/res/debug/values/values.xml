@@ -24,6 +24,7 @@
     <!-- From: file:/C:/Users/tijs1/Documents/3NMCT/AppDev/Project/ProjectDatabase/ReceptenApp/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="AddBasket">addBasket</string>
+    <string name="Categories">Categorieën</string>
     <string name="Ingredients">Ingrediënten:</string>
     <string name="aantal_personen">Aantal personen</string>
     <string name="action_delete">Ledig favorieten</string>

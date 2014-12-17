@@ -39,5 +39,6 @@
     <string name="Ingredients">Ingrediënten:</string>
     <string name="addIngredients">Ingrediënten toevoegen</string>
     <string name="bereiding">Bereiding:</string>
+    <string name="Categories">Categorieën</string>
 
 </resources>
