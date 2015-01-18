@@ -5,25 +5,24 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import data.CategoryData.CategoryDatabaseHelper;
-import data.CategoryData.CategoryTable;
-import data.FavoriteData.FavoriteDatabaseHelper;
-import data.FavoriteData.FavoriteTable;
-import data.ReceptData.ReceptDatabaseHelper;
-import data.ReceptData.ReceptTable;
-import data.RecipesByCategory.RecipesByCategoryDatabaseHelper;
-import data.RecipesByCategory.RecipesByCategoryTable;
+import be.howest.nmct.receptenapp.data.CategoryData.CategoryDatabaseHelper;
+import be.howest.nmct.receptenapp.data.CategoryData.CategoryTable;
+import be.howest.nmct.receptenapp.data.FavoriteData.FavoriteDatabaseHelper;
+import be.howest.nmct.receptenapp.data.FavoriteData.FavoriteTable;
+import be.howest.nmct.receptenapp.data.ReceptData.ReceptDatabaseHelper;
+import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
+import be.howest.nmct.receptenapp.data.RecipesByCategory.RecipesByCategoryDatabaseHelper;
+import be.howest.nmct.receptenapp.data.RecipesByCategory.RecipesByCategoryTable;
+
 
 /**
  * Created by Mattias on 16/01/2015.

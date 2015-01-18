@@ -2,7 +2,6 @@ package be.howest.nmct.receptenapp;
 
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -25,22 +24,22 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
-import data.CategoryData.Category;
-import data.IngredientData.Ingredient;
-import data.ReceptData.Recept;
-import fragments.ReceptBereidingFragment;
-import fragments.ReceptBoodschappenlijstjeFragment;
-import fragments.ReceptCategoriesFragment;
-import fragments.ReceptCreateBereidingFragment;
-import fragments.ReceptCreateCategoryFragment;
-import fragments.ReceptCreateInfoFragment;
-import fragments.ReceptCreateIngredientFragment;
-import fragments.ReceptDetailFragment;
-import fragments.ReceptFavoriteFragment;
-import fragments.ReceptInfoFragment;
-import fragments.ReceptIngredientenFragment;
-import fragments.ReceptNavigationFragment;
-import fragments.ReceptReceptenFragment;
+import be.howest.nmct.receptenapp.data.CategoryData.Category;
+import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
+import be.howest.nmct.receptenapp.data.ReceptData.Recept;
+import be.howest.nmct.receptenapp.fragments.ReceptBereidingFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptBoodschappenlijstjeFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptCategoriesFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptCreateBereidingFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptCreateCategoryFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptCreateInfoFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptCreateIngredientFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptDetailFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptFavoriteFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptInfoFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptIngredientenFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptNavigationFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptReceptenFragment;
 
 public class MainActivity extends FragmentActivity
         implements
@@ -155,41 +154,6 @@ public class MainActivity extends FragmentActivity
     }
 
     //LOADING DATA ON START
-    class LoadCategoriesTask extends AsyncTask<String, Void, ArrayList<Category>> {
-        private ProgressDialog pDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Loading");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        @Override
-        protected ArrayList<Category> doInBackground(String... params) {
-
-            arrIngredients = Ingredient.getAllIngredients();
-            ArrayList<Category> categories = Category.getAllCategories();
-            /*for (Category cat : categories){
-                cat.setPicture("" + R.drawable.cat_vleesgerechten);
-            }*/
-            return categories;
-        }
-        @Override
-        protected void onPostExecute(ArrayList<Category> result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-            arrCategories = result;
-            arrRecipes = new ArrayList<ArrayList<Recept>>();
-            for (int i = 0; i < arrCategories.size(); i++) {
-                arrRecipes.add(new ArrayList<Recept>());
-            }
-            setCategories();
-            Toast.makeText(MainActivity.this, "Categories ready.", Toast.LENGTH_SHORT).show();
-        }
-    }
     private void setCategories(){
         ReceptCategoriesFragment catFrag = new ReceptCategoriesFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.mainfragment, catFrag).commit();

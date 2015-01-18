@@ -10,8 +10,8 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import data.ReceptData.Recept;
-import data.helpers.ImageConverter;
+import be.howest.nmct.receptenapp.data.ReceptData.Recept;
+import be.howest.nmct.receptenapp.data.helpers.ImageConverter;
 
 
 public class TestActivity extends Activity {

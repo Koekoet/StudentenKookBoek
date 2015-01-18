@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragments.ReceptCategoriesFragment">
+    tools:context="be.howest.nmct.receptenapp.fragments.ReceptCategoriesFragment">
 
     <ListView
         android:dividerHeight="0dp"

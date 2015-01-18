@@ -24,7 +24,7 @@
         android:padding="0dp"
         >
 
-        <fragment android:name="fragments.ReceptNavigationFragment"
+        <fragment android:name="be.howest.nmct.receptenapp.fragments.ReceptNavigationFragment"
             android:id="@+id/fragment_navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
