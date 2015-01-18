@@ -7,13 +7,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -159,6 +164,50 @@ public class ReceptReceptenFragment extends ListFragment {
         mCursor.close();
     }
 
+
+    private String grid_currentQuery = null; // holds the current query...
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.menu_item_search).getActionView();
+        searchView.setOnQueryTextListener(queryListener);
+
+
+    }
+    private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            if (TextUtils.isEmpty(newText)) {
+
+                grid_currentQuery = null;
+            } else {
+
+                grid_currentQuery = newText;
+
+            }
+            //getLoaderManager().restartLoader(0, null, MyListFragment.this);
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            ReceptSearchFragment recSFrag = new ReceptSearchFragment();
+            Bundle bundle = new Bundle();
+            Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/RecByQUERY/" + query);
+            bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
+            recSFrag.setArguments(bundle);
+            getFragmentManager().beginTransaction().replace(R.id.mainfragment, recSFrag).addToBackStack("SEARCH").commit();
+            return false;
+        }
+    };
 
 
 }
