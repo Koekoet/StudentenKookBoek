@@ -39,7 +39,6 @@ public class ReceptFavoriteFragment extends ListFragment {
     ListView listView;
     MyCursorAdapter favoriteAdapter;
 
-    private ArrayList<Recept> arrFavoriteRecipes;
 
     //GLOBAL
     public static final String ARR_FAVORITE_RECIPES = "";
@@ -56,6 +55,9 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_favorite, menu);
+        if(menu != null){
+            menu.findItem(R.id.menu_item_search).setVisible(false);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 

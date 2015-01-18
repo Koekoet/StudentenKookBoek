@@ -168,25 +168,7 @@ public class MainActivity extends FragmentActivity
         int id = item.getItemId();
 
         switch (id){
-            /*case R.id.action_TestRecepi:
-                *//*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
-                intent.putExtra("selectedRecipe", new Recept());
-                startActivity(intent);*//*
-                ReceptDetailFragment fragment = new ReceptDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("MYSELECTEDRECIPE", new Recept());
-                fragment.setArguments(bundle);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
-                return true;
-            case R.id.action_TestFavorite:
-                ReceptFavoriteFragment fragment1 = new ReceptFavoriteFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, fragment1).addToBackStack(null).commit();
-                return true;
-            case R.id.action_TestDiff:
-                Intent intent3 = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent3);
-                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -259,54 +241,12 @@ public class MainActivity extends FragmentActivity
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    //FAVORITES
-    private void checkFavoritesData() {
-        if(arrFavoriteRecipes == null){
-            //set favorites
-            LoadFavoritesTask task = new LoadFavoritesTask();
-            task.execute();
-
-        }else {
-            ShowFavorites();
-        }
-
-    }
     private void ShowFavorites(){
         ReceptFavoriteFragment favoriteFragment = new ReceptFavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(favoriteFragment.ARR_FAVORITE_RECIPES, arrFavoriteRecipes);
         favoriteFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, favoriteFragment).addToBackStack(null).commit();
-    }
-    class LoadFavoritesTask extends AsyncTask<String, Void, ArrayList<Recept>> {
-        private ProgressDialog pDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Loading");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        @Override
-        protected ArrayList<Recept> doInBackground(String... params) {
-
-            ArrayList<Recept> recepts = new ArrayList<Recept>();
-            recepts.add(Recept.getRecipeById(10));
-            recepts.add(Recept.getRecipeById(15));
-            recepts.add(Recept.getRecipeById(12));
-            arrFavoriteRecipes = recepts;
-            return recepts;
-        }
-        @Override
-        protected void onPostExecute(ArrayList<Recept> result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-            arrFavoriteRecipes = result;
-            ShowFavorites();
-        }
     }
 
     //ON CATEGORIE SELECTED
@@ -317,9 +257,7 @@ public class MainActivity extends FragmentActivity
 
 
     }
-    private void LoadRecipes(Category category) {
-        //checkRecipes(category);
-    }
+
     private void showReceptsOfCategory(int categoryID){
         //krijgen category binnen ==> mss simpeler met een ID alleen in toekomst.
         ReceptReceptenFragment recFrag = new ReceptReceptenFragment();
@@ -384,9 +322,6 @@ public class MainActivity extends FragmentActivity
         }
 
     }
-
-
-
 
     @Override
     public void onNextCreateInfoSelectedListener(Recept recept) {
