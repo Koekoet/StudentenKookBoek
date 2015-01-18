@@ -1,5 +1,7 @@
-package data;
+package data.ReceptData;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.MatrixCursor;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,6 +14,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import data.CategoryData.Category;
+import data.Difficulty;
+import data.IngredientData.Ingredient;
 import data.helpers.onlineData;
 
 /**
@@ -26,10 +32,11 @@ public class Recept implements Parcelable {
     private String Cost;
     private int NumberOfPersons;
     private int DifficultyID;
-    private Difficulty Difficulty;
+    private data.Difficulty Difficulty;
     private String Picture;
     private ArrayList<Ingredient> Ingredients;
     private String RecipeText;
+    private ArrayList<Category> Categories;
 
 
     private Recept(Parcel in) {
@@ -45,6 +52,7 @@ public class Recept implements Parcelable {
         setDifficulty((data.Difficulty) in.readParcelable(data.Difficulty.class.getClassLoader()));
         setPicture(in.readString());
         setRecipeText(in.readString());
+        setCategories(in.readArrayList(Category.class.getClassLoader()));
     }
 
     public Recept() {
@@ -69,6 +77,7 @@ public class Recept implements Parcelable {
         out.writeParcelable(getDifficulty(), flags);
         out.writeString(getPicture());
         out.writeString(getRecipeText());
+        out.writeList(getCategories());
     }
 
     public static final Creator<Recept> CREATOR = new Creator<Recept>() {
@@ -179,6 +188,14 @@ public class Recept implements Parcelable {
     public void setDifficulty(Difficulty difficulty) {
         Difficulty = difficulty;
     }
+
+    public ArrayList<Category> getCategories() {
+        return Categories;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        Categories = categories;
+    }
     //endregion
 
     public class IngredientList extends ArrayList<Ingredient> implements Parcelable {
@@ -252,7 +269,7 @@ public class Recept implements Parcelable {
                     int difficultyId = c.getInt("DifficultyId");
                     data.Difficulty dif = data.Difficulty.getDifficultyById(difficultyId);
                     String picture = c.getString("Picture");
-                    ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
+                    //ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
                     String recipeText = c.getString("RecipeText");
 
                     //invullen in nieuw recept
@@ -266,7 +283,7 @@ public class Recept implements Parcelable {
                     rec.DifficultyID = difficultyId;
                     rec.Difficulty = dif;
                     rec.Picture = picture;
-                    rec.Ingredients = ingredients;
+                    //rec.Ingredients = ingredients;
                     rec.RecipeText = recipeText;
 
                     list.add(rec);
@@ -382,7 +399,7 @@ public class Recept implements Parcelable {
         return ingrList;
     }
 
-    public static void createRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText) {
+    public static int createRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", "ap_recipe"));
         params.add(new BasicNameValuePair("Name", "" + _name));
@@ -394,9 +411,10 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("Picture", "" + _picture));
         params.add(new BasicNameValuePair("Ingredients", "" + _ingredients));
         params.add(new BasicNameValuePair("RecipeText", "" + _recipeText));
-        onlineData.create(params);
+        int newId =onlineData.create(params);
+        return newId;
     }
-    public static void createRecipe(Recept recept, String ingredients){
+    public static int createRecipe(Recept recept, String ingredients){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", "ap_recipe"));
         params.add(new BasicNameValuePair("Name", "" + recept.getName()));
@@ -408,7 +426,8 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("Picture", "" + recept.getPicture()));
         params.add(new BasicNameValuePair("Ingredients", "" + ingredients));
         params.add(new BasicNameValuePair("RecipeText", "" + recept.getRecipeText()));
-        onlineData.create(params);
+        int newId = onlineData.create(params);
+        return newId;
     }
 
     public static void delete(int _id){
@@ -416,6 +435,36 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("tableName", "ap_recipe"));
         params.add(new BasicNameValuePair("id", ""+_id));
         data.helpers.onlineData.delete(params);
+    }
+
+    //CURSOR METHODES
+    public static Boolean LoadAllRecipesCURSOR(Context context){
+        JSONArray recipes = data.helpers.onlineData.selectAllData("ap_recipe");
+        if (recipes != null) {
+            for (int i = 0; i < recipes.length(); i++) {
+                try {
+                    JSONObject c = recipes.getJSONObject(i);
+                    //ophalen data
+                    ContentValues values = new ContentValues();
+                    values.put(ReceptTable.COLUMN_ID, c.getInt("ID"));
+                    values.put(ReceptTable.COLUMN_NAME, c.getString("Recipename"));
+                    values.put(ReceptTable.COLUMN_AUTHORID, c.getInt("AuthorId"));
+                    values.put(ReceptTable.COLUMN_DURATION, c.getString("Duration"));
+                    values.put(ReceptTable.COLUMN_COST, c.getString("Cost"));
+                    values.put(ReceptTable.COLUMN_NUMBEROFPERSONS, c.getInt("NumberOfPersons"));
+                    values.put(ReceptTable.COLUMN_DIFFICULTYID, c.getInt("DifficultyId"));
+                    values.put(ReceptTable.COLUMN_PICTURE, c.getString("Picture"));
+                    values.put(ReceptTable.COLUMN_INGREDIENTS, c.getString("Ingredients"));
+                    values.put(ReceptTable.COLUMN_RECIPETEXT, c.getString("RecipeText"));
+                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
+
+                } catch (Exception e) {
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

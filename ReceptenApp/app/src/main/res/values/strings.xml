@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ReceptenApp</string>
+    <string name="app_name">Studentenkookboek</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_recept_detail">ReceptDetailActivity</string>
@@ -39,5 +39,7 @@
     <string name="Ingredients">Ingrediënten:</string>
     <string name="addIngredients">Ingrediënten toevoegen</string>
     <string name="bereiding">Bereiding:</string>
+    <string name="Categories">Categorieën</string>
+    <string name="action_favorite">favorite</string>
 
 </resources>

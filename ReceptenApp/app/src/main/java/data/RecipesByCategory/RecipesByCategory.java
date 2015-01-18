@@ -1,4 +1,8 @@
-package data;
+package data.RecipesByCategory;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -7,6 +11,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import data.CategoryData.Category;
+import data.ReceptData.Recept;
 
 /**
  * Created by tijs1 on 3-12-2014.
@@ -72,7 +80,7 @@ public class RecipesByCategory {
         return recByCat;
     }
     private static Category makeCategory(int catId) {
-        Category cat = data.Category.getCategoryById(catId);
+        Category cat = data.CategoryData.Category.getCategoryById(catId);
         return cat;
     }
     private static ArrayList<Recept> makeRecipes(String recipeIds) {
@@ -97,5 +105,25 @@ public class RecipesByCategory {
         params.add(new BasicNameValuePair("tableName", "ap_recipes_by_category"));
         params.add(new BasicNameValuePair("id", ""+_id));
         data.helpers.onlineData.delete(params);
+    }
+
+    //CURSOR FUNCTION
+    public static Boolean getAllRecipesByCategoryCURSOR(Context context){
+        JSONArray recByCat = data.helpers.onlineData.selectAllData("ap_recipes_by_category");
+        if (recByCat != null) {
+            for (int i = 0; i < recByCat.length(); i++) {
+                try {
+                    JSONObject c = recByCat.getJSONObject(i);
+                    ContentValues values = new ContentValues();
+                    values.put(RecipesByCategoryTable.COLUMN_CATID, c.getInt("CategoryId"));
+                    values.put(RecipesByCategoryTable.COLUMN_RECIDS, c.getString("RecipeIds"));
+                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_RECBYCAT, values);
+                } catch (Exception e) {
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

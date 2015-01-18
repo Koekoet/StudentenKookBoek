@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/ivPictureRecipe"
-        android:src="@drawable/rec_hamburger"
+        android:src="@drawable/cat_vleesgerechten"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#F9F9F9"

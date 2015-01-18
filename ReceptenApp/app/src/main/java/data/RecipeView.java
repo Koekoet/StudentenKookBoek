@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+import data.CategoryData.Category;
+import data.ReceptData.Recept;
+
 /**
  * Created by Mattias on 3/12/2014.
  */
@@ -14,7 +17,7 @@ public class RecipeView implements Parcelable {
 
     private RecipeView(Parcel in){
         setArrRecipes(in.readArrayList(Recept.class.getClassLoader()));
-        setCategory((data.Category) in.readParcelable(data.Category.class.getClassLoader()));
+        setCategory((Category) in.readParcelable(Category.class.getClassLoader()));
     }
     public RecipeView(){
 

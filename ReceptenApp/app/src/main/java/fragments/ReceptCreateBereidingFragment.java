@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import be.howest.nmct.receptenapp.R;
-import data.Recept;
+import data.ReceptData.Recept;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -189,7 +189,8 @@ function createNewRecipe($name, $author,$duration,$cost,$persons,$difficulty,$pi
                     $data["error"] = "Failed to execute the query: " . $query->error;
                 } else {
                     if($query->affected_rows === 1){
-                        $data["succeeded"] = "Query successfully executed";
+                        $newId = $query->insert_id;
+                        $data["data"] = $newId;
                     }else{
                         $data["error"] = "Something went wrong while executing query. Please try again.";
                     }

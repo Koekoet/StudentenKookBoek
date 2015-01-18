@@ -29,6 +29,7 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Mijn boodschappenlijstje");
 
         //TODO
         arrBoodschappenlijstje = new ArrayList<String>();

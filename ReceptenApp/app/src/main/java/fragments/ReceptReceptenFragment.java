@@ -3,13 +3,19 @@ package fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,9 +23,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
-import data.Category;
-import data.Recept;
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import data.CategoryData.Category;
+import data.ReceptData.Recept;
+import data.ReceptData.ReceptTable;
 import data.RecipeView;
+import data.RecipesByCategory.RecipesByCategoryTable;
 import data.helpers.ImageConverter;
 
 /**
@@ -28,9 +37,14 @@ import data.helpers.ImageConverter;
 public class ReceptReceptenFragment extends ListFragment
        {
 
-    final Context context = getActivity();
-    ReceptenAdapter receptenAdapter;
+    Context context = getActivity();
+    //ReceptenAdapter receptenAdapter;
     private TextView txvTitle;
+    private ListView listView;
+
+    //CURSOR
+    private Cursor mCursor;
+    MyCursorAdapter receptenAdapter;
 
     //global date here:
     Category category;
@@ -46,94 +60,92 @@ public class ReceptReceptenFragment extends ListFragment
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity();
+        //1. get ID van CATEGORY
 
+        //2. get Cursor list van Recepten by ID
+
+
+        /* TEMP IN COMMENTAAR
         Bundle bundle = this.getArguments();
         data = bundle.getParcelable(RECIPE_VIEW);
         category = data.getCategorie();
         arrRecipes = data.getArrRecipes();
+        */
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //getActivity().setTitle(category.getName());
         View view =  inflater.inflate(R.layout.fragment_recepten, container, false);
-        ((TextView) view.findViewById(R.id.Title)).setText("");
+
+
+
+        /*((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);
-        return view;
+        */return view;
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        txvTitle.setText(category.getName());
-        //ShowReceptenTask task = new ShowReceptenTask();
-        //task.execute();
-        receptenAdapter = new ReceptenAdapter();
-        setListAdapter(receptenAdapter);
-    }
+        listView = getListView();
 
-    //1. Asynctask
-    private ProgressDialog pDialog;
-    class ShowReceptenTask extends AsyncTask<String, Void, ArrayList<Recept>> {
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
+        Bundle bundle = this.getArguments();
+        Uri uri = bundle.getParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC);
 
-            pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Showing Recepten...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
+        mCursor = context.getContentResolver().query(
+                uri,
+                null,
+                null,
+                null,
+                null);
 
-        @Override
-        protected ArrayList<Recept> doInBackground(String... params)
-        {
+        if(mCursor != null){
+            //display
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    receptenAdapter = new MyCursorAdapter(
+                            getActivity(),
+                            mCursor,
+                            0);
 
-            return arrRecipes;
-        }
+                    listView.setAdapter(receptenAdapter);
+                }
 
-        @Override
-        protected void onPostExecute(ArrayList<Recept> result){
-            if(pDialog.isShowing()){ pDialog.dismiss();}
-            super.onPostExecute(result);
-            receptenAdapter = new ReceptenAdapter();
-            setListAdapter(receptenAdapter);
-
-            //Toast.makeText(getActivity(), "Recepten ready.", Toast.LENGTH_SHORT).show();
+            });
         }
     }
 
-    class ReceptenAdapter extends ArrayAdapter<Recept>
-    {
-        public ReceptenAdapter()
-        {
-            super(getActivity(), R.layout.row_recept, R.id.recept_naam, arrRecipes);
+
+    public class MyCursorAdapter extends CursorAdapter {
+        private LayoutInflater mInflater;
+        // Default constructor
+        public MyCursorAdapter(Context context, Cursor cursor, int flags) {
+            super(context, cursor, flags);
+                  mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            }
+
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView naam = (TextView) view.findViewById(R.id.recept_naam);
+            naam.setText(cursor.getString(cursor.getColumnIndex(ReceptTable.COLUMN_NAME)));
+
+            ImageView image = (ImageView) view.findViewById(R.id.receptImage);
+            image.setImageBitmap(ImageConverter.StringToBitmap(cursor.getString(cursor.getColumnIndex(ReceptTable.COLUMN_PICTURE))));
         }
 
-
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            View row = super.getView(position, convertView, parent);
-
-            Recept rec = arrRecipes.get(position);
-
-            TextView naam = (TextView) row.findViewById(R.id.recept_naam);
-            naam.setText(rec.getName());
-
-            ImageView image = (ImageView) row.findViewById(R.id.receptImage);
-            image.setImageBitmap(ImageConverter.StringToBitmap(rec.getPicture()));
-
-            return row;
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+              return mInflater.inflate(R.layout.row_recept, parent, false);
         }
-
     }
 
-    //CLICK ON LIST
+
+           //CLICK ON LIST
     OnReceptenSelectedListener mCallback;
 
     // Container Activity must implement this interface
     public interface OnReceptenSelectedListener {
-        public void OnReceptenSelectedListener(Recept recept);
+        public void OnReceptenSelectedListener(int id);
     }
     @Override
     public void onAttach(Activity activity) {
@@ -148,7 +160,10 @@ public class ReceptReceptenFragment extends ListFragment
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.OnReceptenSelectedListener(arrRecipes.get(position));
+        mCursor.moveToPosition(position);
+
+        mCallback.OnReceptenSelectedListener(mCursor.getInt(mCursor.getColumnIndex(ReceptTable.COLUMN_ID)));
+        mCursor.close();
     }
 
 

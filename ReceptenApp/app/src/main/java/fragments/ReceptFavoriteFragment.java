@@ -1,8 +1,12 @@
 package fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,15 +24,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
-import data.Recept;
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import data.FavoriteData.FavoriteTable;
+import data.ReceptData.Recept;
+import data.ReceptData.ReceptTable;
+import data.helpers.ImageConverter;
 import data.helpers.SwipeDismissListViewTouchListener;
 
 /**
  * Created by Toine on 25/11/2014.
  */
 public class ReceptFavoriteFragment extends ListFragment {
+    Context context = getActivity();
+    Cursor mCursor;
+    ListView listView;
+    MyCursorAdapter favoriteAdapter;
+
     private ArrayList<Recept> arrFavoriteRecipes;
-    private FavoriteAdapter mAdapter;
 
     //GLOBAL
     public static final String ARR_FAVORITE_RECIPES = "";
@@ -36,10 +49,9 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Mijn favorieten");
+        context = getActivity();
         setHasOptionsMenu(true);
-
-        Bundle bundle = this.getArguments();
-        arrFavoriteRecipes = bundle.getParcelableArrayList(ARR_FAVORITE_RECIPES);
     }
 
     @Override
@@ -65,7 +77,15 @@ public class ReceptFavoriteFragment extends ListFragment {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mAdapter.clearAdapter();
+                                Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_FAV + "");
+                                context.getContentResolver().delete(uri, null, null);
+
+                                mCursor = context.getContentResolver().query( ReceptenAppContentProvider.CONTENT_URI_FAV,
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                                favoriteAdapter.swapCursor(mCursor);
 
                             }
                         })
@@ -86,12 +106,10 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        listView = getListView();
+       showFavorites();
 
-        mAdapter = new FavoriteAdapter();
-        setListAdapter(mAdapter);
 
-        ListView listView = getListView();
-        listView.setAdapter(mAdapter);
         SwipeDismissListViewTouchListener touchListener = new SwipeDismissListViewTouchListener(
                 listView,
                 new SwipeDismissListViewTouchListener.DismissCallbacks() {
@@ -101,10 +119,19 @@ public class ReceptFavoriteFragment extends ListFragment {
                     @Override
                     public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                         for(int position : reverseSortedPositions){
-                            mAdapter.remove(mAdapter.getItem(position));
-                        }
-                        mAdapter.notifyDataSetChanged();
+                            //favoriteAdapter.remove(favoriteAdapter.getItem(position));
+                            mCursor.moveToPosition(position);
+                            String id = mCursor.getString(mCursor.getColumnIndex(FavoriteTable.COLUMN_ID));
+                            Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_FAV + "/" + id);
+                            context.getContentResolver().delete(uri, null, null);
 
+                            mCursor = context.getContentResolver().query( ReceptenAppContentProvider.CONTENT_URI_FAV,
+                                    null,
+                                    null,
+                                    null,
+                                    null);
+                            favoriteAdapter.swapCursor(mCursor);
+                        }
                     }
                 });
         listView.setOnTouchListener(touchListener);
@@ -113,10 +140,13 @@ public class ReceptFavoriteFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(getActivity(), favorietenLijst.get(i).getName(), Toast.LENGTH_SHORT).show();
-
+                mCursor.moveToPosition(i);
+                String id = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_ID));
+                mCursor.close();
                 ReceptDetailFragment fragment = new ReceptDetailFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("MYSELECTEDRECIPE", arrFavoriteRecipes.get(i));
+                Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/" + id);
+                bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
                 fragment.setArguments(bundle);
 
                 getFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
@@ -124,45 +154,57 @@ public class ReceptFavoriteFragment extends ListFragment {
         });
     }
 
+    private void showFavorites() {
+        listView = getListView();
+        mCursor = context.getContentResolver().query(
+                ReceptenAppContentProvider.CONTENT_URI_FAV,
+                null,
+                null,
+                null,
+                null);
+
+        if(mCursor != null){
+            int aantal = mCursor.getCount();
+            //display
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    favoriteAdapter = new MyCursorAdapter(
+                            getActivity(),
+                            mCursor,
+                            0);
+
+                    listView.setAdapter(favoriteAdapter);
+                }
+
+            });
+        }
+    }
+
+    public class MyCursorAdapter extends CursorAdapter {
+        private LayoutInflater mInflater;
+        // Default constructor
+        public MyCursorAdapter(Context context, Cursor cursor, int flags) {
+            super(context, cursor, flags);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView naam = (TextView) view.findViewById(R.id.recept_naam);
+            naam.setText(cursor.getString(cursor.getColumnIndex(ReceptTable.COLUMN_NAME)));
+
+            ImageView image = (ImageView) view.findViewById(R.id.receptImage);
+            image.setImageBitmap(ImageConverter.StringToBitmap(cursor.getString(cursor.getColumnIndex(ReceptTable.COLUMN_PICTURE))));
+        }
+
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return mInflater.inflate(R.layout.row_favorites, parent, false);
+        }
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favorite, null, false);
-    }
-
-    public class FavoriteAdapter extends ArrayAdapter<Recept> {
-
-        public FavoriteAdapter(){
-            super(getActivity(), R.layout.row_favorites, R.id.recept_naam, arrFavoriteRecipes);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Recept recept = arrFavoriteRecipes.get(position);
-            View row = super.getView(position, convertView, parent);
-
-            ImageView imageView = (ImageView) row.findViewById(R.id.receptImage);
-            int img;
-            if(recept.getPicture() != null){
-                img = Integer.parseInt(recept.getPicture());
-            } else {
-                img = R.drawable.ic_noimage;
-            }
-            imageView.setImageResource(img);
-
-
-
-            TextView textView = (TextView) row.findViewById(R.id.recept_naam);
-            textView.setText(recept.getName());
-
-            return row;
-        }
-
-        public void clearAdapter(){
-            arrFavoriteRecipes.clear();
-            notifyDataSetChanged();
-        }
-        public void NotifyAdapter(){
-            notifyDataSetChanged();
-        }
     }
 }

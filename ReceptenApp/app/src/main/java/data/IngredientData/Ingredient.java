@@ -1,4 +1,4 @@
-package data;
+package data.IngredientData;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import data.Unit;
 
 /**
  * Created by Toine on 5/11/2014.

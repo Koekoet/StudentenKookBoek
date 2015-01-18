@@ -8,16 +8,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +31,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
-import data.Difficulty;
-import data.Recept;
+import data.ReceptData.Recept;
 import data.helpers.ImageConverter;
 
 /**
@@ -66,7 +61,21 @@ public class ReceptCreateInfoFragment extends Fragment {
         txtName = (TextView) view.findViewById(R.id.ciNameRecipe);
         txtDuration = (TextView) view.findViewById(R.id.ciDurationName);
         txtPersons = (TextView) view.findViewById(R.id.numPersons);
+        imageView = (ImageView) view.findViewById(R.id.recept_image_create);
         Bundle args = getArguments();
+
+        ArrayList<String> arrayCost = fillCostAdapter();
+        ArrayList<String> arrayDiff = fillDiffAdapter();
+
+        ArrayAdapter<String> adapterCost = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayCost);
+        ArrayAdapter<String> adapterDiff = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayDiff);
+
+        adapterCost.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterDiff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerCost.setAdapter(adapterCost);
+        spinnerDiff.setAdapter(adapterDiff);
+
         if(args != null){
             //er zit iets in
             recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
@@ -74,13 +83,20 @@ public class ReceptCreateInfoFragment extends Fragment {
             txtName.setText(recCreateRecipe.getName());
             txtDuration.setText(recCreateRecipe.getDuration());
             txtPersons.setText(""+recCreateRecipe.getNumberOfPersons());
-            //Cost & difficulty nog!
-            //spinnerCost.setSelection(recCreateRecipe.getCost());
+            if(recCreateRecipe.getPicture() != null && !recCreateRecipe.getPicture().equals("")){
+                Bitmap bm = ImageConverter.StringToBitmap(recCreateRecipe.getPicture());
+                imageView.setImageBitmap(bm);
+            }
+
+            String costValue = recCreateRecipe.getCost();
+            int spinnerPositionCost = adapterCost.getPosition(costValue);
+            spinnerCost.setSelection(spinnerPositionCost);
+            spinnerPositionCost = 0;
             spinnerDiff.setSelection(recCreateRecipe.getDifficultyID(), false);
         } else {
             recCreateRecipe = new Recept();
         }
-        imageView = (ImageView) view.findViewById(R.id.recept_image_create);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,24 +142,12 @@ public class ReceptCreateInfoFragment extends Fragment {
                     String imageString = ImageConverter.BitmapToString(bm);
                     recCreateRecipe.setPicture(imageString);
                     //Nog difficulty
-                    recCreateRecipe.setDifficultyID((int) spinnerDiff.getSelectedItemId());
+                    recCreateRecipe.setDifficultyID((int) spinnerDiff.getSelectedItemId() + 1);
                     //recept.setDifficulty(Difficulty.getDifficultyById((int) spinnerDiff.getSelectedItemId()));
                     mCallback.onNextCreateInfoSelectedListener(recCreateRecipe);
                 }
             }
         });
-
-        ArrayList<String> arrayCost = fillCostAdapter();
-        ArrayList<String> arrayDiff = fillDiffAdapter();
-
-        ArrayAdapter<String> adapterCost = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayCost);
-        ArrayAdapter<String> adapterDiff = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayDiff);
-
-        adapterCost.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterDiff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerCost.setAdapter(adapterCost);
-        spinnerDiff.setAdapter(adapterDiff);
 
         return view;
     }

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import data.Recept;
+import data.ReceptData.Recept;
 import data.helpers.ImageConverter;
 
 
@@ -47,6 +47,7 @@ public class TestActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
+            ArrayList<Recept> recepts = Recept.getAllRecipes();
             //CreateIngredientsDatabase();
             //CreateFruitTaart(Boolean.TRUE);
             getReceptById(2);
@@ -64,7 +65,7 @@ public class TestActivity extends Activity {
         rec8.setDifficultyID(3);
         rec8.setDuration("80");
         rec8.setNumberOfPersons(4);
-        rec8.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_fruittaart)));
+        rec8.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec8.setCost("12");
         rec8.setRecipeText("1. Plaats het bladerdeeg in de oven voor 20min op 200°. 2. Leg al het fruit erop en laat afkoelen. ");
         ingr = "10;14;15;16";
@@ -79,7 +80,7 @@ public class TestActivity extends Activity {
         rec0.setDifficultyID(2);
         rec0.setDuration("30");
         rec0.setNumberOfPersons(2);
-        rec0.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_hamburger)));
+        rec0.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec0.setCost("9");
         rec0.setRecipeText("1. Maak hamburgers van het gehakt. 2. Smijt het in de pan. 3. Leg de hamburgers tussen een broodje en plaats Samuraisaus erop. 4. Leg er nog tenslotte sla en tomaat op");
         ingr = "2;17;18;6;19";
@@ -92,7 +93,7 @@ public class TestActivity extends Activity {
         rec1.setDifficultyID(2);
         rec1.setDuration("35");
         rec1.setNumberOfPersons(2);
-        rec1.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_steakmetfrieten)));
+        rec1.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec1.setCost("14.25");
         rec1.setRecipeText("1. Bak de steak 2. Smijt frieten in de frietpot 3. Versier met sla en wortels.");
         ingr = "20;21;18;22";
@@ -104,7 +105,7 @@ public class TestActivity extends Activity {
         rec2.setDifficultyID(3);
         rec2.setDuration("25");
         rec2.setNumberOfPersons(1);
-        rec2.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_kipmetrijst)));
+        rec2.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec2.setCost("7.5");
         rec2.setRecipeText("1. Snij de kip in stukjes en begin met bakken op een zacht vuur. 2. Kook de rijst voor 8 minuten. 3.Kook currysaus en breng alles samen.");
         ingr = "23;24;25";
@@ -117,7 +118,7 @@ public class TestActivity extends Activity {
         rec3.setDifficultyID(2);
         rec3.setDuration("30");
         rec3.setNumberOfPersons(2);
-        rec3.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_zalmrolletjes)));
+        rec3.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec3.setCost("5.5");
         rec3.setRecipeText("1. Vul de zalm met iets wat je lekker vindt. 2. Rol de zalm. 3.Smakelijk");
         ingr = "26";
@@ -129,7 +130,7 @@ public class TestActivity extends Activity {
         rec4.setDifficultyID(2);
         rec4.setDuration("22");
         rec4.setNumberOfPersons(2);
-        rec4.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_scampi)));
+        rec4.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec4.setCost("16.5");
         rec4.setRecipeText("1. Pel de scampi's. 2. Bak de scampi's. 3. Versier met groentjes.");
         ingr = "27;18;22;6;28";
@@ -144,7 +145,7 @@ public class TestActivity extends Activity {
         rec8.setDifficultyID(3);
         rec8.setDuration("80");
         rec8.setNumberOfPersons(4);
-        rec8.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.rec_fruittaart)));
+        rec8.setPicture(ImageConverter.BitmapToString(BitmapFactory.decodeResource(getResources(), R.drawable.cat_vleesgerechten)));
         rec8.setCost("12");
         rec8.setRecipeText("1. Plaats het bladerdeeg in de oven voor 20min op 200°. 2. Leg al het fruit erop en laat afkoelen. ");
         String ingr = "10;14;15;16";

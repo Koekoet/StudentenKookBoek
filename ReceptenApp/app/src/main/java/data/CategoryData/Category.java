@@ -1,5 +1,7 @@
-package data;
+package data.CategoryData;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,6 +12,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+
 
 /**
  * Created by Toine on 5/11/2014.
@@ -130,5 +135,27 @@ public class Category implements Parcelable{
         params.add(new BasicNameValuePair("tableName", "ap_recept_category"));
         params.add(new BasicNameValuePair("id", ""+_id));
         data.helpers.onlineData.delete(params);
+    }
+
+    //CURSOR METHODES
+    public static Boolean LoadAllCategories(Context context){
+        JSONArray categories = data.helpers.onlineData.selectAllData("ap_recept_category");
+        if(categories != null) {
+            for (int i = 0; i < categories.length(); i++) {
+                try {
+                    JSONObject c = categories.getJSONObject(i);
+                    ContentValues values = new ContentValues();
+                    int id = c.getInt("ID");
+                    values.put(CategoryTable.COLUMN_ID, c.getInt("ID"));
+                    values.put(CategoryTable.COLUMN_NAME, c.getString("Name"));
+                    values.put(CategoryTable.COLUMN_IMAGE, c.getString("Picture"));
+                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_CAT, values);
+                } catch (Exception e) {
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
     }
 }

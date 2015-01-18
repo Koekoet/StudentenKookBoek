@@ -1,9 +1,6 @@
 package fragments;
 
 import android.app.Activity;
-import android.database.DataSetObserver;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,20 +10,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
-import data.Ingredient;
-import data.Recept;
-
-import static fragments.ReceptIngredientenFragment.*;
+import data.IngredientData.Ingredient;
+import data.ReceptData.Recept;
 
 public class ReceptCreateIngredientFragment extends Fragment {
     ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
@@ -43,19 +35,12 @@ public class ReceptCreateIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-
-        new GetAllIngredients.execute();
-
-         */
-
-
         Bundle args = getArguments();
         recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
         if(recCreateRecipe.getIngredients() != null){
             selectedIngredients = recCreateRecipe.getIngredients();
         }
-
+        allIngredients = MainActivity.arrIngredients;
     }
 
     @Override
@@ -83,7 +68,9 @@ public class ReceptCreateIngredientFragment extends Fragment {
         mAdapter = new IngredientAdapter();
         lvIngredients.setAdapter(mAdapter);
 
-        //-----Temp data
+
+
+        /*//-----Temp data
         Ingredient patat = new Ingredient(0,"Aardappelen");
         Ingredient gehakt = new Ingredient(1,"Gehakt");
         Ingredient bloemkool = new Ingredient(2,"Bloemkool");
@@ -95,7 +82,7 @@ public class ReceptCreateIngredientFragment extends Fragment {
         allIngredients.add(bloemkool);
         allIngredients.add(boter);
         allIngredients.add(water);
-        //-----End Temp data
+        //-----End Temp data*/
 
         lvIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -154,22 +141,6 @@ public class ReceptCreateIngredientFragment extends Fragment {
             }
 
             return row;
-        }
-    }
-    class GetAllIngredients extends AsyncTask<Void,Void,ArrayList<Ingredient>>{
-
-        @Override
-        protected ArrayList<Ingredient> doInBackground(Void... voids) {
-            ArrayList<Ingredient> allIngredients = Ingredient.getAllIngredients();
-            return allIngredients;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Ingredient> ingredients) {
-            super.onPostExecute(ingredients);
-            allIngredients = ingredients;
-            mAdapter = new IngredientAdapter();
-            lvIngredients.setAdapter(mAdapter);
         }
     }
 }

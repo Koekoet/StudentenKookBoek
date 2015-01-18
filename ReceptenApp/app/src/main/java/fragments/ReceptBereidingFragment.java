@@ -1,6 +1,9 @@
 package fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,12 +12,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import be.howest.nmct.receptenapp.R;
-import data.Recept;
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import data.ReceptData.Recept;
+import data.ReceptData.ReceptTable;
 
 /**
  * Created by Toine on 5/11/2014.
  */
 public class ReceptBereidingFragment extends Fragment {
+    //CURSOR
+    Context context = getActivity();
+    private Cursor mCursor;
+
     onReceptBereidingSelectedListener mCallback;
     private static Recept selectedRecipe = null;
 
@@ -40,8 +49,10 @@ public class ReceptBereidingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recept_bereiding, container, false);
 
+        mCursor.moveToFirst();
+
         TextView bereiding = (TextView) v.findViewById(R.id.riBereiding);
-        bereiding.setText(selectedRecipe.getRecipeText());
+        bereiding.setText(mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_RECIPETEXT)));
 
         return v;
     }
@@ -49,8 +60,11 @@ public class ReceptBereidingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Context context = getActivity();
 
-        Bundle args = getArguments();
-        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
+        Bundle bundle = this.getArguments();
+        Uri uri = bundle.getParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC);
+
+        mCursor = context.getContentResolver().query(uri, null, null, null, null);
     }
 }

@@ -1,20 +1,17 @@
 package fragments;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.ListFragment;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,14 +19,20 @@ import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
-import data.Ingredient;
-import data.Recept;
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import data.IngredientData.Ingredient;
+import data.ReceptData.Recept;
 
 /**
  * Created by Toine on 5/11/2014.
  */
 public class ReceptIngredientenFragment extends ListFragment {
     onReceptIngredientSelectedListener mCallback;
+
+    //CURSOR
+    Cursor mCursor;
+    Context context = getActivity();
+
     private static Recept selectedRecipe = null;
     private ListAdapter mAdapter;
     private static final String ADDEDINGREDIENTS = "added-ingredients";
@@ -90,8 +93,11 @@ public class ReceptIngredientenFragment extends ListFragment {
             MainActivity.BOODSCHAPPENLIJSTJE.add(test);
         }
 
-        Bundle args = getArguments();
-        selectedRecipe = args.getParcelable("MYSELECTEDRECIPE");
+
+        Bundle bundle = this.getArguments();
+        Uri uri = bundle.getParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC);
+
+        mCursor = context.getContentResolver().query(uri, null, null, null, null);
 
 
 

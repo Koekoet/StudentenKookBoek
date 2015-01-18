@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import data.ReceptData.Recept;
+
 /**
  * Created by Toine on 3/12/2014.
  */

@@ -36,6 +36,10 @@
             android:name=".TestActivity"
             android:label="@string/title_activity_test" >
         </activity>
+        <provider
+            android:name=".contentprovider.ReceptenAppContentProvider"
+            android:authorities="be.howest.nmct.receptenapp.contentprovider" >
+        </provider>
 
     </application>
 

@@ -19,7 +19,7 @@
         android:src="@drawable/ic_upload"
         android:cropToPadding="false"
         android:adjustViewBounds="false"
-        android:padding="30dp"
+        android:padding="50dp"
          />
     <TextView
         android:id="@+id/nameRecipe"
@@ -40,15 +40,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text=""
         android:id="@+id/ciNameRecipe"
-        android:layout_below="@id/nameRecipe"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:hint="@string/crRecipe_name"
         android:inputType="text"
-        />
+        android:layout_alignBottom="@+id/nameRecipe"
+        android:layout_alignLeft="@+id/ciDurationName"
+        android:layout_alignStart="@+id/ciDurationName"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,14 +65,12 @@
         android:text=""
         android:hint="@string/crRecept_duur"
         android:id="@+id/ciDurationName"
-        android:layout_below="@id/riDurationRecipe"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:inputType="numberDecimal"
-        />
+        android:layout_alignBottom="@+id/riDurationRecipe"
+        android:layout_alignLeft="@+id/ciCostRecipeSpinner"
+        android:layout_alignStart="@+id/ciCostRecipeSpinner"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,16 +82,13 @@
         android:layout_alignLeft="@+id/riDurationRecipe"
         android:layout_alignStart="@+id/riDurationRecipe" />
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ciCostRecipeSpinner"
-        android:layout_toEndOf="@+id/riCostRecipe"
-        android:layout_toRightOf="@+id/riCostRecipe"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_alignTop="@+id/riCostRecipe"
-        android:layout_alignRight="@+id/ciDurationName"
-        android:layout_alignEnd="@+id/ciDurationName" />
+        android:layout_alignLeft="@+id/numPersons"
+        android:layout_alignStart="@+id/numPersons"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,14 +107,10 @@
         android:ems="10"
         android:id="@+id/numPersons"
         android:hint="@string/aantal_personen"
-        android:layout_toRightOf="@id/riNumRecipe"
-        android:layout_toEndOf="@id/riNumRecipe"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_alignTop="@+id/riNumRecipe"
-        />
+        android:layout_alignBottom="@+id/riNumRecipe"
+        android:layout_alignLeft="@+id/ciDiffSpinner"
+        android:layout_alignStart="@+id/ciDiffSpinner"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -142,7 +130,8 @@
         android:layout_toRightOf="@id/riDifficultyRecipe"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_alignTop="@+id/riDifficultyRecipe" />
+        android:layout_alignTop="@+id/riDifficultyRecipe"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -170,6 +159,15 @@
             android:text="@string/next" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload an image"
+        android:id="@+id/txvUploadImage"
+        android:layout_alignBottom="@+id/recept_image_create"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
 
 
 </RelativeLayout>

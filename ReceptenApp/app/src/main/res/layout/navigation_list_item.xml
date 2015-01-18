@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/BrouwerijImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_action_next_item"
@@ -16,12 +16,14 @@
     <TextView
         android:id="@+id/menuItem"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="35dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:layout_alignBottom="@+id/BrouwerijImage"
         android:layout_toRightOf="@+id/BrouwerijImage"
         android:layout_toEndOf="@+id/BrouwerijImage"
         android:layout_alignParentTop="true"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:textIsSelectable="false" />
 </RelativeLayout>
