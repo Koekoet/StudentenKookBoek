@@ -142,7 +142,7 @@ public class ReceptCreateInfoFragment extends Fragment {
                     String imageString = ImageConverter.BitmapToString(bm);
                     recCreateRecipe.setPicture(imageString);
                     //Nog difficulty
-                    recCreateRecipe.setDifficultyID((int) spinnerDiff.getSelectedItemId() + 1);
+                    recCreateRecipe.setDifficultyID((int) spinnerDiff.getSelectedItemId());
                     //recept.setDifficulty(Difficulty.getDifficultyById((int) spinnerDiff.getSelectedItemId()));
                     mCallback.onNextCreateInfoSelectedListener(recCreateRecipe);
                 }

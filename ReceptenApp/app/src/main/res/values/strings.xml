@@ -41,5 +41,7 @@
     <string name="bereiding">Bereiding:</string>
     <string name="Categories">Categorieën</string>
     <string name="action_favorite">favorite</string>
+    <string name="Ingredient">Ingredient</string>
+    <string name="Hoev">Hoev.</string>
 
 </resources>

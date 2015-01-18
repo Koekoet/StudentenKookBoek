@@ -6,11 +6,11 @@ import android.os.Parcelable;
 /**
  * Created by Toine on 5/11/2014.
  */
-public class Author implements Parcelable{
-    private int ID;
-    private String Name;
+public class Author implements Parcelable {
+    private String AuthorID;
+    private String Firstname;
+    private String Lastname;
     private String Email;
-    private String Password;
 
     @Override
     public int describeContents() {
@@ -19,21 +19,21 @@ public class Author implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(getID());
-        out.writeString(getName());
+        out.writeString(getAuthorID());
+        out.writeString(getFirstname());
+        out.writeString(getLastname());
         out.writeString(getEmail());
-        out.writeString(getPassword());
 
     }
 
-    private Author(Parcel in){
-        setID(in.readInt());
-        setName(in.readString());
+    private Author(Parcel in) {
+        setAuthorID(in.readString());
+        setFirstname(in.readString());
+        setLastname(in.readString());
         setEmail(in.readString());
-        setPassword(in.readString());
     }
 
-    public Author(){
+    public Author() {
 
     }
 
@@ -49,20 +49,28 @@ public class Author implements Parcelable{
         }
     };
 
-    public int getID() {
-        return ID;
+    public String getAuthorID() {
+        return AuthorID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setAuthorID(String authorID) {
+        AuthorID = authorID;
     }
 
-    public String getName() {
-        return Name;
+    public String getFirstname() {
+        return Firstname;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setFirstname(String firstname) {
+        Firstname = firstname;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    public void setLastname(String lastname) {
+        Lastname = lastname;
     }
 
     public String getEmail() {
@@ -71,13 +79,5 @@ public class Author implements Parcelable{
 
     public void setEmail(String email) {
         Email = email;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
     }
 }

@@ -344,7 +344,7 @@ public class ReceptCategoriesFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         mCursor.moveToPosition(position);
         mCallback.OnCategorieSelectedListener(mCursor.getInt(mCursor.getColumnIndex(CategoryTable.COLUMN_ID)));
-        mCursor.close();
+
     }
 
 

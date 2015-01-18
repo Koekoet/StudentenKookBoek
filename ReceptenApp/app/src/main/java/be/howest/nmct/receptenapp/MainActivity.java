@@ -1,12 +1,18 @@
 package be.howest.nmct.receptenapp;
 
 
+import android.accounts.AccountManager;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,17 +21,29 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import be.howest.nmct.receptenapp.data.Author;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
 import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
+import be.howest.nmct.receptenapp.data.Login.AbstractGetUserTask;
+import be.howest.nmct.receptenapp.data.Login.GetUserInForeground;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
 import be.howest.nmct.receptenapp.fragments.ReceptBereidingFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptBoodschappenlijstjeFragment;
@@ -77,6 +95,16 @@ public class MainActivity extends FragmentActivity
     public static ArrayList<Category> ARRCATEGORIES = new ArrayList<Category>();
 
     private Recept recCreateRecipe;
+
+    //  Login
+    private String mEmail;
+    private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
+    public static final String EXTRA_ACCOUNTNAME = "extra_accountname";
+    static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
+    static final int REQUEST_CODE_RECOVER_FROM_AUTH_ERROR = 1001;
+    static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1002;
+
+    public static Author LOGGEDINUSER;
     //tijdelijk
 
     @Override
@@ -240,7 +268,7 @@ public class MainActivity extends FragmentActivity
                 case 6:
                     //USER UITLOGGEN
                     FragmentManager fm = getSupportFragmentManager();
-
+                    LOGGEDINUSER = null;
                     //if you added fragment via layout xml
                     ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);
                     fragment.ShowNavigation();
@@ -248,13 +276,79 @@ public class MainActivity extends FragmentActivity
             }
         }else {
             if (position == 3) {
-                FragmentManager fm = getSupportFragmentManager();
-                ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);
-                fragment.ShowNavigation();
+                //Inloggen
+
+                getUser();
+
+
             }
         }
 
     }
+
+    private void getUser() {
+        if(mEmail == null){
+            pickUserAccount();
+        } else {
+            if(isDeviceOnline()){
+                getTask(MainActivity.this, mEmail, SCOPE).execute();
+            } else {
+                Toast.makeText(MainActivity.this, "Geen netwerkverbinding...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private AbstractGetUserTask getTask(MainActivity activity, String email,String scope){
+        return new GetUserInForeground(activity, email, scope);
+    }
+    private boolean isDeviceOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
+    private void pickUserAccount() {
+        String[] accountTypes = new String[]{"com.google"};
+        Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                accountTypes, false, null, null, null, null);
+        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==REQUEST_CODE_PICK_ACCOUNT){
+            if(resultCode == Activity.RESULT_OK){
+                mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                getUser();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(MainActivity.this, "You must pick an account", Toast.LENGTH_SHORT).show();
+            }
+        } else if((requestCode == REQUEST_CODE_RECOVER_FROM_AUTH_ERROR ||
+                requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) && resultCode == Activity.RESULT_OK){
+            handleAuthorizeResult(resultCode, data);
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleAuthorizeResult(int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        if (resultCode == Activity.RESULT_OK) {
+            //Log.i(TAG, "Retrying");
+            getTask(MainActivity.this, mEmail, SCOPE).execute();
+            return;
+        }
+        if (resultCode == Activity.RESULT_CANCELED) {
+            return;
+        }
+    }
+
     public void clearBackstack() {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
@@ -278,6 +372,59 @@ public class MainActivity extends FragmentActivity
         favoriteFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, favoriteFragment).addToBackStack(null).commit();
     }
+
+    public void user(final JSONObject profile, final String email) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run(){
+                try{
+                    LOGGEDINUSER = new Author();
+                    LOGGEDINUSER.setAuthorID(profile.getString("id"));
+                    LOGGEDINUSER.setFirstname(profile.getString("given_name"));
+                    LOGGEDINUSER.setLastname(profile.getString("family_name"));
+                    LOGGEDINUSER.setEmail(email);
+
+                    FragmentManager fm = getSupportFragmentManager();
+                    ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);
+                    fragment.ShowNavigation();
+                }catch (JSONException e){
+                    Log.d("JSONException:", e.getMessage());
+                }
+
+            }
+        });
+    }
+
+    public void showError(final String msg){
+        Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
+    }
+
+    public void handleException(final Exception e) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (e instanceof GooglePlayServicesAvailabilityException) {
+                    // The Google Play services APK is old, disabled, or not present.
+                    // Show a dialog created by Google Play services that allows
+                    // the user to update the APK
+                    int statusCode = ((GooglePlayServicesAvailabilityException)e)
+                            .getConnectionStatusCode();
+                    Dialog dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
+                            MainActivity.this,
+                            REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+                    dialog.show();
+                } else if (e instanceof UserRecoverableAuthException) {
+                    // Unable to authenticate, such as when the user has not yet granted
+                    // the app access to the account, but the user can fix this.
+                    // Forward the user to an activity in Google Play services.
+                    Intent intent = ((UserRecoverableAuthException)e).getIntent();
+                    startActivityForResult(intent,
+                            REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+                }
+            }
+        });
+    }
+
     class LoadFavoritesTask extends AsyncTask<String, Void, ArrayList<Recept>> {
         private ProgressDialog pDialog;
         @Override
