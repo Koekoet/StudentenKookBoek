@@ -17,7 +17,7 @@ import java.util.List;
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
 import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
-import be.howest.nmct.receptenapp.data.Difficulty;
+import be.howest.nmct.receptenapp.data.DifficultyData.Difficulty;
 import be.howest.nmct.receptenapp.data.helpers.onlineData;
 
 
@@ -50,7 +50,7 @@ public class Recept implements Parcelable {
         setCost(in.readString());
         setNumberOfPersons(in.readInt());
         setDifficultyID(in.readInt());
-        setDifficulty((be.howest.nmct.receptenapp.data.Difficulty) in.readParcelable(be.howest.nmct.receptenapp.data.Difficulty.class.getClassLoader()));
+        setDifficulty((be.howest.nmct.receptenapp.data.DifficultyData.Difficulty) in.readParcelable(be.howest.nmct.receptenapp.data.DifficultyData.Difficulty.class.getClassLoader()));
         setPicture(in.readString());
         setRecipeText(in.readString());
         setCategories(in.readArrayList(Category.class.getClassLoader()));
@@ -268,7 +268,7 @@ public class Recept implements Parcelable {
                     String cost = c.getString("Cost");
                     int numberOfPersons = c.getInt("NumberOfPersons");
                     int difficultyId = c.getInt("DifficultyId");
-                    be.howest.nmct.receptenapp.data.Difficulty dif = be.howest.nmct.receptenapp.data.Difficulty.getDifficultyById(difficultyId);
+                    be.howest.nmct.receptenapp.data.DifficultyData.Difficulty dif = be.howest.nmct.receptenapp.data.DifficultyData.Difficulty.getDifficultyById(difficultyId);
                     String picture = c.getString("Picture");
                     //ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
                     String recipeText = c.getString("RecipeText");
@@ -314,7 +314,7 @@ public class Recept implements Parcelable {
                     String cost = c.getString("Cost");
                     int numberOfPersons = c.getInt("NumberOfPersons");
                     int difficultyId = c.getInt("DifficultyId");
-                    be.howest.nmct.receptenapp.data.Difficulty dif = be.howest.nmct.receptenapp.data.Difficulty.getDifficultyById(difficultyId);
+                    be.howest.nmct.receptenapp.data.DifficultyData.Difficulty dif = be.howest.nmct.receptenapp.data.DifficultyData.Difficulty.getDifficultyById(difficultyId);
                     String picture = c.getString("Picture");
                     ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
                     String recipeText = c.getString("RecipeText");
@@ -360,7 +360,7 @@ public class Recept implements Parcelable {
                 String cost = c.getString("Cost");
                 int numberOfPersons = c.getInt("NumberOfPersons");
                 int difficultyId = c.getInt("DifficultyId");
-                be.howest.nmct.receptenapp.data.Difficulty dif = be.howest.nmct.receptenapp.data.Difficulty.getDifficultyById(difficultyId);
+                be.howest.nmct.receptenapp.data.DifficultyData.Difficulty dif = be.howest.nmct.receptenapp.data.DifficultyData.Difficulty.getDifficultyById(difficultyId);
                 String picture = c.getString("Picture");
                 ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
                 String recipeText = c.getString("RecipeText");

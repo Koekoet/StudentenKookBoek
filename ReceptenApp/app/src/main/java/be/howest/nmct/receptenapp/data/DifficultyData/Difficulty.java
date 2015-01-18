@@ -1,4 +1,4 @@
-package be.howest.nmct.receptenapp.data;
+package be.howest.nmct.receptenapp.data.DifficultyData;
 
 import android.os.Parcel;
 import android.os.Parcelable;

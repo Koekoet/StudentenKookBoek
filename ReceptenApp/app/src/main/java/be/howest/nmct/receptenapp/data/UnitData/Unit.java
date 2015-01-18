@@ -1,4 +1,4 @@
-package be.howest.nmct.receptenapp.data;
+package be.howest.nmct.receptenapp.data.UnitData;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

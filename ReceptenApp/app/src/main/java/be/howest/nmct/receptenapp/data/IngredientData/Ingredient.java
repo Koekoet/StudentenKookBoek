@@ -1,7 +1,5 @@
 package be.howest.nmct.receptenapp.data.IngredientData;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,8 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
-import be.howest.nmct.receptenapp.data.Unit;
+import be.howest.nmct.receptenapp.data.UnitData.Unit;
 import be.howest.nmct.receptenapp.data.helpers.onlineData;
 
 
