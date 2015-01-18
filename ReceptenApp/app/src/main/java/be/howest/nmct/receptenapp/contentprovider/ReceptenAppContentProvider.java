@@ -45,12 +45,12 @@ public class ReceptenAppContentProvider extends ContentProvider {
     private static final int RECEPTS = 20;
     private static final int RECEPTS_ID = 21;
     private static final int RECEPTS_BY_CAT_ID = 22;
+    private static final int RECEPTS_BY_QUERY = 23;
     //ReceptByCategoryID
     private static final int RECBYCAT = 30;
     //Favorite
     private static final int FAVORITE = 40;
     private static final int FAVORITE_ID = 41;
-
     //Ingredient
     private static final int INGREDIENT = 50;
 
@@ -96,6 +96,7 @@ public class ReceptenAppContentProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC, RECEPTS);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/#", RECEPTS_ID);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/RecByCatId/#", RECEPTS_BY_CAT_ID);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/RecByQUERY/*", RECEPTS_BY_QUERY);
 
         //RECIPE BY CAT
         sURIMatcher.addURI(AUTHORITY, BASE_PATH_RECBYCAT, RECBYCAT);
@@ -151,6 +152,17 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 break;
             case RECEPTS_BY_CAT_ID:
                 return LoadRecipesByCategory(uri);
+            case RECEPTS_BY_QUERY:
+
+                String[] args = new String[1];
+                args[0] = "%"+ uri.getLastPathSegment() +"%";
+                db = RecDatabase.getReadableDatabase();
+                return db.rawQuery("SELECT * FROM " + ReceptTable.TABLE_RECEPI + " WHERE " + ReceptTable.COLUMN_NAME + " like ?", args);
+
+               /* selectedDatabase = 1;
+                queryBuilder.setTables(ReceptTable.TABLE_RECEPI);
+                queryBuilder.appendWhere(ReceptTable.COLUMN_NAME + "= %" + uri.getLastPathSegment() + "%");
+                break;*/
             //RECEPTS BY CAT
             case RECBYCAT:
                 //GET ALL REC BY CAT

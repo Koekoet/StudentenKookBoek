@@ -12,17 +12,23 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
@@ -69,8 +75,8 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-
-        getActivity().setTitle("Categorieën");
+        getActivity().getActionBar().setSubtitle(null);
+        getActivity().getActionBar().setTitle(R.string.app_name);
 
         //TEMP
         //AddFavorites();
@@ -189,7 +195,6 @@ public class ReceptCategoriesFragment extends ListFragment {
         protected Boolean doInBackground(String... params) {
 
             Boolean succes = RecipesByCategory.getAllRecipesByCategoryCURSOR(context);
-            AddFavorites();
             return succes;
         }
         @Override
@@ -204,26 +209,6 @@ public class ReceptCategoriesFragment extends ListFragment {
 
         }
     }
-
-    //TEMP ADD FAVORITES
-    private void AddFavorites(){
-        ContentValues values = new ContentValues();
-        values.put(FavoriteTable.COLUMN_ID,10);
-        context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_FAV, values);
-
-        values = new ContentValues();
-        values.put(FavoriteTable.COLUMN_ID,12);
-        context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_FAV, values);
-
-        values = new ContentValues();
-        values.put(FavoriteTable.COLUMN_ID,13);
-        context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_FAV, values);
-
-        values = new ContentValues();
-        values.put(FavoriteTable.COLUMN_ID,15);
-        context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_FAV, values);
-    }
-
     private void showCategories() {
         String[] projection = { CategoryTable.COLUMN_ID ,CategoryTable.COLUMN_NAME, CategoryTable.COLUMN_IMAGE };
         mCursor =  context.getContentResolver().query(
@@ -331,6 +316,7 @@ public class ReceptCategoriesFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         context = getActivity();
+        getActivity().setTitle(R.string.app_name);
 
         try {
             mCallback = (OnCategorieSelectedListener) activity;
@@ -346,6 +332,50 @@ public class ReceptCategoriesFragment extends ListFragment {
         mCallback.OnCategorieSelectedListener(mCursor.getInt(mCursor.getColumnIndex(CategoryTable.COLUMN_ID)));
     }
 
+    private String grid_currentQuery = null; // holds the current query...
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.menu_item_search).getActionView();
+        searchView.setOnQueryTextListener(queryListener);
+
+
+    }
+    private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            if (TextUtils.isEmpty(newText)) {
+
+                grid_currentQuery = null;
+            } else {
+
+                grid_currentQuery = newText;
+
+            }
+            //getLoaderManager().restartLoader(0, null, MyListFragment.this);
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            Toast.makeText(getActivity(), "Searching for: " + query + "...", Toast.LENGTH_LONG).show();
+            ReceptSearchFragment recSFrag = new ReceptSearchFragment();
+            Bundle bundle = new Bundle();
+            Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/RecByQUERY/" + query);
+            bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
+            recSFrag.setArguments(bundle);
+            getFragmentManager().beginTransaction().replace(R.id.mainfragment, recSFrag).addToBackStack("SEARCH").commit();
+            return false;
+        }
+    };
 
 
 }

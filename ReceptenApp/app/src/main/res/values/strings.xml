@@ -41,5 +41,7 @@
     <string name="bereiding">Bereiding:</string>
     <string name="Categories">Categorieën</string>
     <string name="action_favorite">favorite</string>
+    <string name="receptimage">receptimage</string>
+    <string name="receptname">Large Text</string>
 
 </resources>

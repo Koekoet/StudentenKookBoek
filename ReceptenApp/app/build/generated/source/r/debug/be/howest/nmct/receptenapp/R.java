@@ -38,11 +38,11 @@ public final class R {
         public static final int textlinesborder=0x7f020010;
     }
     public static final class id {
-        public static final int BrouwerijImage=0x7f0a0028;
-        public static final int CategorieImage=0x7f0a002b;
+        public static final int BrouwerijImage=0x7f0a0029;
+        public static final int CategorieImage=0x7f0a002c;
         public static final int TextView2=0x7f0a0007;
-        public static final int action_delete=0x7f0a0036;
-        public static final int action_settings=0x7f0a0037;
+        public static final int action_delete=0x7f0a0039;
+        public static final int action_settings=0x7f0a003a;
         public static final int btnNext=0x7f0a0015;
         public static final int btnPrevious=0x7f0a0014;
         public static final int ciCostRecipeSpinner=0x7f0a000e;
@@ -56,23 +56,23 @@ public final class R {
         public static final int lvCategories=0x7f0a001c;
         public static final int lvIngredients=0x7f0a001e;
         public static final int mainfragment=0x7f0a0001;
-        public static final int menuItem=0x7f0a0029;
-        public static final int menu_item_favorite=0x7f0a0033;
-        public static final int menu_item_rate=0x7f0a0035;
-        public static final int menu_item_search=0x7f0a0032;
-        public static final int menu_item_share=0x7f0a0034;
+        public static final int menuItem=0x7f0a002a;
+        public static final int menu_item_favorite=0x7f0a0036;
+        public static final int menu_item_rate=0x7f0a0038;
+        public static final int menu_item_search=0x7f0a0035;
+        public static final int menu_item_share=0x7f0a0037;
         public static final int nameRecipe=0x7f0a000a;
         public static final int navigation=0x7f0a0002;
         public static final int numPersons=0x7f0a0010;
         public static final int ratingBar=0x7f0a0006;
         public static final int realtabcontent=0x7f0a001f;
-        public static final int receptImage=0x7f0a002e;
+        public static final int receptImage=0x7f0a002f;
         public static final int recept_bereiding=0x7f0a0019;
-        public static final int recept_image=0x7f0a002d;
+        public static final int recept_image=0x7f0a002e;
         public static final int recept_image_create=0x7f0a0009;
-        public static final int recept_naam=0x7f0a002f;
+        public static final int recept_naam=0x7f0a0030;
         public static final int review=0x7f0a0008;
-        public static final int riAddBasket=0x7f0a0031;
+        public static final int riAddBasket=0x7f0a0032;
         public static final int riBereiding=0x7f0a0017;
         public static final int riCostRecipe=0x7f0a000f;
         public static final int riDifficultyRecipe=0x7f0a0013;
@@ -80,6 +80,9 @@ public final class R {
         public static final int riNameRecipe=0x7f0a0021;
         public static final int riNumRecipe=0x7f0a0011;
         public static final int riUploadedRecipe=0x7f0a0022;
+        public static final int search_query=0x7f0a0028;
+        public static final int search_recept_img=0x7f0a0033;
+        public static final int search_recept_name=0x7f0a0034;
         public static final int textView2=0x7f0a0018;
         public static final int tvBierNaamRating=0x7f0a0005;
         public static final int tvCostRecipe=0x7f0a0024;
@@ -87,12 +90,12 @@ public final class R {
         public static final int tvNumRecipe=0x7f0a0025;
         public static final int tvSwipeRight=0x7f0a0027;
         public static final int tvUploadedRecipe=0x7f0a0026;
-        public static final int tv_ingredient_name=0x7f0a0030;
+        public static final int tv_ingredient_name=0x7f0a0031;
         public static final int txbCategories=0x7f0a001b;
         public static final int txbIngredients=0x7f0a001d;
         public static final int txtQuery=0x7f0a0004;
-        public static final int txvBoodschap=0x7f0a002a;
-        public static final int txvCategorieNaam=0x7f0a002c;
+        public static final int txvBoodschap=0x7f0a002b;
+        public static final int txvCategorieNaam=0x7f0a002d;
         public static final int txvUploadImage=0x7f0a0016;
     }
     public static final class layout {
@@ -113,12 +116,14 @@ public final class R {
         public static final int fragment_recept_info=0x7f03000e;
         public static final int fragment_recept_ingredienten=0x7f03000f;
         public static final int fragment_recepten=0x7f030010;
-        public static final int navigation_list_item=0x7f030011;
-        public static final int row_boodschappenlijstje=0x7f030012;
-        public static final int row_categories=0x7f030013;
-        public static final int row_favorites=0x7f030014;
-        public static final int row_ingredients=0x7f030015;
-        public static final int row_recept=0x7f030016;
+        public static final int fragment_search=0x7f030011;
+        public static final int navigation_list_item=0x7f030012;
+        public static final int row_boodschappenlijstje=0x7f030013;
+        public static final int row_categories=0x7f030014;
+        public static final int row_favorites=0x7f030015;
+        public static final int row_ingredients=0x7f030016;
+        public static final int row_recept=0x7f030017;
+        public static final int row_search=0x7f030018;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -150,24 +155,26 @@ public final class R {
         public static final int hello_world=0x7f070013;
         public static final int next=0x7f070014;
         public static final int previous=0x7f070015;
-        public static final int riCostRecipe=0x7f070016;
-        public static final int riDiffRecipe=0x7f070017;
-        public static final int riDurationRecipe=0x7f070018;
-        public static final int riNameRecipe=0x7f070019;
-        public static final int riNumRecipe=0x7f07001a;
-        public static final int riPictureRecipe=0x7f07001b;
-        public static final int riUploadedRecipe=0x7f07001c;
-        public static final int search_hint=0x7f07001d;
-        public static final int search_title=0x7f07001e;
-        public static final int swipeToAddBasket=0x7f07001f;
-        public static final int title_activity_favorite=0x7f070020;
-        public static final int title_activity_recept_detail=0x7f070021;
-        public static final int title_activity_search=0x7f070022;
-        public static final int title_activity_search_results=0x7f070023;
-        public static final int title_activity_test=0x7f070024;
-        public static final int txtUwMening=0x7f070025;
-        public static final int txtUwMeningHint=0x7f070026;
-        public static final int txtUwScore=0x7f070027;
+        public static final int receptimage=0x7f070016;
+        public static final int receptname=0x7f070017;
+        public static final int riCostRecipe=0x7f070018;
+        public static final int riDiffRecipe=0x7f070019;
+        public static final int riDurationRecipe=0x7f07001a;
+        public static final int riNameRecipe=0x7f07001b;
+        public static final int riNumRecipe=0x7f07001c;
+        public static final int riPictureRecipe=0x7f07001d;
+        public static final int riUploadedRecipe=0x7f07001e;
+        public static final int search_hint=0x7f07001f;
+        public static final int search_title=0x7f070020;
+        public static final int swipeToAddBasket=0x7f070021;
+        public static final int title_activity_favorite=0x7f070022;
+        public static final int title_activity_recept_detail=0x7f070023;
+        public static final int title_activity_search=0x7f070024;
+        public static final int title_activity_search_results=0x7f070025;
+        public static final int title_activity_test=0x7f070026;
+        public static final int txtUwMening=0x7f070027;
+        public static final int txtUwMeningHint=0x7f070028;
+        public static final int txtUwScore=0x7f070029;
     }
     public static final class style {
         /**  Customize your theme here. 

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import be.howest.nmct.receptenapp.R;
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
+import be.howest.nmct.receptenapp.data.CategoryData.CategoryTable;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
 import be.howest.nmct.receptenapp.data.RecipeView;
@@ -28,8 +29,7 @@ import be.howest.nmct.receptenapp.data.helpers.ImageConverter;
 /**
  * Created by Mattias on 17/11/2014.
  */
-public class ReceptReceptenFragment extends ListFragment
-       {
+public class ReceptReceptenFragment extends ListFragment {
 
     Context context = getActivity();
     //ReceptenAdapter receptenAdapter;
@@ -87,27 +87,26 @@ public class ReceptReceptenFragment extends ListFragment
         Bundle bundle = this.getArguments();
         Uri uri = bundle.getParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC);
 
-        mCursor = context.getContentResolver().query(
-                uri,
-                null,
-                null,
-                null,
-                null);
+        mCursor = context.getContentResolver().query(uri, null, null, null, null);
 
         if(mCursor != null){
             //display
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    receptenAdapter = new MyCursorAdapter(
-                            getActivity(),
-                            mCursor,
-                            0);
-
+                    receptenAdapter = new MyCursorAdapter(getActivity(), mCursor, 0);
                     listView.setAdapter(receptenAdapter);
                 }
 
             });
+        }
+
+        Uri catUri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_CAT + "/" + uri.getLastPathSegment());
+
+        Cursor Cat = context.getContentResolver().query(catUri, null,null,null,null);
+        if(Cat.getCount() != 0){
+            Cat.moveToFirst();
+            getActivity().getActionBar().setSubtitle(Cat.getString(Cat.getColumnIndex(CategoryTable.COLUMN_NAME)));
         }
     }
 

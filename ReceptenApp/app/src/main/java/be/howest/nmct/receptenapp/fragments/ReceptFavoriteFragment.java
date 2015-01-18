@@ -47,7 +47,6 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Mijn favorieten");
         context = getActivity();
         setHasOptionsMenu(true);
     }
@@ -55,9 +54,7 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_favorite, menu);
-        if(menu != null){
-            menu.findItem(R.id.menu_item_search).setVisible(false);
-        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -107,6 +104,7 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getActivity().getActionBar().setSubtitle("Favorieten");
         listView = getListView();
        showFavorites();
 

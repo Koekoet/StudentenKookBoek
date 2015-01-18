@@ -71,9 +71,6 @@ public class ReceptDetailFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(menu != null){
-            menu.findItem(R.id.menu_item_search).setVisible(false);
-        }
         inflater.inflate(R.menu.recept_detail, menu);
         mCursor.moveToFirst();
         String id = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_ID));
