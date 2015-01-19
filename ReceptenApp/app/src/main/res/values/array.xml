@@ -11,8 +11,7 @@
         <item>Boodschappenlijstje</item>
         <item>Favorieten</item>
         <item>Recept toevoegen</item>
-        <item>Vrienden</item>
-        <item>Profiel bewerken</item>
+        <item>Profiel</item>
         <item>Uitloggen</item>
     </string-array>
 </resources>

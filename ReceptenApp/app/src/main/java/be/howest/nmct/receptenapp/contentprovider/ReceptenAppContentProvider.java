@@ -347,6 +347,10 @@ public class ReceptenAppContentProvider extends ContentProvider {
                             selectionArgs);
                 }
                 break;
+            case RECEPTS:
+                sqlDB = RecDatabase.getWritableDatabase();
+                rowsDeleted = sqlDB.delete(ReceptTable.TABLE_RECEPI,null,null);
+                break;
             case FAVORITE:
                 sqlDB = FavDatabase.getWritableDatabase();
                 rowsDeleted = sqlDB.delete(FavoriteTable.TABLE_FAVORITE,null,null);

@@ -53,6 +53,10 @@ public class ReceptFavoriteFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
         inflater.inflate(R.menu.menu_favorite, menu);
 
         super.onCreateOptionsMenu(menu, inflater);

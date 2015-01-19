@@ -93,17 +93,7 @@ public class ReceptCategoriesFragment extends ListFragment {
                 null,
                 null,
                 null);
-        //check if not empty
-        if(mCursor.getCount() < 1){
-            //if empty --> load data from online
-            ShowCategoriesTask taskCat = new ShowCategoriesTask();
-            taskCat.execute();
-
-
-
-
-        } else {
-
+        if(mCursor.getCount() != 0){
             //display
             new Handler().post(new Runnable() {
 
@@ -119,122 +109,9 @@ public class ReceptCategoriesFragment extends ListFragment {
 
             });
         }
-
     }
 
     //1. Asynctask
-
-
-    class ShowCategoriesTask extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog pDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Loading data 1/3");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            Boolean isSucces = Category.LoadAllCategories(context);
-            return isSucces;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-
-
-
-            LoadReceptenTask taskRec = new LoadReceptenTask();
-            taskRec.execute();
-        }
-    }
-    class LoadReceptenTask extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog pDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog((getActivity()));
-            pDialog.setMessage("Loading data 2/3");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            Boolean isSucces = Recept.LoadAllRecipesCURSOR(context);
-            return isSucces;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-
-            LoadRecByCatTask taskRecByCat = new LoadRecByCatTask();
-            taskRecByCat.execute();
-        }
-    }
-    class LoadRecByCatTask extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog pDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog((getActivity()));
-            pDialog.setMessage("Loading data 3/3");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            Boolean succes = RecipesByCategory.getAllRecipesByCategoryCURSOR(context);
-            return succes;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-
-            showCategories();
-
-
-        }
-    }
-    private void showCategories() {
-        String[] projection = { CategoryTable.COLUMN_ID ,CategoryTable.COLUMN_NAME, CategoryTable.COLUMN_IMAGE };
-        mCursor =  context.getContentResolver().query(
-                ReceptenAppContentProvider.CONTENT_URI_CAT,
-                projection,
-                null,
-                null,
-                null);
-
-
-        //display
-        new Handler().post(new Runnable() {
-
-            @Override
-            public void run() {
-                customAdapter = new MyCursorAdapter(
-                        getActivity(),
-                        mCursor,
-                        0);
-
-                listView.setAdapter(customAdapter);
-            }
-
-        });
-    }
-
 
     public class MyCursorAdapter extends CursorAdapter {
         private LayoutInflater mInflater;
@@ -342,7 +219,7 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.search, menu);
         SearchView searchView = (SearchView)menu.findItem(R.id.menu_item_search).getActionView();
         searchView.setOnQueryTextListener(queryListener);
 

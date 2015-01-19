@@ -12,6 +12,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -25,6 +28,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
@@ -43,11 +47,13 @@ import java.util.ArrayList;
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.Author;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
+import be.howest.nmct.receptenapp.data.CategoryData.CategoryDatabaseHelper;
 import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
 import be.howest.nmct.receptenapp.data.Login.AbstractGetUserTask;
 import be.howest.nmct.receptenapp.data.Login.GetUserInForeground;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
+import be.howest.nmct.receptenapp.data.RecipesByCategory.RecipesByCategory;
 import be.howest.nmct.receptenapp.fragments.ReceptBereidingFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptBoodschappenlijstjeFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptCategoriesFragment;
@@ -77,6 +83,8 @@ public class MainActivity extends FragmentActivity
         ReceptCreateCategoryFragment.OnNextCreateCategorySelectedListener{
 
     private String[] arrNavigation;
+    private Context context;
+    private Bundle savedInstanceStateGlobal;
 
     //NAVIGATION
     private DrawerLayout navigationDrawer;
@@ -114,6 +122,8 @@ public class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = MainActivity.this;
+        savedInstanceStateGlobal = savedInstanceState;
 
         arrRecipes = new ArrayList<ArrayList<Recept>>();
 
@@ -149,14 +159,89 @@ public class MainActivity extends FragmentActivity
             navigationDrawer.closeDrawer(navigationView);}*/
 
 
-        if (savedInstanceState == null) {
+        if (savedInstanceStateGlobal == null) {
+            //check sqlite database
+            CategoryDatabaseHelper catdatabase = new CategoryDatabaseHelper(MainActivity.this);
+            SQLiteDatabase catDb = catdatabase.getReadableDatabase();
+            Cursor mCount= catDb.rawQuery("select count(*) from category", null);
+            mCount.moveToFirst();
+            int count= mCount.getInt(0);
+            mCount.close();
 
-            setCategories();
-           // LoadCategoriesTask task = new LoadCategoriesTask();
+            if(count == 0){
+                //load all data
+                LoadData();
+
+            } else {
+                // continue mainactivity
+                setCategories();
+            }
+
+            // LoadCategoriesTask task = new LoadCategoriesTask();
             //task.execute();
         }
 
+
+
     }
+
+    private void LoadData() {
+        if(isDeviceOnline()){
+            clearBackstack();
+            LoadDataTask taskCat = new LoadDataTask();
+            taskCat.execute();
+        } else {
+            Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class LoadDataTask extends AsyncTask<String, Integer, Void> {
+        private ProgressDialog pDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(context);
+            pDialog.setMessage("Loading data from servers");
+            pDialog.setProgressStyle(pDialog.STYLE_HORIZONTAL);
+            pDialog.setCancelable(false);
+            pDialog.setIndeterminate(false);
+            //The maximum number of items is 100
+            pDialog.setMax(3);
+            //Set the current progress to zero
+            pDialog.setProgress(0);
+            pDialog.show();
+        }
+        @Override
+        protected Void doInBackground(String... params) {
+
+            Category.LoadAllCategories(MainActivity.this);
+            publishProgress(1);
+            Recept.LoadAllRecipesCURSOR(MainActivity.this);
+            publishProgress(2);
+            RecipesByCategory.getAllRecipesByCategoryCURSOR(MainActivity.this);
+            publishProgress(3);
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values)
+        {
+            //set the current progress of the progress dialog
+            pDialog.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+
+            setCategories();
+
+        }
+    }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -171,33 +256,22 @@ public class MainActivity extends FragmentActivity
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        SearchView searchView = (SearchView)menu.findItem(R.id.menu_item_search).getActionView();
-        searchView.setOnQueryTextListener(queryListener);
-
-//
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onCreateOptionsMenu(menu);
-
-    }
-    */
-
     //LOADING DATA ON START
     private void setCategories(){
         ReceptCategoriesFragment catFrag = new ReceptCategoriesFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.mainfragment, catFrag).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, catFrag).commit();
     }
 
         //ON MENU OR ITEM SELECTED
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -206,6 +280,9 @@ public class MainActivity extends FragmentActivity
         int id = item.getItemId();
 
         switch (id){
+            case R.id.menu_item_refresh:
+                LoadData();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -248,16 +325,11 @@ public class MainActivity extends FragmentActivity
                     ReceptCreateInfoFragment receptCreateInfoFragment = new ReceptCreateInfoFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateInfoFragment).addToBackStack(null).commit();
                     break;
-
                 case 4:
-                    Toast.makeText(MainActivity.this, "Vrienden", Toast.LENGTH_SHORT).show();
-                    break;
-
-                case 5:
                     Toast.makeText(MainActivity.this, "Profiel", Toast.LENGTH_SHORT).show();
                     break;
 
-                case 6:
+                case 5:
                     //USER UITLOGGEN
                     FragmentManager fm = getSupportFragmentManager();
                     LOGGEDINUSER = null;
@@ -345,14 +417,6 @@ public class MainActivity extends FragmentActivity
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    private void ShowFavorites(){
-        ReceptFavoriteFragment favoriteFragment = new ReceptFavoriteFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(favoriteFragment.ARR_FAVORITE_RECIPES, arrFavoriteRecipes);
-        favoriteFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, favoriteFragment).addToBackStack(null).commit();
-    }
-
     public void user(final JSONObject profile, final String email) {
         runOnUiThread(new Runnable() {
             @Override
@@ -403,37 +467,6 @@ public class MainActivity extends FragmentActivity
                 }
             }
         });
-    }
-
-    class LoadFavoritesTask extends AsyncTask<String, Void, ArrayList<Recept>> {
-        private ProgressDialog pDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Loading");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        @Override
-        protected ArrayList<Recept> doInBackground(String... params) {
-
-            ArrayList<Recept> recepts = new ArrayList<Recept>();
-            recepts.add(Recept.getRecipeById(10));
-            recepts.add(Recept.getRecipeById(15));
-            recepts.add(Recept.getRecipeById(12));
-            arrFavoriteRecipes = recepts;
-            return recepts;
-        }
-        @Override
-        protected void onPostExecute(ArrayList<Recept> result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-            arrFavoriteRecipes = result;
-            ShowFavorites();
-        }
     }
 
     //ON CATEGORIE SELECTED
@@ -571,32 +604,10 @@ public class MainActivity extends FragmentActivity
                                 recCreateRecipe.setAuthorID(1);
 
 
-                                //RECEPT TOEVOEGEN SQLITE
-                                ContentValues values = new ContentValues();
-                                values.put(ReceptTable.COLUMN_NAME, recCreateRecipe.getName());
-                                values.put(ReceptTable.COLUMN_AUTHORID, recCreateRecipe.getAuthorID());
-                                values.put(ReceptTable.COLUMN_DURATION, recCreateRecipe.getDuration());
-                                values.put(ReceptTable.COLUMN_COST, cost);
-                                values.put(ReceptTable.COLUMN_NUMBEROFPERSONS, recCreateRecipe.getNumberOfPersons());
-                                values.put(ReceptTable.COLUMN_DIFFICULTYID, recCreateRecipe.getDifficultyID());
-                                values.put(ReceptTable.COLUMN_PICTURE, recCreateRecipe.getPicture());
-                                values.put(ReceptTable.COLUMN_INGREDIENTS, ingredients);
-                                values.put(ReceptTable.COLUMN_RECIPETEXT, recCreateRecipe.getRecipeText());
-                                MainActivity.this.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
-
 
                                 //RECEPT TOEVOEGEN DATABASE ONLINE
                                 new CreateRecipe(recCreateRecipe, ingredients, cost).execute();
 
-                                //Recept detail tonen
-                                int id = recCreateRecipe.getID();
-                                ReceptDetailFragment fragment = new ReceptDetailFragment();
-                                Bundle bundle = new Bundle();
-                                Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/" + id);
-                                bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
-                                fragment.setArguments(bundle);
-
-                                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
 
                             }
                         })
@@ -648,7 +659,7 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private class CreateRecipe extends AsyncTask<Void,Void,Void>{
+    private class CreateRecipe extends AsyncTask<Void,Void, Integer>{
         Recept recipe;
         String ingredients;
         String cost;
@@ -660,20 +671,44 @@ public class MainActivity extends FragmentActivity
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Integer doInBackground(Void... params) {
             //int receptID = recept.create....
-            Recept.createRecipe(recipe.getName(), recipe.getAuthorID(), recipe.getDuration(),
-                    cost, recipe.getNumberOfPersons(), recipe.getDifficultyID(), recipe.getPicture(),
+            int id = Recept.createRecipe(recipe.getName(), recipe.getAuthorID(), recipe.getDuration(),
+                    cost, recipe.getNumberOfPersons(), recipe.getDifficultyID() +1, recipe.getPicture(),
                     ingredients, recipe.getRecipeText());
 
-            /*for(Category cat : recipe.getCategories()){
-                //voor elke categorie dat gebruiker selecteert
-                //moet het receptID toegevoegd worden aan de lijst
+            //RECEPT TOEVOEGEN SQLITE
+            ContentValues values = new ContentValues();
+            values.put(ReceptTable.COLUMN_ID, recCreateRecipe.getID());
+            values.put(ReceptTable.COLUMN_NAME, recCreateRecipe.getName());
+            values.put(ReceptTable.COLUMN_AUTHORID, recCreateRecipe.getAuthorID());
+            values.put(ReceptTable.COLUMN_DURATION, recCreateRecipe.getDuration());
+            values.put(ReceptTable.COLUMN_COST, cost);
+            values.put(ReceptTable.COLUMN_NUMBEROFPERSONS, recCreateRecipe.getNumberOfPersons());
+            values.put(ReceptTable.COLUMN_DIFFICULTYID, recCreateRecipe.getDifficultyID());
+            values.put(ReceptTable.COLUMN_PICTURE, recCreateRecipe.getPicture());
+            values.put(ReceptTable.COLUMN_INGREDIENTS, ingredients);
+            values.put(ReceptTable.COLUMN_RECIPETEXT, recCreateRecipe.getRecipeText());
+            MainActivity.this.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
+
+            return id;
+        }
+
+        @Override
+        protected void onPostExecute(Integer id) {
+            super.onPostExecute(id);
+
+            ReceptDetailFragment fragment = new ReceptDetailFragment();
+            Bundle bundle = new Bundle();
+            Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/" + id);
+            bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
+            fragment.setArguments(bundle);
+
+            clearBackstack();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
 
 
-            }*/
 
-            return null;
         }
     }
 }

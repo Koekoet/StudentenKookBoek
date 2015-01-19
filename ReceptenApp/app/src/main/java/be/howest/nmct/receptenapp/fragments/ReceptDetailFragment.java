@@ -72,6 +72,10 @@ public class ReceptDetailFragment extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.recept_detail, menu);
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
         mCursor.moveToFirst();
         String id = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_ID));
         Uri favUri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_FAV + "/" + id);

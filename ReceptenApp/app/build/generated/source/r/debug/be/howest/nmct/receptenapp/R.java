@@ -414,27 +414,28 @@ containing a value of this type.
         public static final int ic_action_new=0x7f020020;
         public static final int ic_action_next_item=0x7f020021;
         public static final int ic_action_not_important=0x7f020022;
-        public static final int ic_action_search=0x7f020023;
-        public static final int ic_action_share=0x7f020024;
-        public static final int ic_drawer=0x7f020025;
-        public static final int ic_launcher=0x7f020026;
-        public static final int ic_noimage=0x7f020027;
-        public static final int ic_plusone_medium_off_client=0x7f020028;
-        public static final int ic_plusone_small_off_client=0x7f020029;
-        public static final int ic_plusone_standard_off_client=0x7f02002a;
-        public static final int ic_plusone_tall_off_client=0x7f02002b;
-        public static final int ic_tick=0x7f02002c;
-        public static final int ic_upload=0x7f02002d;
-        public static final int powered_by_google_dark=0x7f02002e;
-        public static final int powered_by_google_light=0x7f02002f;
-        public static final int textlinesborder=0x7f020030;
+        public static final int ic_action_refresh=0x7f020023;
+        public static final int ic_action_search=0x7f020024;
+        public static final int ic_action_share=0x7f020025;
+        public static final int ic_drawer=0x7f020026;
+        public static final int ic_launcher=0x7f020027;
+        public static final int ic_noimage=0x7f020028;
+        public static final int ic_plusone_medium_off_client=0x7f020029;
+        public static final int ic_plusone_small_off_client=0x7f02002a;
+        public static final int ic_plusone_standard_off_client=0x7f02002b;
+        public static final int ic_plusone_tall_off_client=0x7f02002c;
+        public static final int ic_tick=0x7f02002d;
+        public static final int ic_upload=0x7f02002e;
+        public static final int powered_by_google_dark=0x7f02002f;
+        public static final int powered_by_google_light=0x7f020030;
+        public static final int textlinesborder=0x7f020031;
     }
     public static final class id {
         public static final int BrouwerijImage=0x7f08003f;
         public static final int CategorieImage=0x7f080042;
         public static final int TextView2=0x7f08001e;
         public static final int action_delete=0x7f080054;
-        public static final int action_settings=0x7f080055;
+        public static final int action_settings=0x7f080056;
         public static final int adjust_height=0x7f080002;
         public static final int adjust_width=0x7f080001;
         public static final int book_now=0x7f080012;
@@ -467,7 +468,8 @@ containing a value of this type.
         public static final int menuItem=0x7f080040;
         public static final int menu_item_favorite=0x7f080051;
         public static final int menu_item_rate=0x7f080053;
-        public static final int menu_item_search=0x7f080050;
+        public static final int menu_item_refresh=0x7f080050;
+        public static final int menu_item_search=0x7f080055;
         public static final int menu_item_share=0x7f080052;
         public static final int monochrome=0x7f080016;
         public static final int nameRecipe=0x7f080021;
@@ -554,7 +556,8 @@ containing a value of this type.
         public static final int menu_detail_isfavorite=0x7f0d0001;
         public static final int menu_favorite=0x7f0d0002;
         public static final int recept_detail=0x7f0d0003;
-        public static final int test=0x7f0d0004;
+        public static final int search=0x7f0d0004;
+        public static final int test=0x7f0d0005;
     }
     public static final class raw {
         public static final int gtm_analytics=0x7f050000;
@@ -618,27 +621,28 @@ containing a value of this type.
         public static final int previous=0x7f0b0037;
         public static final int receptimage=0x7f0b0038;
         public static final int receptname=0x7f0b0039;
-        public static final int riCostRecipe=0x7f0b003a;
-        public static final int riDiffRecipe=0x7f0b003b;
-        public static final int riDurationRecipe=0x7f0b003c;
-        public static final int riNameRecipe=0x7f0b003d;
-        public static final int riNumRecipe=0x7f0b003e;
-        public static final int riPictureRecipe=0x7f0b003f;
-        public static final int riUploadedRecipe=0x7f0b0040;
-        public static final int search_hint=0x7f0b0041;
-        public static final int search_title=0x7f0b0042;
-        public static final int store_picture_message=0x7f0b0043;
-        public static final int store_picture_title=0x7f0b0044;
-        public static final int swipeToAddBasket=0x7f0b0045;
-        public static final int title_activity_favorite=0x7f0b0046;
-        public static final int title_activity_recept_detail=0x7f0b0047;
-        public static final int title_activity_search=0x7f0b0048;
-        public static final int title_activity_search_results=0x7f0b0049;
-        public static final int title_activity_test=0x7f0b004a;
-        public static final int txtUwMening=0x7f0b004b;
-        public static final int txtUwMeningHint=0x7f0b004c;
-        public static final int txtUwScore=0x7f0b004d;
-        public static final int wallet_buy_button_place_holder=0x7f0b004e;
+        public static final int refresh=0x7f0b003a;
+        public static final int riCostRecipe=0x7f0b003b;
+        public static final int riDiffRecipe=0x7f0b003c;
+        public static final int riDurationRecipe=0x7f0b003d;
+        public static final int riNameRecipe=0x7f0b003e;
+        public static final int riNumRecipe=0x7f0b003f;
+        public static final int riPictureRecipe=0x7f0b0040;
+        public static final int riUploadedRecipe=0x7f0b0041;
+        public static final int search_hint=0x7f0b0042;
+        public static final int search_title=0x7f0b0043;
+        public static final int store_picture_message=0x7f0b0044;
+        public static final int store_picture_title=0x7f0b0045;
+        public static final int swipeToAddBasket=0x7f0b0046;
+        public static final int title_activity_favorite=0x7f0b0047;
+        public static final int title_activity_recept_detail=0x7f0b0048;
+        public static final int title_activity_search=0x7f0b0049;
+        public static final int title_activity_search_results=0x7f0b004a;
+        public static final int title_activity_test=0x7f0b004b;
+        public static final int txtUwMening=0x7f0b004c;
+        public static final int txtUwMeningHint=0x7f0b004d;
+        public static final int txtUwScore=0x7f0b004e;
+        public static final int wallet_buy_button_place_holder=0x7f0b004f;
     }
     public static final class style {
         /**  Customize your theme here. 

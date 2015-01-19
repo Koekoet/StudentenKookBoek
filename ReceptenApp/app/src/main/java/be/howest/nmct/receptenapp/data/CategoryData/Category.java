@@ -2,6 +2,7 @@ package be.howest.nmct.receptenapp.data.CategoryData;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import be.howest.nmct.receptenapp.data.ReceptData.ReceptDatabaseHelper;
 import be.howest.nmct.receptenapp.data.helpers.onlineData;
 
 /**
@@ -139,6 +141,9 @@ public class Category implements Parcelable{
 
     //CURSOR METHODES
     public static Boolean LoadAllCategories(Context context){
+
+        context.getContentResolver().delete(ReceptenAppContentProvider.CONTENT_URI_CAT,null,null);
+
         JSONArray categories = onlineData.selectAllData("ap_recept_category");
         if(categories != null) {
             for (int i = 0; i < categories.length(); i++) {
