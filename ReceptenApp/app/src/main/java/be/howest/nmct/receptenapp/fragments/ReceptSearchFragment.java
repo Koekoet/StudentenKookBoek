@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -32,9 +33,9 @@ import be.howest.nmct.receptenapp.data.RecipeView;
 import be.howest.nmct.receptenapp.data.helpers.ImageConverter;
 
 /**
- * Created by Mattias on 17/11/2014.
+ * Created by Mattias on 18/01/2015.
  */
-public class ReceptReceptenFragment extends ListFragment {
+public class ReceptSearchFragment extends ListFragment {
 
     Context context = getActivity();
     //ReceptenAdapter receptenAdapter;
@@ -45,44 +46,16 @@ public class ReceptReceptenFragment extends ListFragment {
     private Cursor mCursor;
     MyCursorAdapter receptenAdapter;
 
-    //global date here:
-    Category category;
-    ArrayList<Recept> arrRecipes;
-    RecipeView data;
-
-    //KEYS
-    public static final String SELECTED_CATEGORIE = "";
-    public static final String ARR_RECIPES = "";
-    public static final String RECIPE_VIEW = "";
-
-    public ReceptReceptenFragment(){}
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        //1. get ID van CATEGORY
-
-        //2. get Cursor list van Recepten by ID
-
-
-        /* TEMP IN COMMENTAAR
-        Bundle bundle = this.getArguments();
-        data = bundle.getParcelable(RECIPE_VIEW);
-        category = data.getCategorie();
-        arrRecipes = data.getArrRecipes();
-        */
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //getActivity().setTitle(category.getName());
-        View view =  inflater.inflate(R.layout.fragment_recepten, container, false);
-
-
-
-        /*((TextView) view.findViewById(R.id.Title)).setText("");
-        txvTitle = (TextView) view.findViewById(R.id.Title);
-        */return view;
+        View view =  inflater.inflate(R.layout.fragment_search, container, false);
+        return view;
     }
 
     public void onViewCreated(View v, Bundle savedInstanceState) {
@@ -92,27 +65,25 @@ public class ReceptReceptenFragment extends ListFragment {
         Bundle bundle = this.getArguments();
         Uri uri = bundle.getParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC);
 
+        TextView query = (TextView) v.findViewById(R.id.search_query);
+        query.setText("Resultaten voor: " + uri.getLastPathSegment());
         mCursor = context.getContentResolver().query(uri, null, null, null, null);
 
-        if(mCursor != null){
+
+        if(mCursor != null && mCursor.getCount() != 0){
             //display
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    receptenAdapter = new MyCursorAdapter(getActivity(), mCursor, 0);
+                    receptenAdapter = new MyCursorAdapter(getActivity(), mCursor,0);
                     listView.setAdapter(receptenAdapter);
                 }
 
             });
         }
 
-        Uri catUri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_CAT + "/" + uri.getLastPathSegment());
+        getActivity().getActionBar().setSubtitle("zoekresultaten");
 
-        Cursor Cat = context.getContentResolver().query(catUri, null,null,null,null);
-        if(Cat.getCount() != 0){
-            Cat.moveToFirst();
-            getActivity().getActionBar().setSubtitle(Cat.getString(Cat.getColumnIndex(CategoryTable.COLUMN_NAME)));
-        }
     }
 
 
@@ -121,51 +92,35 @@ public class ReceptReceptenFragment extends ListFragment {
         // Default constructor
         public MyCursorAdapter(Context context, Cursor cursor, int flags) {
             super(context, cursor, flags);
-                  mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            }
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
 
         public void bindView(View view, Context context, Cursor cursor) {
-            TextView naam = (TextView) view.findViewById(R.id.recept_naam);
+            TextView naam = (TextView) view.findViewById(R.id.search_recept_name);
             naam.setText(cursor.getString(cursor.getColumnIndex(ReceptTable.COLUMN_NAME)));
 
-            ImageView image = (ImageView) view.findViewById(R.id.receptImage);
+            ImageView image = (ImageView) view.findViewById(R.id.search_recept_img);
             image.setImageBitmap(ImageConverter.StringToBitmap(cursor.getString(cursor.getColumnIndex(ReceptTable.COLUMN_PICTURE))));
         }
 
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-              return mInflater.inflate(R.layout.row_recept, parent, false);
+            return mInflater.inflate(R.layout.row_search, parent, false);
         }
     }
 
-
-           //CLICK ON LIST
-    OnReceptenSelectedListener mCallback;
-
-    // Container Activity must implement this interface
-    public interface OnReceptenSelectedListener {
-        public void OnReceptenSelectedListener(int id);
-    }
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mCallback = (OnReceptenSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnReceptenSelectedListener");
-        }
-    }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         mCursor.moveToPosition(position);
+        String recID = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_ID));
+        ReceptDetailFragment fragment = new ReceptDetailFragment();
+        Bundle bundle = new Bundle();
+        Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/" + recID);
+        bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
+        fragment.setArguments(bundle);
 
-        mCallback.OnReceptenSelectedListener(mCursor.getInt(mCursor.getColumnIndex(ReceptTable.COLUMN_ID)));
-        mCursor.close();
+        getFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
     }
-
-
-    private String grid_currentQuery = null; // holds the current query...
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -181,6 +136,7 @@ public class ReceptReceptenFragment extends ListFragment {
 
 
     }
+    private String grid_currentQuery = null; // holds the current query...
     private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
 
         @Override
@@ -189,8 +145,7 @@ public class ReceptReceptenFragment extends ListFragment {
 
                 grid_currentQuery = null;
             } else {
-
-                grid_currentQuery = newText;
+               grid_currentQuery = newText;
 
             }
             //getLoaderManager().restartLoader(0, null, MyListFragment.this);
@@ -199,15 +154,18 @@ public class ReceptReceptenFragment extends ListFragment {
 
         @Override
         public boolean onQueryTextSubmit(String query) {
+            Toast.makeText(getActivity(), "Searching for: " + query + "...", Toast.LENGTH_LONG).show();
             ReceptSearchFragment recSFrag = new ReceptSearchFragment();
             Bundle bundle = new Bundle();
             Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/RecByQUERY/" + query);
             bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
             recSFrag.setArguments(bundle);
+            getFragmentManager().popBackStack("SEARCH", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getFragmentManager().beginTransaction().replace(R.id.mainfragment, recSFrag).addToBackStack("SEARCH").commit();
             return false;
         }
     };
+
 
 
 }

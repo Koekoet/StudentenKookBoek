@@ -130,6 +130,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="next">Volgende</string>
     <string name="previous">Vorige</string>
+    <string name="receptimage">receptimage</string>
+    <string name="receptname">Large Text</string>
     <string name="riCostRecipe">Kost:</string>
     <string name="riDiffRecipe">Moeilijkheid:</string>
     <string name="riDurationRecipe">Duur:</string>

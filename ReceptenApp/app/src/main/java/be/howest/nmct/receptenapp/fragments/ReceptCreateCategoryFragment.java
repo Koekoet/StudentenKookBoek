@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import be.howest.nmct.receptenapp.MainActivity;
 import be.howest.nmct.receptenapp.R;
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
@@ -109,7 +108,7 @@ public class ReceptCreateCategoryFragment extends ListFragment {
         }
         recCreateRecipe.setCategoryIDs(selectedIDs);
         customAdapter.notifyDataSetChanged();
-        
+
     }
 
     @Override

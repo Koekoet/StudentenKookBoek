@@ -71,9 +71,6 @@ public class ReceptDetailFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(menu != null){
-            menu.findItem(R.id.menu_item_search).setVisible(false);
-        }
         inflater.inflate(R.menu.recept_detail, menu);
         mCursor.moveToFirst();
         String id = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_ID));
@@ -131,7 +128,7 @@ public class ReceptDetailFragment extends Fragment{
                                 float selectedRating = rating.getRating();
                                 String selectedReview = "" + review.getText();
 
-                                //OPSLAAN VAN RATING.... TIJS (*ZUCHT*);
+
 
                             }
                         }).setNegativeButton("Annuleer", new DialogInterface.OnClickListener() {
@@ -155,7 +152,9 @@ public class ReceptDetailFragment extends Fragment{
     private void ShareIntent() {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Ik vond een leuk receptje op de receptenapp! Bekijk het hier: www.tijs-dl.be");
+        String text = "Ik vond een leuk receptje op de studentenkookapp voor " + mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_NAME)) +". ";
+        text += "De bereiding: " + mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_RECIPETEXT));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_NAME)));
         shareIntent.setType("text/plain");
         startActivity(shareIntent);

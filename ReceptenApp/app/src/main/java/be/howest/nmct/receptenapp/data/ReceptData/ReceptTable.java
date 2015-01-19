@@ -23,7 +23,7 @@ public class ReceptTable {
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_RECEPI + "("
-            + COLUMN_ID + " integer, "
+            + COLUMN_ID + " integer primary key autoincrement not null, "
             + COLUMN_NAME + " text not null, "
             + COLUMN_AUTHORID + " integer,"
             + COLUMN_DURATION + " text not null,"

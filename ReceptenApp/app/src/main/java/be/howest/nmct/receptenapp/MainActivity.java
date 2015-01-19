@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +47,7 @@ import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
 import be.howest.nmct.receptenapp.data.Login.AbstractGetUserTask;
 import be.howest.nmct.receptenapp.data.Login.GetUserInForeground;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
+import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
 import be.howest.nmct.receptenapp.fragments.ReceptBereidingFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptBoodschappenlijstjeFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptCategoriesFragment;
@@ -125,14 +128,14 @@ public class MainActivity extends FragmentActivity
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
+                //getActionBar().setTitle(titleClosed);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
+                //getActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -168,18 +171,25 @@ public class MainActivity extends FragmentActivity
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
         getMenuInflater().inflate(R.menu.main, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        SearchView searchView = (SearchView)menu.findItem(R.id.menu_item_search).getActionView();
+        searchView.setOnQueryTextListener(queryListener);
+
+//
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
+
     }
+    */
 
     //LOADING DATA ON START
     private void setCategories(){
@@ -196,25 +206,7 @@ public class MainActivity extends FragmentActivity
         int id = item.getItemId();
 
         switch (id){
-            /*case R.id.action_TestRecepi:
-                *//*Intent intent = new Intent(MainActivity.this, ReceptDetailActivity.class);
-                intent.putExtra("selectedRecipe", new Recept());
-                startActivity(intent);*//*
-                ReceptDetailFragment fragment = new ReceptDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("MYSELECTEDRECIPE", new Recept());
-                fragment.setArguments(bundle);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
-                return true;
-            case R.id.action_TestFavorite:
-                ReceptFavoriteFragment fragment1 = new ReceptFavoriteFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, fragment1).addToBackStack(null).commit();
-                return true;
-            case R.id.action_TestDiff:
-                Intent intent3 = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent3);
-                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -353,18 +345,6 @@ public class MainActivity extends FragmentActivity
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    //FAVORITES
-    private void checkFavoritesData() {
-        if(arrFavoriteRecipes == null){
-            //set favorites
-            LoadFavoritesTask task = new LoadFavoritesTask();
-            task.execute();
-
-        }else {
-            ShowFavorites();
-        }
-
-    }
     private void ShowFavorites(){
         ReceptFavoriteFragment favoriteFragment = new ReceptFavoriteFragment();
         Bundle bundle = new Bundle();
@@ -376,8 +356,8 @@ public class MainActivity extends FragmentActivity
     public void user(final JSONObject profile, final String email) {
         runOnUiThread(new Runnable() {
             @Override
-            public void run(){
-                try{
+            public void run() {
+                try {
                     LOGGEDINUSER = new Author();
                     LOGGEDINUSER.setAuthorID(profile.getString("id"));
                     LOGGEDINUSER.setFirstname(profile.getString("given_name"));
@@ -387,7 +367,7 @@ public class MainActivity extends FragmentActivity
                     FragmentManager fm = getSupportFragmentManager();
                     ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);
                     fragment.ShowNavigation();
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     Log.d("JSONException:", e.getMessage());
                 }
 
@@ -464,9 +444,7 @@ public class MainActivity extends FragmentActivity
 
 
     }
-    private void LoadRecipes(Category category) {
-        //checkRecipes(category);
-    }
+
     private void showReceptsOfCategory(int categoryID){
         //krijgen category binnen ==> mss simpeler met een ID alleen in toekomst.
         ReceptReceptenFragment recFrag = new ReceptReceptenFragment();
@@ -532,9 +510,6 @@ public class MainActivity extends FragmentActivity
 
     }
 
-
-
-
     @Override
     public void onNextCreateInfoSelectedListener(Recept recept) {
         this.recCreateRecipe = recept;
@@ -595,15 +570,33 @@ public class MainActivity extends FragmentActivity
 
                                 recCreateRecipe.setAuthorID(1);
 
+
+                                //RECEPT TOEVOEGEN SQLITE
+                                ContentValues values = new ContentValues();
+                                values.put(ReceptTable.COLUMN_NAME, recCreateRecipe.getName());
+                                values.put(ReceptTable.COLUMN_AUTHORID, recCreateRecipe.getAuthorID());
+                                values.put(ReceptTable.COLUMN_DURATION, recCreateRecipe.getDuration());
+                                values.put(ReceptTable.COLUMN_COST, cost);
+                                values.put(ReceptTable.COLUMN_NUMBEROFPERSONS, recCreateRecipe.getNumberOfPersons());
+                                values.put(ReceptTable.COLUMN_DIFFICULTYID, recCreateRecipe.getDifficultyID());
+                                values.put(ReceptTable.COLUMN_PICTURE, recCreateRecipe.getPicture());
+                                values.put(ReceptTable.COLUMN_INGREDIENTS, ingredients);
+                                values.put(ReceptTable.COLUMN_RECIPETEXT, recCreateRecipe.getRecipeText());
+                                MainActivity.this.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
+
+
+                                //RECEPT TOEVOEGEN DATABASE ONLINE
                                 new CreateRecipe(recCreateRecipe, ingredients, cost).execute();
 
                                 //Recept detail tonen
-                                ReceptDetailFragment receptDetailFragment = new ReceptDetailFragment();
+                                int id = recCreateRecipe.getID();
+                                ReceptDetailFragment fragment = new ReceptDetailFragment();
                                 Bundle bundle = new Bundle();
-                                bundle.putParcelable("MYSELECTEDRECIPE", recCreateRecipe);
-                                receptDetailFragment.setArguments(bundle);
-                                clearBackstack();
-                                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptDetailFragment).addToBackStack(null).commit();
+                                Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/" + id);
+                                bundle.putParcelable(ReceptenAppContentProvider.CONTENT_ITEM_REC, uri);
+                                fragment.setArguments(bundle);
+
+                                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment,fragment).addToBackStack(null).commit();
 
                             }
                         })
