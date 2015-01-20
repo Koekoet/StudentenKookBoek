@@ -14,6 +14,10 @@ import android.text.TextUtils;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import be.howest.nmct.receptenapp.data.AuthorData.AuthorDatabaseHelper;
+import be.howest.nmct.receptenapp.data.AuthorData.AuthorTable;
+import be.howest.nmct.receptenapp.data.BoodschappenData.BasketDatabaseHelper;
+import be.howest.nmct.receptenapp.data.BoodschappenData.BasketTable;
 import be.howest.nmct.receptenapp.data.CategoryData.CategoryDatabaseHelper;
 import be.howest.nmct.receptenapp.data.CategoryData.CategoryTable;
 import be.howest.nmct.receptenapp.data.FavoriteData.FavoriteDatabaseHelper;
@@ -40,6 +44,8 @@ public class ReceptenAppContentProvider extends ContentProvider {
     private FavoriteDatabaseHelper FavDatabase;
     private IngredientDatabaseHelper IngrDatabase;
     private UnitDatabaseHelper UnitDatabase;
+    private BasketDatabaseHelper BasketDatabase;
+    private AuthorDatabaseHelper AuthorDatabase;
 
     // used for the UriMacher
     //Category
@@ -61,6 +67,12 @@ public class ReceptenAppContentProvider extends ContentProvider {
     //Unit
     private static final int UNIT = 60;
     private static final int UNIT_ID = 61;
+    //Boodschappen
+    private static final int BASKET = 70;
+    private static final int BASKET_ID = 71;
+    //Author
+    private static final int AUTHOR = 80;
+    private static final int AUTHOR_ID = 81;
 
 
     //Auth
@@ -76,15 +88,17 @@ public class ReceptenAppContentProvider extends ContentProvider {
         FavDatabase = new FavoriteDatabaseHelper(getContext());
         IngrDatabase = new IngredientDatabaseHelper(getContext());
         UnitDatabase = new UnitDatabaseHelper(getContext());
+        BasketDatabase = new BasketDatabaseHelper(getContext());
+        AuthorDatabase = new AuthorDatabaseHelper(getContext());
         return false;
     }
 
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)  {
         //Preperation
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        checkColumns(projection);
+        //checkColumns(projection);
         SQLiteDatabase db =  null;
-        //0 -> Cat, 1 -> Rec, 2-> RECBYCAT, 3->FAV, 4->ING, 5->Unit
+        //0 -> Cat, 1 -> Rec, 2-> RECBYCAT, 3->FAV, 4->ING, 5->Unit, 6-> Basket, 7->Author
         int selectedDatabase = 0;
 
         int uriType = sURIMatcher.match(uri);
@@ -154,6 +168,29 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 queryBuilder.setTables(UnitTable.TABLE_UNIT);
                 queryBuilder.appendWhere(UnitTable.COLUMN_ID + "=" + uri.getLastPathSegment());
                 break;
+
+            //-------------------BASKET---------------------//
+            case BASKET:
+                selectedDatabase = 6;
+                queryBuilder.setTables(BasketTable.TABLE_BASKET);
+                break;
+            case BASKET_ID:
+                selectedDatabase = 6;
+                queryBuilder.setTables(BasketTable.TABLE_BASKET);
+                queryBuilder.appendWhere(BasketTable.COLUMN_ID + "=" + uri.getLastPathSegment());
+                break;
+
+            //-------------------AUTHOR---------------------//
+            case AUTHOR:
+                selectedDatabase = 7;
+                queryBuilder.setTables(AuthorTable.TABLE_AUTHOR);
+                break;
+            case AUTHOR_ID:
+                selectedDatabase = 7;
+                queryBuilder.setTables(AuthorTable.TABLE_AUTHOR);
+                queryBuilder.appendWhere(AuthorTable.COLUMN_ID + "=" + uri.getLastPathSegment());
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -164,6 +201,8 @@ public class ReceptenAppContentProvider extends ContentProvider {
         else if(selectedDatabase == 3) {db = FavDatabase.getWritableDatabase();}
         else if(selectedDatabase == 4){db = IngrDatabase.getWritableDatabase();}
         else if(selectedDatabase == 5){db = UnitDatabase.getWritableDatabase();}
+        else if(selectedDatabase == 6) {db = BasketDatabase.getWritableDatabase();}
+        else if(selectedDatabase == 7) {db = AuthorDatabase.getWritableDatabase();}
 
         Cursor cursor = queryBuilder.query(db, projection, selection,selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -206,7 +245,14 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 sqlDB = UnitDatabase.getWritableDatabase();
                 sqlDB.insert(UnitTable.TABLE_UNIT,null,values);
                 break;
-
+            case BASKET:
+                sqlDB = BasketDatabase.getWritableDatabase();
+                sqlDB.insert(BasketTable.TABLE_BASKET, null,values);
+                break;
+            case AUTHOR:
+                sqlDB = AuthorDatabase.getWritableDatabase();
+                sqlDB.insert(AuthorTable.TABLE_AUTHOR, null,values);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -244,6 +290,10 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 sqlDB = RecDatabase.getWritableDatabase();
                 rowsDeleted = sqlDB.delete(ReceptTable.TABLE_RECEPI,null,null);
                 break;
+            case RECBYCAT:
+                sqlDB = RecByCatDatabase.getWritableDatabase();
+                rowsDeleted = sqlDB.delete(RecipesByCategoryTable.TABLE_RECEPIBYCATEGORY,null,null);
+                break;
             case FAVORITE:
                 sqlDB = FavDatabase.getWritableDatabase();
                 rowsDeleted = sqlDB.delete(FavoriteTable.TABLE_FAVORITE,null,null);
@@ -252,6 +302,27 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 sqlDB = FavDatabase.getWritableDatabase();
                 id = uri.getLastPathSegment();
                 rowsDeleted = sqlDB.delete(FavoriteTable.TABLE_FAVORITE, FavoriteTable.COLUMN_ID + "=" + id, null);
+                break;
+            case INGREDIENT:
+                sqlDB = IngrDatabase.getWritableDatabase();
+                rowsDeleted = sqlDB.delete(IngredientTable.TABLE_INGREDIENT,null,null);
+                break;
+            case UNIT:
+                sqlDB = UnitDatabase.getWritableDatabase();
+                rowsDeleted = sqlDB.delete(UnitTable.TABLE_UNIT,null,null);
+                break;
+            case BASKET:
+                sqlDB = BasketDatabase.getWritableDatabase();
+                rowsDeleted = sqlDB.delete(BasketTable.TABLE_BASKET,null,null);
+                break;
+            case BASKET_ID:
+                sqlDB = BasketDatabase.getWritableDatabase();
+                id = uri.getLastPathSegment();
+                rowsDeleted = sqlDB.delete(BasketTable.TABLE_BASKET, BasketTable.COLUMN_ID + "=" + id, null);
+                break;
+            case AUTHOR:
+                sqlDB = AuthorDatabase.getWritableDatabase();
+                rowsDeleted = sqlDB.delete(AuthorTable.TABLE_AUTHOR, null,null);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -290,6 +361,10 @@ public class ReceptenAppContentProvider extends ContentProvider {
                             selectionArgs);
                 }
                 break;
+            case INGREDIENT_ID:
+                String ingrID = uri.getLastPathSegment();
+                sqlDB = IngrDatabase.getWritableDatabase();
+                rowsUpdated = sqlDB.update(IngredientTable.TABLE_INGREDIENT,values,IngredientTable.COLUMN_ID + "=" + ingrID,null);
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -337,9 +412,6 @@ public class ReceptenAppContentProvider extends ContentProvider {
             Cursor rec1 = getRecById(RecByCatIDs[0]);
             Cursor rec2 = getRecById(RecByCatIDs[1]);
             recipes = new MergeCursor(new Cursor[] {rec1, rec2});
-            int recCount = recipes.getCount();
-            int rec1Count = rec1.getCount();
-            int rec2Co = rec2.getCount();
         } else {
             Cursor rec1 = getRecById(RecByCatIDs[0]);
             Cursor rec2 = getRecById(RecByCatIDs[1]);
@@ -434,10 +506,25 @@ public class ReceptenAppContentProvider extends ContentProvider {
         return recipes;
     }
 
-    //-------------------FAVORITES METHODES------------//
+    //-------------------INGREDIENTS METHODES----------//
     //-----INGREDIENT CONNECTION-----------------------//
     private static final String BASE_PATH_INGR = "ingredient";
     public static final Uri CONTENT_URI_INGR = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_INGR);
+
+    //-------------------UNITS METHODES----------------//
+    //-----UNITS CONNECTION----------------------------//
+    private static final String BASE_PATH_UNIT = "unit";
+    public static final Uri CONTENT_URI_UNIT = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_UNIT);
+
+    //-------------------BASKET METHODES---------------//
+    //-----BASKET CONNECTION---------------------------//
+    private static final String BASE_PATH_BASKET = "basket";
+    public static final Uri CONTENT_URI_BASKET = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_BASKET);
+
+    //-------------------AUTHOR METHODES---------------//
+    //-----AUTHOR CONNECTION---------------------------//
+    private static final String BASE_PATH_AUTHOR = "author";
+    public static final Uri CONTENT_URI_AUTHOR = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_AUTHOR);
 
     //-------------------URIMATCHER--------------------//
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -461,7 +548,20 @@ public class ReceptenAppContentProvider extends ContentProvider {
 
         //INGREDIENT
         sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR, INGREDIENT);
-        //sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR + "/#", FAVORITE_INGR);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR + "/#", INGREDIENT_ID);
+
+        //UNIT
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_UNIT, UNIT);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_UNIT + "/#", UNIT_ID);
+
+
+        //BASKET
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_BASKET, BASKET);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_BASKET + "/#", BASKET_ID);
+
+        //AUTHOR
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_AUTHOR, AUTHOR);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_AUTHOR + "/#", AUTHOR_ID);
 
     }
 }

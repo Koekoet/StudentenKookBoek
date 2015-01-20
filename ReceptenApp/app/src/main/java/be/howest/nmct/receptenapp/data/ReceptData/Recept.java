@@ -411,7 +411,7 @@ public class Recept implements Parcelable {
         return ingrList;
     }
 
-    public static int createRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText) {
+    public static int createRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText, String _catIDs) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", "ap_recipe"));
         params.add(new BasicNameValuePair("Name", "" + _name));
@@ -423,6 +423,7 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("Image", "" + _picture));
         params.add(new BasicNameValuePair("Ingredients", "" + _ingredients));
         params.add(new BasicNameValuePair("RecipeText", "" + _recipeText));
+        params.add(new BasicNameValuePair("CatId", "" + _catIDs));
         int newId = onlineData.create(params);
         return newId;
     }
@@ -451,6 +452,8 @@ public class Recept implements Parcelable {
 
     //CURSOR METHODES
     public static Boolean LoadAllRecipesCURSOR(Context context){
+        context.getContentResolver().delete(ReceptenAppContentProvider.CONTENT_URI_REC,null,null);
+
         JSONArray recipes = onlineData.selectAllData("ap_recipe");
         if (recipes != null) {
             for (int i = 0; i < recipes.length(); i++) {

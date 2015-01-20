@@ -243,7 +243,6 @@ public class ReceptCategoriesFragment extends ListFragment {
 
         @Override
         public boolean onQueryTextSubmit(String query) {
-            Toast.makeText(getActivity(), "Searching for: " + query + "...", Toast.LENGTH_LONG).show();
             ReceptSearchFragment recSFrag = new ReceptSearchFragment();
             Bundle bundle = new Bundle();
             Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/RecByQUERY/" + query);

@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +14,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -27,12 +25,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
@@ -46,15 +42,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
-import be.howest.nmct.receptenapp.data.Author;
+import be.howest.nmct.receptenapp.data.AuthorData.Author;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
 import be.howest.nmct.receptenapp.data.CategoryData.CategoryDatabaseHelper;
 import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
+import be.howest.nmct.receptenapp.data.IngredientData.IngredientTable;
 import be.howest.nmct.receptenapp.data.Login.AbstractGetUserTask;
 import be.howest.nmct.receptenapp.data.Login.GetUserInForeground;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
 import be.howest.nmct.receptenapp.data.RecipesByCategory.RecipesByCategory;
+import be.howest.nmct.receptenapp.data.UnitData.Unit;
 import be.howest.nmct.receptenapp.fragments.ReceptBereidingFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptBoodschappenlijstjeFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptCategoriesFragment;
@@ -94,17 +92,6 @@ public class MainActivity extends FragmentActivity
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private View navigationView;
-
-    //globale vars here:
-    public static ArrayList<Category> arrCategories;
-    public static ArrayList<ArrayList<Recept>> arrRecipes;
-    public static ArrayList<Recept> arrFavoriteRecipes;
-    public static ArrayList<Ingredient> arrIngredients;
-
-
-    //Globale vars
-    //  Boodschappenlijstje
-    public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
 
     private Recept recCreateRecipe;
 
@@ -215,20 +202,24 @@ public class MainActivity extends FragmentActivity
             pDialog.setCancelable(false);
             pDialog.setIndeterminate(false);
             //The maximum number of items is 100
-            pDialog.setMax(3);
+            pDialog.setMax(5);
             //Set the current progress to zero
             pDialog.setProgress(0);
             pDialog.show();
         }
         @Override
         protected Void doInBackground(String... params) {
-
-            Category.LoadAllCategories(MainActivity.this);
+            Context context = MainActivity.this;
+            Category.LoadAllCategories(context);
             publishProgress(1);
-            Recept.LoadAllRecipesCURSOR(MainActivity.this);
+            Recept.LoadAllRecipesCURSOR(context);
             publishProgress(2);
-            RecipesByCategory.getAllRecipesByCategoryCURSOR(MainActivity.this);
+            RecipesByCategory.getAllRecipesByCategoryCURSOR(context);
             publishProgress(3);
+            Ingredient.LoadAllIngredientsCURSOR(context);
+            publishProgress(4);
+            Unit.LoadAllUnitsCURSOR(context);
+            publishProgress(5);
             return null;
         }
 
@@ -306,8 +297,11 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onNavigationSelected(int position, boolean isLogin) {
         //case 0-2 (blijft hetzelfde)
-        if(navigationDrawer.isDrawerOpen(navigationView)){
-            navigationDrawer.closeDrawer(navigationView);}
+        if(isSmall){
+            if(navigationDrawer.isDrawerOpen(navigationView)){
+                navigationDrawer.closeDrawer(navigationView);}
+        }
+
 
         clearBackstack();
         switch (position){
@@ -431,26 +425,31 @@ public class MainActivity extends FragmentActivity
     }
 
     public void user(final JSONObject profile, final String email) {
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    LOGGEDINUSER = new Author();
-                    LOGGEDINUSER.setAuthorID(profile.getString("id"));
-                    LOGGEDINUSER.setFirstname(profile.getString("given_name"));
-                    LOGGEDINUSER.setLastname(profile.getString("family_name"));
-                    LOGGEDINUSER.setEmail(email);
-                    LOGGEDINUSER.setImage(profile.getString("picture"));
-
-                    FragmentManager fm = getSupportFragmentManager();
-                    ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);
-                    fragment.ShowNavigation();
-                } catch (JSONException e) {
-                    Log.d("JSONException:", e.getMessage());
-                }
-
+                FragmentManager fm = getSupportFragmentManager();
+                ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);
+                fragment.ShowNavigation();
             }
         });
+        try {
+            LOGGEDINUSER = new Author();
+            LOGGEDINUSER.setAuthorID(profile.getString("id"));
+            LOGGEDINUSER.setFirstname(profile.getString("given_name"));
+            LOGGEDINUSER.setLastname(profile.getString("family_name"));
+            LOGGEDINUSER.setEmail(email);
+            LOGGEDINUSER.setImage(profile.getString("picture"));
+
+            Author.saveAuthor(LOGGEDINUSER);
+            Author.loadAllAuthors(MainActivity.this);
+
+        } catch (JSONException e) {
+            Log.d("JSONException:", e.getMessage());
+        }
+
+
     }
 
     public void showError(final String msg){
@@ -607,20 +606,22 @@ public class MainActivity extends FragmentActivity
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //Recept wegschrijven
-                                String ingredients = "";
-                                for (Ingredient ing : recCreateRecipe.getIngredients()){
-                                    ingredients += ing.getID() + ";";
+
+
+                                String catIDs = "";
+                                for(Integer cat : recCreateRecipe.getCategoryIDs()){
+                                    catIDs += cat + ";";
                                 }
-                                ingredients = ingredients.substring(0, ingredients.length()-1);
+                                catIDs = catIDs.substring(0, catIDs.length() -1);
                                 String cost = recCreateRecipe.getCost();
                                 cost = cost.replaceAll(">","").replaceAll("<","").replaceAll("€","").replaceAll(" ", "");
 
-                                recCreateRecipe.setAuthorID(1);
+                                recCreateRecipe.setAuthorID(Integer.parseInt(LOGGEDINUSER.getAuthorID()));
 
 
 
                                 //RECEPT TOEVOEGEN DATABASE ONLINE
-                                new CreateRecipe(recCreateRecipe, ingredients, cost).execute();
+                                new CreateRecipe(recCreateRecipe, cost, catIDs).execute();
 
 
                             }
@@ -677,23 +678,27 @@ public class MainActivity extends FragmentActivity
         Recept recipe;
         String ingredients;
         String cost;
+        String catIDs;
 
-        public CreateRecipe(Recept recept, String ingredients, String cost){
+        public CreateRecipe(Recept recept, String cost, String catIDs){
             this.recipe = recept;
-            this.ingredients = ingredients;
             this.cost = cost;
+            this.catIDs = catIDs;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
-            //int receptID = recept.create....
+            String ingredients = Ingredient.createIngredients(recipe.getIngredients());
+
+            //CREATE RECIPE ONLINE
             int id = Recept.createRecipe(recipe.getName(), recipe.getAuthorID(), recipe.getDuration(),
                     cost, recipe.getNumberOfPersons(), recipe.getDifficultyID() +1, recipe.getPicture(),
-                    ingredients, recipe.getRecipeText());
+                    ingredients, recipe.getRecipeText(), catIDs);
+            //CREATE INGREDIENTS ONLINE
 
             //RECEPT TOEVOEGEN SQLITE
             ContentValues values = new ContentValues();
-            values.put(ReceptTable.COLUMN_ID, recCreateRecipe.getID());
+            values.put(ReceptTable.COLUMN_ID, id);
             values.put(ReceptTable.COLUMN_NAME, recCreateRecipe.getName());
             values.put(ReceptTable.COLUMN_AUTHORID, recCreateRecipe.getAuthorID());
             values.put(ReceptTable.COLUMN_DURATION, recCreateRecipe.getDuration());
@@ -704,6 +709,10 @@ public class MainActivity extends FragmentActivity
             values.put(ReceptTable.COLUMN_INGREDIENTS, ingredients);
             values.put(ReceptTable.COLUMN_RECIPETEXT, recCreateRecipe.getRecipeText());
             MainActivity.this.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
+
+            //UPDATE REC BY CAT TABLE
+            RecipesByCategory.getAllRecipesByCategoryCURSOR(MainActivity.this);
+            Ingredient.LoadAllIngredientsCURSOR(MainActivity.this);
 
             return id;
         }

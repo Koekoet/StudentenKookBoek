@@ -111,8 +111,9 @@ public class onlineData {
                 } else if (name.toString().equals(String.valueOf("error"))) {
                     String error = jsonObj.getString("error");
                     Log.d("Error: ", error);
-                } else if (name.toString().equals(String.valueOf("be/howest/nmct/receptenapp/data"))) {
-                    String data = jsonObj.getString("be/howest/nmct/receptenapp/data");
+                } else if (name.toString().equals(String.valueOf("data"))) {
+                    String data = jsonObj.getString("data");
+                    id = Integer.parseInt(data);
                     Log.d("Data: ", data);
                 }
             } catch (JSONException e) {

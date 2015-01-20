@@ -1,13 +1,19 @@
 package be.howest.nmct.receptenapp.data.IngredientData;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.UnitData.Unit;
 import be.howest.nmct.receptenapp.data.helpers.onlineData;
 
@@ -155,20 +161,21 @@ public class Ingredient implements Parcelable{
 
 
     //CURSOR METHODES
-    /*
-    public static Boolean LoadAllCategories(Context context){
-        JSONArray categories = onlineData.selectAllData("ap_recept_category");
-        if(categories != null) {
-            for (int i = 0; i < categories.length(); i++) {
+    public static Boolean LoadAllIngredientsCURSOR(Context context){
+        context.getContentResolver().delete(ReceptenAppContentProvider.CONTENT_URI_INGR,null,null);
+
+        JSONArray ingredients = onlineData.selectAllData("ap_ingredient");
+        if(ingredients != null) {
+            for (int i = 0; i < ingredients.length(); i++) {
                 try {
-                    JSONObject c = categories.getJSONObject(i);
+                    JSONObject c = ingredients.getJSONObject(i);
                     ContentValues values = new ContentValues();
                     int id = c.getInt("ID");
                     values.put(IngredientTable.COLUMN_ID, c.getInt("ID"));
                     values.put(IngredientTable.COLUMN_NAME, c.getString("Name"));
                     values.put(IngredientTable.COLUMN_AMOUNT, c.getString("Amount"));
                     values.put(IngredientTable.COLUMN_UNITID, c.getString("UnitId"));
-                    context.getContentResolver().insert(ReceptenAppContentProvider., values);
+                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_INGR, values);
                 } catch (Exception e) {
                 }
             }
@@ -177,27 +184,18 @@ public class Ingredient implements Parcelable{
             return false;
         }
     }
-
-    public static ArrayList<Ingredient> getAllIngredients() {
-        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
-        JSONArray ingredients = onlineData.selectAllData("ap_ingredient");
-        if(ingredients != null) {
-            for (int i = 0; i < ingredients.length(); i++) {
-                try {
-                    JSONObject c = ingredients.getJSONObject(i);
-                    int id = c.getInt("ID");
-                    String name = c.getString("Name");
-                    ArrayList<Unit> allowedUnits = makeArrayUnits(c.getString("AllowedUnits"));
-                    Ingredient ingr = new Ingredient(id, name, allowedUnits);
-                    list.add(ingr);
-                } catch (Exception e) {
-                }
-            }
-            return list;
-        }else{
-            return null;
+    public static String createIngredients(ArrayList<Ingredient> ingredients){
+        String ingrIDs = "";
+        for(Ingredient ingr : ingredients){
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("tableName", "ap_ingredient"));
+            params.add(new BasicNameValuePair("Name", ingr.getName()));
+            params.add(new BasicNameValuePair("Amount","" +ingr.getAmount()));
+            params.add(new BasicNameValuePair("UnitId",ingr.getUnitID() + 1 +""));
+            Integer ID = onlineData.create(params);
+            ingrIDs += ID +";";
         }
+        ingrIDs = ingrIDs.substring(0, ingrIDs.length()-1);
+        return  ingrIDs;
     }
-    */
-
 }

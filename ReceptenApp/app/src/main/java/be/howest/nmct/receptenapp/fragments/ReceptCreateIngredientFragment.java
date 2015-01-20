@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import be.howest.nmct.receptenapp.data.CategoryData.CategoryTable;
 import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
 import be.howest.nmct.receptenapp.data.IngredientData.IngredientTable;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
+import be.howest.nmct.receptenapp.data.UnitData.UnitTable;
 import be.howest.nmct.receptenapp.data.helpers.ImageConverter;
 
 public class ReceptCreateIngredientFragment extends ListFragment {
@@ -44,7 +46,7 @@ public class ReceptCreateIngredientFragment extends ListFragment {
     OnNextCreateIngredientSelectedListener mCallback;
     IngredientAdapter mAdapter;
     ListView lvIngredients;
-    private ArrayList<String> units = new ArrayList<String>();
+    private Cursor unitCursor;
     private int clickedOnAdd = 0;
 
     public ReceptCreateIngredientFragment() {
@@ -58,6 +60,13 @@ public class ReceptCreateIngredientFragment extends ListFragment {
         recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
 
 
+        String[] projection = {UnitTable.COLUMN_ID ,UnitTable.COLUMN_NAME, UnitTable.COLUMN_ABBREVIATION };
+
+        //get data from cursor
+        Context c = getActivity();
+        unitCursor = c.getContentResolver().query(ReceptenAppContentProvider.CONTENT_URI_UNIT, projection, null, null, null);
+
+
 
         if(recCreateRecipe.getIngredients() != null && recCreateRecipe.getIngredients().size()>0){
             //Dan zitten er al ingredients in...
@@ -66,11 +75,6 @@ public class ReceptCreateIngredientFragment extends ListFragment {
             allIngredients = new ArrayList<Ingredient>();
             allIngredients.add(new Ingredient(-1,""));
         }
-
-        units.add("kg");
-        units.add("g");
-        units.add("l");
-        units.add("cl");
     }
 
     @Override
@@ -148,28 +152,6 @@ public class ReceptCreateIngredientFragment extends ListFragment {
         allIngredients = saveValidIngr;
     }
 
-    private void AddIngredients() {
-        allIngredients.clear();
-
-        for(int i = 0; i < clickedOnAdd; i++){
-            View row = lvIngredients.getChildAt(i);
-            EditText txtName = (EditText) row.findViewById(R.id.ingName);
-            EditText ingQuan = (EditText) row.findViewById(R.id.ingQuan);
-            Spinner spUnit = (Spinner) row.findViewById(R.id.ingUnit);
-            Ingredient ing = new Ingredient();
-            ing.setID(i);
-            ing.setName(txtName.getText().toString());
-            if(!ingQuan.getText().toString().equals("")){
-                ing.setAmount(Integer.parseInt(ingQuan.getText().toString()));
-            } else {
-                ing.setAmount(0);
-            }
-            ing.setUnitID(spUnit.getSelectedItemPosition());
-
-            allIngredients.add(ing);
-        }
-    }
-
     public interface OnNextCreateIngredientSelectedListener{
         public void onNextCreateIngredientSelectedListener(Recept recept, String button);
     }
@@ -198,9 +180,17 @@ public class ReceptCreateIngredientFragment extends ListFragment {
             EditText ingQuan = (EditText) row.findViewById(R.id.ingQuan);
             Spinner spUnit = (Spinner) row.findViewById(R.id.ingUnit);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,units);
-            spUnit.setAdapter(adapter);
+            //SPINER
+            String[] columns = new String[] { UnitTable.COLUMN_ABBREVIATION };
+            int[] to = new int[] { android.R.id.text1 };
 
+            SimpleCursorAdapter mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_spinner_item, unitCursor, columns, to);
+            mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spUnit.setAdapter(mAdapter);
+
+            /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,units);
+            spUnit.setAdapter(adapter);
+*/
             int thisID = allIngredients.get(position).getID();
             if(thisID == -1){
                 //Dan is hij 'leeg'

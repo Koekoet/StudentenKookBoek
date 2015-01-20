@@ -109,6 +109,8 @@ public class RecipesByCategory {
 
     //CURSOR FUNCTION
     public static Boolean getAllRecipesByCategoryCURSOR(Context context){
+        context.getContentResolver().delete(ReceptenAppContentProvider.CONTENT_URI_RECBYCAT,null,null);
+
         JSONArray recByCat = onlineData.selectAllData("ap_recipes_by_category");
         if (recByCat != null) {
             for (int i = 0; i < recByCat.length(); i++) {

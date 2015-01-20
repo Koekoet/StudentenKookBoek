@@ -1,15 +1,23 @@
 package be.howest.nmct.receptenapp.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,38 +25,58 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.R;
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import be.howest.nmct.receptenapp.data.BoodschappenData.BasketTable;
+import be.howest.nmct.receptenapp.data.UnitData.UnitTable;
 import be.howest.nmct.receptenapp.data.helpers.SwipeDismissListViewTouchListener;
 
 /**
  * Created by Mattias on 9/12/2014.
  */
 public class ReceptBoodschappenlijstjeFragment extends ListFragment {
-    private ArrayList<String> arrBoodschappenlijstje;
-    private BoodschappenlijstjeAdapter mAdapter;
+
+    //CURSOR
+    private Cursor mCursor;
+    private MyCursorAdapter mAdapter;
+    private ListView listView;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity();
         getActivity().setTitle("Mijn boodschappenlijstje");
-
-        //TODO
-        arrBoodschappenlijstje = new ArrayList<String>();
-        arrBoodschappenlijstje.add("2 eieren");
-        arrBoodschappenlijstje.add("1 kg bananen");
-        arrBoodschappenlijstje.add("2 appels");
-        arrBoodschappenlijstje.add("1 kg suiker");
-
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getActivity().getActionBar().setSubtitle("Boodschappenlijstje");
+        listView = getListView();
+        mCursor = context.getContentResolver().query(
+                ReceptenAppContentProvider.CONTENT_URI_BASKET,
+                null,
+                null,
+                null,
+                null);
 
-        mAdapter = new BoodschappenlijstjeAdapter();
-        setListAdapter(mAdapter);
+        if(mCursor != null){
+            int aantal = mCursor.getCount();
+            //display
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter = new MyCursorAdapter(
+                            getActivity(),
+                            mCursor,
+                            0);
 
-        ListView listView = getListView();
-        listView.setAdapter(mAdapter);
+                    listView.setAdapter(mAdapter);
+                }
+
+            });
+        }
         SwipeDismissListViewTouchListener touchListener = new SwipeDismissListViewTouchListener(
                 listView,
                 new SwipeDismissListViewTouchListener.DismissCallbacks() {
@@ -58,10 +86,18 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
                     @Override
                     public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                         for(int position : reverseSortedPositions){
-                            mAdapter.remove(mAdapter.getItem(position));
-                        }
-                        mAdapter.notifyDataSetChanged();
+                            mCursor.moveToPosition(position);
+                            int ID = mCursor.getInt(mCursor.getColumnIndex(BasketTable.COLUMN_ID));
+                            Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_BASKET + "/" + ID);
+                            context.getContentResolver().delete(uri, null, null);
 
+                            mCursor = context.getContentResolver().query( ReceptenAppContentProvider.CONTENT_URI_BASKET,
+                                    null,
+                                    null,
+                                    null,
+                                    null);
+                            mAdapter.swapCursor(mCursor);
+                        }
                     }
                 });
         listView.setOnTouchListener(touchListener);
@@ -71,10 +107,10 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(getActivity(), arrBoodschappenlijstje.get(i), Toast.LENGTH_SHORT).show();
-                boodschapDialog = arrBoodschappenlijstje.get(i);
+                //boodschapDialog = arrBoodschappenlijstje.get(i);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Title");
+                builder.setTitle("Wijzig");
 
                 // Set up the input
                 final EditText input = new EditText(getActivity());
@@ -102,8 +138,8 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
                 });
 
                 builder.show();
-                arrBoodschappenlijstje.set(i, boodschapDialog);
-                mAdapter = new BoodschappenlijstjeAdapter();
+                //arrBoodschappenlijstje.set(i, boodschapDialog);
+                //mAdapter = new BoodschappenlijstjeAdapter();
                 setListAdapter(mAdapter);
 
             }
@@ -115,31 +151,93 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
         return inflater.inflate(R.layout.fragment_boodschappenlijstje, null, false);
     }
 
-    public class BoodschappenlijstjeAdapter extends ArrayAdapter<String> {
-
-        public BoodschappenlijstjeAdapter(){
-            super(getActivity(), R.layout.row_boodschappenlijstje, R.id.txvBoodschap, arrBoodschappenlijstje);
+    public class MyCursorAdapter extends CursorAdapter {
+        private LayoutInflater mInflater;
+        // Default constructor
+        public MyCursorAdapter(Context context, Cursor cursor, int flags) {
+            super(context, cursor, flags);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            String boodschap = arrBoodschappenlijstje.get(position);
-            View row = super.getView(position, convertView, parent);
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView naam = (TextView) view.findViewById(R.id.txvBoodschap);
+            naam.setText(createBooschapText(cursor));
 
-            TextView textView = (TextView) row.findViewById(R.id.txvBoodschap);
-            textView.setText(boodschap);
-
-            return row;
         }
 
-        public void clearAdapter(){
-            arrBoodschappenlijstje.clear();
-            notifyDataSetChanged();
-        }
-        public void NotifyAdapter(){
-            notifyDataSetChanged();
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return mInflater.inflate(R.layout.row_boodschappenlijstje, parent, false);
         }
     }
+
+    private String createBooschapText(Cursor cursor){
+        String text = "";
+        text += cursor.getString(cursor.getColumnIndex(BasketTable.COLUMN_AMOUNT));
+        text += getAbbreviation(cursor.getInt(cursor.getColumnIndex(BasketTable.COLUMN_UNITID))) + " ";
+        text += cursor.getString(cursor.getColumnIndex(BasketTable.COLUMN_NAME)) + " ";
+        return text;
+    }
+    private String getAbbreviation(int id){
+        Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_UNIT + "/" + id);
+        Cursor unitCursor = context.getContentResolver().query(uri, null, null, null, null);
+
+        //Text
+        Cursor test = context.getContentResolver().query(ReceptenAppContentProvider.CONTENT_URI_UNIT, null, null, null, null);
+        int countTest = unitCursor.getCount();
+
+        unitCursor.moveToFirst();
+        return unitCursor.getString(unitCursor.getColumnIndex(UnitTable.COLUMN_ABBREVIATION));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
+        inflater.inflate(R.menu.menu_favorite, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.action_delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Alles verwijderen");
+                builder.setMessage("Bent u zeker dat u alle boodschappen wilt verwijderen?");
+                builder.setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_BASKET + "");
+                                context.getContentResolver().delete(uri, null, null);
+
+                                mCursor = context.getContentResolver().query( ReceptenAppContentProvider.CONTENT_URI_BASKET,
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                                mAdapter.swapCursor(mCursor);
+
+                            }
+                        })
+                        .setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 
 }

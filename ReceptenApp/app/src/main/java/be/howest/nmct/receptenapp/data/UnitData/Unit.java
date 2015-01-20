@@ -1,5 +1,8 @@
 package be.howest.nmct.receptenapp.data.UnitData;
 
+import android.content.ContentValues;
+import android.content.Context;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -8,6 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.helpers.onlineData;
 
 /**
@@ -80,5 +84,27 @@ public class Unit {
         params.add(new BasicNameValuePair("tableName", "ap_unit"));
         params.add(new BasicNameValuePair("id", ""+_id));
         onlineData.delete(params);
+    }
+
+    public static Boolean LoadAllUnitsCURSOR(Context context){
+        context.getContentResolver().delete(ReceptenAppContentProvider.CONTENT_URI_UNIT,null,null);
+
+        JSONArray ingredients = onlineData.selectAllData("ap_unit");
+        if(ingredients != null) {
+            for (int i = 0; i < ingredients.length(); i++) {
+                try {
+                    JSONObject c = ingredients.getJSONObject(i);
+                    ContentValues values = new ContentValues();
+                    values.put(UnitTable.COLUMN_ID, c.getInt("ID"));
+                    values.put(UnitTable.COLUMN_NAME, c.getString("Name"));
+                    values.put(UnitTable.COLUMN_ABBREVIATION, c.getString("Abbreviation"));
+                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_UNIT, values);
+                } catch (Exception e) {
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
     }
 }

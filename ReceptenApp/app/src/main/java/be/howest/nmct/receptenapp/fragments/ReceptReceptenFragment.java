@@ -44,6 +44,7 @@ public class ReceptReceptenFragment extends ListFragment {
 
     //CURSOR
     private Cursor mCursor;
+    private Cursor catCursor;
     MyCursorAdapter receptenAdapter;
 
     //global date here:
@@ -109,10 +110,10 @@ public class ReceptReceptenFragment extends ListFragment {
 
         Uri catUri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_CAT + "/" + uri.getLastPathSegment());
 
-        Cursor Cat = context.getContentResolver().query(catUri, null,null,null,null);
-        if(Cat.getCount() != 0){
-            Cat.moveToFirst();
-            getActivity().getActionBar().setSubtitle(Cat.getString(Cat.getColumnIndex(CategoryTable.COLUMN_NAME)));
+        catCursor = context.getContentResolver().query(catUri, null,null,null,null);
+        if(catCursor.getCount() != 0){
+            catCursor.moveToFirst();
+            getActivity().getActionBar().setSubtitle(catCursor.getString(catCursor.getColumnIndex(CategoryTable.COLUMN_NAME)));
         }
     }
 
@@ -162,7 +163,6 @@ public class ReceptReceptenFragment extends ListFragment {
         mCursor.moveToPosition(position);
 
         mCallback.OnReceptenSelectedListener(mCursor.getInt(mCursor.getColumnIndex(ReceptTable.COLUMN_ID)));
-        mCursor.close();
     }
 
 
