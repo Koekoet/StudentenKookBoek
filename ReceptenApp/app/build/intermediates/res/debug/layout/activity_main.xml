@@ -4,6 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="#ffd8dcff">
     <!-- The main content view -->
     <FrameLayout
@@ -11,7 +12,8 @@
         android:id="@+id/mainfragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffd8d9ff" />
+        android:background="#ffd8d9ff"
+        />
 
     <!-- The navigation drawer -->
     <LinearLayout

@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -85,7 +86,7 @@ public class MainActivity extends FragmentActivity
 
     private String[] arrNavigation;
     private Context context;
-    private Bundle savedInstanceStateGlobal;
+    private Boolean isSmall;
 
     //NAVIGATION
     private DrawerLayout navigationDrawer;
@@ -104,7 +105,6 @@ public class MainActivity extends FragmentActivity
     //Globale vars
     //  Boodschappenlijstje
     public static ArrayList<Ingredient> BOODSCHAPPENLIJSTJE = new ArrayList<Ingredient>();
-    public static ArrayList<Category> ARRCATEGORIES = new ArrayList<Category>();
 
     private Recept recCreateRecipe;
 
@@ -122,45 +122,48 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isSmall = IsSmallDevice();
+
         setContentView(R.layout.activity_main);
         context = MainActivity.this;
-        savedInstanceStateGlobal = savedInstanceState;
-
-        arrRecipes = new ArrayList<ArrayList<Recept>>();
 
         //navigation
         arrNavigation = getResources().getStringArray(R.array.MenuBasic);
         navigationView = (View) findViewById(R.id.navigation);
-        mTitle = mDrawerTitle = getTitle();
-        navigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, navigationDrawer,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                //getActionBar().setTitle(titleClosed);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
+        if(isSmall){
+            mTitle = mDrawerTitle = getTitle();
+            navigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerToggle = new ActionBarDrawerToggle(this, navigationDrawer,
+                    R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                //getActionBar().setTitle(R.string.app_name);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
+                /** Called when a drawer has settled in a completely closed state. */
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+                    //getActionBar().setTitle(titleClosed);
+                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                }
 
-        // Set the drawer toggle as the DrawerListener
-        navigationDrawer.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+                /** Called when a drawer has settled in a completely open state. */
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    //getActionBar().setTitle(R.string.app_name);
+                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                }
+            };
 
-        /*if(navigationDrawer.isDrawerOpen(navigationView)){
-            navigationDrawer.closeDrawer(navigationView);}*/
+            // Set the drawer toggle as the DrawerListener
+            navigationDrawer.setDrawerListener(mDrawerToggle);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+        }
 
 
-        if (savedInstanceStateGlobal == null) {
+
+
+
+
+        if (savedInstanceState == null) {
             //check sqlite database
             CategoryDatabaseHelper catdatabase = new CategoryDatabaseHelper(MainActivity.this);
             SQLiteDatabase catDb = catdatabase.getReadableDatabase();
@@ -177,9 +180,6 @@ public class MainActivity extends FragmentActivity
                 // continue mainactivity
                 setCategories();
             }
-
-            // LoadCategoriesTask task = new LoadCategoriesTask();
-            //task.execute();
         }
 
 
@@ -195,6 +195,14 @@ public class MainActivity extends FragmentActivity
             Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
+    private Boolean IsSmallDevice() {
+        if ((this.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) < Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return true;
+        }
+        return false;
+    }
+
 
     class LoadDataTask extends AsyncTask<String, Integer, Void> {
         private ProgressDialog pDialog;
@@ -248,13 +256,15 @@ public class MainActivity extends FragmentActivity
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+        if(isSmall){mDrawerToggle.syncState();}
+
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        if(isSmall){ mDrawerToggle.onConfigurationChanged(newConfig);}
+
     }
 
     //LOADING DATA ON START

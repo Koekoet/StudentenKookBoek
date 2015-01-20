@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="39dp">
     <ImageView
-        android:id="@+id/BrouwerijImage"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:id="@+id/navimg"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_next_item"
+        android:src="@drawable/menu_globe"
         android:contentDescription="menuIcon"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:id="@+id/menuItem"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="25dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:layout_alignBottom="@+id/BrouwerijImage"
-        android:layout_toRightOf="@+id/BrouwerijImage"
-        android:layout_toEndOf="@+id/BrouwerijImage"
-        android:layout_alignParentTop="true"
         android:gravity="center_vertical"
-        android:layout_marginLeft="5dp"
-        android:textIsSelectable="false" />
+        android:textIsSelectable="false"
+        android:layout_alignTop="@+id/navimg"
+        android:layout_toRightOf="@+id/navimg"
+        android:layout_toEndOf="@+id/navimg"
+        android:layout_marginLeft="5dp" />
 </RelativeLayout>

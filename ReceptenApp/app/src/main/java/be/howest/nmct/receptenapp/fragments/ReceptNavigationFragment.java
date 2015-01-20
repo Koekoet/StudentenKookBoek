@@ -1,12 +1,14 @@
 package be.howest.nmct.receptenapp.fragments;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import be.howest.nmct.receptenapp.R;
  */
 public class ReceptNavigationFragment extends ListFragment {
     private String[] arrNavigation;
+    TypedArray navImg;
     public NavigationAdapter navigationAdapter;
 
     //temp
@@ -61,9 +64,11 @@ public class ReceptNavigationFragment extends ListFragment {
     {
         if(isLogin){
             arrNavigation = getResources().getStringArray(R.array.MenuBasic);
+            navImg = getResources().obtainTypedArray(R.array.MenuDrawableBasic);
             isLogin = false;
         } else {
             arrNavigation = getResources().getStringArray(R.array.MenuUser);
+            navImg = getResources().obtainTypedArray(R.array.MenuDrawableUser);
             isLogin = true;
         }
 
@@ -90,6 +95,9 @@ public class ReceptNavigationFragment extends ListFragment {
 
             TextView naam = (TextView) row.findViewById(R.id.menuItem);
             naam.setText(navigationItem);
+
+            ImageView img = (ImageView) row.findViewById(R.id.navimg);
+            img.setImageResource(navImg.getResourceId(position, -1));
 
             return row;
         }

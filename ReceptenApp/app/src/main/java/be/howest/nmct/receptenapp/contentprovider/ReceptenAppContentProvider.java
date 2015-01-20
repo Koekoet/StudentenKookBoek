@@ -19,10 +19,13 @@ import be.howest.nmct.receptenapp.data.CategoryData.CategoryTable;
 import be.howest.nmct.receptenapp.data.FavoriteData.FavoriteDatabaseHelper;
 import be.howest.nmct.receptenapp.data.FavoriteData.FavoriteTable;
 import be.howest.nmct.receptenapp.data.IngredientData.IngredientDatabaseHelper;
+import be.howest.nmct.receptenapp.data.IngredientData.IngredientTable;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptDatabaseHelper;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
 import be.howest.nmct.receptenapp.data.RecipesByCategory.RecipesByCategoryDatabaseHelper;
 import be.howest.nmct.receptenapp.data.RecipesByCategory.RecipesByCategoryTable;
+import be.howest.nmct.receptenapp.data.UnitData.UnitDatabaseHelper;
+import be.howest.nmct.receptenapp.data.UnitData.UnitTable;
 
 
 /**
@@ -36,6 +39,7 @@ public class ReceptenAppContentProvider extends ContentProvider {
     private RecipesByCategoryDatabaseHelper RecByCatDatabase;
     private FavoriteDatabaseHelper FavDatabase;
     private IngredientDatabaseHelper IngrDatabase;
+    private UnitDatabaseHelper UnitDatabase;
 
     // used for the UriMacher
     //Category
@@ -53,63 +57,16 @@ public class ReceptenAppContentProvider extends ContentProvider {
     private static final int FAVORITE_ID = 41;
     //Ingredient
     private static final int INGREDIENT = 50;
+    private static final int INGREDIENT_ID = 51;
+    //Unit
+    private static final int UNIT = 60;
+    private static final int UNIT_ID = 61;
+
 
     //Auth
     private static final String AUTHORITY = "be.howest.nmct.receptenapp.contentprovider";
 
-    //CATEGORY CONNECTION
-    private static final String BASE_PATH_CAT = "category";
-    public static final Uri CONTENT_URI_CAT = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_CAT);
-    public static final String CONTENT_CAT = ContentResolver.CURSOR_DIR_BASE_TYPE + "/categorys";
-    public static final String CONTENT_ITEM_CAT = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/category";
 
-    //CATEGORY CONNECTION
-    private static final String BASE_PATH_REC = "recept";
-    public static final Uri CONTENT_URI_REC = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_REC);
-    public static final String CONTENT_REC = ContentResolver.CURSOR_DIR_BASE_TYPE + "/recipes";
-    public static final String CONTENT_ITEM_REC = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/recept";
-
-    //RECIPES BY CATEGORY
-    private static final String BASE_PATH_RECBYCAT = "recipebycategory";
-    public static final Uri CONTENT_URI_RECBYCAT = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_RECBYCAT);
-    public static final String CONTENT_RECBYCAT = ContentResolver.CURSOR_DIR_BASE_TYPE + "/recipebycategorys";
-    public static final String CONTENT_ITEM_RECBYCAT = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/recipebycategory";
-
-    //FAVORITE
-    private static final String BASE_PATH_FAV = "favorite";
-    public static final Uri CONTENT_URI_FAV = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_FAV);
-    public static final String CONTENT_FAV = ContentResolver.CURSOR_DIR_BASE_TYPE + "/favorites";
-    public static final String CONTENT_ITEM_FAV = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/favorite";
-
-    //INGREDIENT
-    private static final String BASE_PATH_INGR = "ingredient";
-    public static final Uri CONTENT_URI_INGR = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_INGR);
-
-    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
-    static {
-        //CAT
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_CAT, CATEGORYS);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_CAT + "/#", CATEGORY_ID);
-
-        //RECEPT
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC, RECEPTS);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/#", RECEPTS_ID);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/RecByCatId/#", RECEPTS_BY_CAT_ID);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/RecByQUERY/*", RECEPTS_BY_QUERY);
-
-        //RECIPE BY CAT
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_RECBYCAT, RECBYCAT);
-
-        //FAVORITE
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_FAV, FAVORITE);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_FAV + "/#", FAVORITE_ID);
-
-        //INGREDIENT
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR, INGREDIENT);
-        //sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR + "/#", FAVORITE_INGR);
-
-    }
 
     @Override
     public boolean onCreate() {
@@ -118,6 +75,7 @@ public class ReceptenAppContentProvider extends ContentProvider {
         RecByCatDatabase = new RecipesByCategoryDatabaseHelper(getContext());
         FavDatabase = new FavoriteDatabaseHelper(getContext());
         IngrDatabase = new IngredientDatabaseHelper(getContext());
+        UnitDatabase = new UnitDatabaseHelper(getContext());
         return false;
     }
 
@@ -126,12 +84,12 @@ public class ReceptenAppContentProvider extends ContentProvider {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         checkColumns(projection);
         SQLiteDatabase db =  null;
-        //0 -> Cat, 1 -> Rec, 2-> RECBYCAT, 3->FAV
+        //0 -> Cat, 1 -> Rec, 2-> RECBYCAT, 3->FAV, 4->ING, 5->Unit
         int selectedDatabase = 0;
 
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
-            //Category
+            //-------------------CATEGORY------------//
             case CATEGORYS:
                 queryBuilder.setTables(CategoryTable.TABLE_CATEGORY);
                 break;
@@ -140,7 +98,7 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 queryBuilder.appendWhere(CategoryTable.COLUMN_ID + "=" + uri.getLastPathSegment());
                 break;
 
-            //Recepts
+            //-------------------RECEPTS------------//
             case RECEPTS:
                 selectedDatabase = 1;
                 queryBuilder.setTables(ReceptTable.TABLE_RECEPI);
@@ -159,22 +117,42 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 db = RecDatabase.getReadableDatabase();
                 return db.rawQuery("SELECT * FROM " + ReceptTable.TABLE_RECEPI + " WHERE " + ReceptTable.COLUMN_NAME + " like ?", args);
 
-               /* selectedDatabase = 1;
-                queryBuilder.setTables(ReceptTable.TABLE_RECEPI);
-                queryBuilder.appendWhere(ReceptTable.COLUMN_NAME + "= %" + uri.getLastPathSegment() + "%");
-                break;*/
-            //RECEPTS BY CAT
+            //-------------------RECEPTS BY CATEGORY------------//
             case RECBYCAT:
                 //GET ALL REC BY CAT
                 selectedDatabase = 2;
                 queryBuilder.setTables(RecipesByCategoryTable.TABLE_RECEPIBYCATEGORY);
                 break;
+
+            //-------------------FAVORITE---------------//
             case FAVORITE:
                 return LoadFavorites(uri);
             case FAVORITE_ID:
                 selectedDatabase = 3;
                 queryBuilder.setTables(FavoriteTable.TABLE_FAVORITE);
                 queryBuilder.appendWhere(FavoriteTable.COLUMN_ID + "=" + uri.getLastPathSegment());
+                break;
+
+            //-------------------INGREDIENT---------------//
+            case INGREDIENT:
+                selectedDatabase = 4;
+                queryBuilder.setTables(IngredientTable.TABLE_INGREDIENT);
+                break;
+            case INGREDIENT_ID:
+                selectedDatabase = 4;
+                queryBuilder.setTables(IngredientTable.TABLE_INGREDIENT);
+                queryBuilder.appendWhere(IngredientTable.COLUMN_ID + "=" + uri.getLastPathSegment());
+                break;
+
+            //-------------------UNIT---------------------//
+            case UNIT:
+                selectedDatabase = 5;
+                queryBuilder.setTables(UnitTable.TABLE_UNIT);
+                break;
+            case UNIT_ID:
+                selectedDatabase = 5;
+                queryBuilder.setTables(UnitTable.TABLE_UNIT);
+                queryBuilder.appendWhere(UnitTable.COLUMN_ID + "=" + uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -184,108 +162,14 @@ public class ReceptenAppContentProvider extends ContentProvider {
         else if(selectedDatabase == 1){ db = RecDatabase.getWritableDatabase();}
         else if (selectedDatabase == 2) {db = RecByCatDatabase.getWritableDatabase();}
         else if(selectedDatabase == 3) {db = FavDatabase.getWritableDatabase();}
+        else if(selectedDatabase == 4){db = IngrDatabase.getWritableDatabase();}
+        else if(selectedDatabase == 5){db = UnitDatabase.getWritableDatabase();}
 
         Cursor cursor = queryBuilder.query(db, projection, selection,selectionArgs, null, null, sortOrder);
-        // make sure that potential listeners are getting notified
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
     }
-
-    private Cursor LoadFavorites(Uri uri) {
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(FavoriteTable.TABLE_FAVORITE);
-        String[] projection = { FavoriteTable.COLUMN_ID };
-        SQLiteDatabase db = FavDatabase.getWritableDatabase();
-        Cursor cursor = queryBuilder.query(db, projection, null,null, null, null, null);
-
-        MergeCursor recipes = null;
-        if(cursor.getCount() != 0){
-            cursor.moveToFirst();
-            if(cursor.getCount() == 1){
-                return getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
-            } else if(cursor.getCount() == 2){
-                Cursor rec1 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
-                cursor.moveToNext();
-                Cursor rec2 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
-                recipes = new MergeCursor(new Cursor[] {rec1, rec2});
-            } else {
-                Cursor rec1 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
-                cursor.moveToNext();
-                Cursor rec2 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
-                recipes = new MergeCursor(new Cursor[] {rec1, rec2});
-                while (cursor.moveToNext()) {
-                    Cursor recipe = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
-                    recipes =  new MergeCursor(new Cursor[] { recipes, recipe });
-                }
-            }
-        } else {return null;}
-        recipes.setNotificationUri(getContext().getContentResolver(), uri);
-        int count = recipes.getCount();
-        return recipes;
-    }
-
-    private Cursor LoadRecipesByCategory(Uri uri){
-        //Eerst ophalen Rec IDs
-        String[] RecByCatIDs = getRecByCatId(uri.getLastPathSegment());
-        MergeCursor recipes = null;
-        //methode getReceptById en toevoegen aan cursor
-        if(RecByCatIDs == null){ return null;}
-        else if(RecByCatIDs.length == 1){
-            return getRecById(RecByCatIDs[0]);
-        } else if(RecByCatIDs.length == 2){
-            Cursor rec1 = getRecById(RecByCatIDs[0]);
-            Cursor rec2 = getRecById(RecByCatIDs[1]);
-            recipes = new MergeCursor(new Cursor[] {rec1, rec2});
-            int recCount = recipes.getCount();
-            int rec1Count = rec1.getCount();
-            int rec2Co = rec2.getCount();
-        } else {
-            Cursor rec1 = getRecById(RecByCatIDs[0]);
-            Cursor rec2 = getRecById(RecByCatIDs[1]);
-            recipes = new MergeCursor(new Cursor[] {rec1, rec2});
-
-            for (int i = 2; i < RecByCatIDs.length; i++) {
-                if(RecByCatIDs[i] != ""){
-                    Cursor recipe = getRecById(RecByCatIDs[i]);
-                    recipes =  new MergeCursor(new Cursor[] { recipes, recipe });
-                }
-            }
-
-        }
-        recipes.setNotificationUri(getContext().getContentResolver(), uri);
-        return recipes;
-    }
-    private String[] getRecByCatId(String id){
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(RecipesByCategoryTable.TABLE_RECEPIBYCATEGORY);
-        String[] projection = { RecipesByCategoryTable.COLUMN_CATID ,RecipesByCategoryTable.COLUMN_RECIDS };
-        SQLiteDatabase db = RecByCatDatabase.getWritableDatabase();
-        queryBuilder.appendWhere(RecipesByCategoryTable.COLUMN_CATID + "=" + id);
-        Cursor cursor = queryBuilder.query(db, projection, null,null, null, null, null);
-
-        cursor.moveToFirst();
-        //SPlit van 2de locatie cursor.
-        if(cursor.getCount() != 0){
-            String recIDs = cursor.getString(cursor.getColumnIndex(RecipesByCategoryTable.COLUMN_RECIDS));
-            if(recIDs != ""){
-                String[] RecByCatIDs = recIDs.split(";");
-                return RecByCatIDs;
-            }
-        }
-        return null;
-
-    }
-    private Cursor  getRecById(String id){
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        String[] projection = ReceptTable.getAllCollums();
-        queryBuilder.setTables(ReceptTable.TABLE_RECEPI);
-        queryBuilder.appendWhere(ReceptTable.COLUMN_ID + "=" + id);
-        SQLiteDatabase db = RecDatabase.getWritableDatabase();
-        Cursor cursor = queryBuilder.query(db, projection, null,null, null, null, null);
-        return cursor;
-    }
-
 
     @Override
     public String getType(Uri uri) {
@@ -314,6 +198,15 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 sqlDB = FavDatabase.getWritableDatabase();
                 sqlDB.insert(FavoriteTable.TABLE_FAVORITE,null,values);
                 break;
+            case INGREDIENT:
+                sqlDB = IngrDatabase.getWritableDatabase();
+                sqlDB.insert(IngredientTable.TABLE_INGREDIENT,null,values);
+                break;
+            case UNIT:
+                sqlDB = UnitDatabase.getWritableDatabase();
+                sqlDB.insert(UnitTable.TABLE_UNIT,null,values);
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -415,5 +308,160 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown columns in projection: CODE ERROR");
             }
         }
+    }
+
+    //------------------CATEGORIES METHODES------------//
+    //-----CATEGORY CONNECTION-------------------------//
+    private static final String BASE_PATH_CAT = "category";
+    public static final Uri CONTENT_URI_CAT = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_CAT);
+    public static final String CONTENT_CAT = ContentResolver.CURSOR_DIR_BASE_TYPE + "/categorys";
+    public static final String CONTENT_ITEM_CAT = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/category";
+    //-----QUERY---------------------------------------//
+
+    //------------------RECEPT METHODES----------------//
+    //-----RECEPTS CONNECTION--------------------------//
+    private static final String BASE_PATH_REC = "recept";
+    public static final Uri CONTENT_URI_REC = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_REC);
+    public static final String CONTENT_REC = ContentResolver.CURSOR_DIR_BASE_TYPE + "/recipes";
+    public static final String CONTENT_ITEM_REC = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/recept";
+    //-----QUERY---------------------------------------//
+    private Cursor LoadRecipesByCategory(Uri uri){
+        //Eerst ophalen Rec IDs
+        String[] RecByCatIDs = getRecByCatId(uri.getLastPathSegment());
+        MergeCursor recipes = null;
+        //methode getReceptById en toevoegen aan cursor
+        if(RecByCatIDs == null){ return null;}
+        else if(RecByCatIDs.length == 1){
+            return getRecById(RecByCatIDs[0]);
+        } else if(RecByCatIDs.length == 2){
+            Cursor rec1 = getRecById(RecByCatIDs[0]);
+            Cursor rec2 = getRecById(RecByCatIDs[1]);
+            recipes = new MergeCursor(new Cursor[] {rec1, rec2});
+            int recCount = recipes.getCount();
+            int rec1Count = rec1.getCount();
+            int rec2Co = rec2.getCount();
+        } else {
+            Cursor rec1 = getRecById(RecByCatIDs[0]);
+            Cursor rec2 = getRecById(RecByCatIDs[1]);
+            recipes = new MergeCursor(new Cursor[] {rec1, rec2});
+
+            for (int i = 2; i < RecByCatIDs.length; i++) {
+                if(RecByCatIDs[i] != ""){
+                    Cursor recipe = getRecById(RecByCatIDs[i]);
+                    recipes =  new MergeCursor(new Cursor[] { recipes, recipe });
+                }
+            }
+
+        }
+        recipes.setNotificationUri(getContext().getContentResolver(), uri);
+        return recipes;
+    }
+    private String[] getRecByCatId(String id){
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(RecipesByCategoryTable.TABLE_RECEPIBYCATEGORY);
+        String[] projection = { RecipesByCategoryTable.COLUMN_CATID ,RecipesByCategoryTable.COLUMN_RECIDS };
+        SQLiteDatabase db = RecByCatDatabase.getWritableDatabase();
+        queryBuilder.appendWhere(RecipesByCategoryTable.COLUMN_CATID + "=" + id);
+        Cursor cursor = queryBuilder.query(db, projection, null,null, null, null, null);
+
+        cursor.moveToFirst();
+        //SPlit van 2de locatie cursor.
+        if(cursor.getCount() != 0){
+            String recIDs = cursor.getString(cursor.getColumnIndex(RecipesByCategoryTable.COLUMN_RECIDS));
+            if(recIDs != ""){
+                String[] RecByCatIDs = recIDs.split(";");
+                return RecByCatIDs;
+            }
+        }
+        return null;
+
+    }
+    private Cursor  getRecById(String id){
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        String[] projection = ReceptTable.getAllCollums();
+        queryBuilder.setTables(ReceptTable.TABLE_RECEPI);
+        queryBuilder.appendWhere(ReceptTable.COLUMN_ID + "=" + id);
+        SQLiteDatabase db = RecDatabase.getWritableDatabase();
+        Cursor cursor = queryBuilder.query(db, projection, null,null, null, null, null);
+        return cursor;
+    }
+
+    //------------------RECIPES BY CATEGORY METHODES---//
+    //-----RECIPES BY CATEGORY CONNECTION--------------//
+    private static final String BASE_PATH_RECBYCAT = "recipebycategory";
+    public static final Uri CONTENT_URI_RECBYCAT = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_RECBYCAT);
+    public static final String CONTENT_RECBYCAT = ContentResolver.CURSOR_DIR_BASE_TYPE + "/recipebycategorys";
+    public static final String CONTENT_ITEM_RECBYCAT = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/recipebycategory";
+    //-----QUERY---------------------------------------//
+
+    //-------------------FAVORITES METHODES------------//
+    //-----FAVORITE CONNECTION-------------------------//
+    private static final String BASE_PATH_FAV = "favorite";
+    public static final Uri CONTENT_URI_FAV = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_FAV);
+    public static final String CONTENT_FAV = ContentResolver.CURSOR_DIR_BASE_TYPE + "/favorites";
+    public static final String CONTENT_ITEM_FAV = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/favorite";
+    //-----QUERY---------------------------------------//
+    private Cursor LoadFavorites(Uri uri) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(FavoriteTable.TABLE_FAVORITE);
+        String[] projection = { FavoriteTable.COLUMN_ID };
+        SQLiteDatabase db = FavDatabase.getWritableDatabase();
+        Cursor cursor = queryBuilder.query(db, projection, null,null, null, null, null);
+
+        MergeCursor recipes = null;
+        if(cursor.getCount() != 0){
+            cursor.moveToFirst();
+            if(cursor.getCount() == 1){
+                return getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
+            } else if(cursor.getCount() == 2){
+                Cursor rec1 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
+                cursor.moveToNext();
+                Cursor rec2 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
+                recipes = new MergeCursor(new Cursor[] {rec1, rec2});
+            } else {
+                Cursor rec1 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
+                cursor.moveToNext();
+                Cursor rec2 = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
+                recipes = new MergeCursor(new Cursor[] {rec1, rec2});
+                while (cursor.moveToNext()) {
+                    Cursor recipe = getRecById(cursor.getString(cursor.getColumnIndex(FavoriteTable.COLUMN_ID)));
+                    recipes =  new MergeCursor(new Cursor[] { recipes, recipe });
+                }
+            }
+        } else {return null;}
+        recipes.setNotificationUri(getContext().getContentResolver(), uri);
+        int count = recipes.getCount();
+        return recipes;
+    }
+
+    //-------------------FAVORITES METHODES------------//
+    //-----INGREDIENT CONNECTION-----------------------//
+    private static final String BASE_PATH_INGR = "ingredient";
+    public static final Uri CONTENT_URI_INGR = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_INGR);
+
+    //-------------------URIMATCHER--------------------//
+    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    static {
+        //CAT
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_CAT, CATEGORYS);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_CAT + "/#", CATEGORY_ID);
+
+        //RECEPT
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC, RECEPTS);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/#", RECEPTS_ID);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/RecByCatId/#", RECEPTS_BY_CAT_ID);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_REC + "/RecByQUERY/*", RECEPTS_BY_QUERY);
+
+        //RECIPE BY CAT
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_RECBYCAT, RECBYCAT);
+
+        //FAVORITE
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_FAV, FAVORITE);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_FAV + "/#", FAVORITE_ID);
+
+        //INGREDIENT
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR, INGREDIENT);
+        //sURIMatcher.addURI(AUTHORITY, BASE_PATH_INGR + "/#", FAVORITE_INGR);
+
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:layout_margin="0dp"
+        android:id="@+id/CategorieImage"
+        android:src="@drawable/cat_vleesgerechten"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="categorieImage"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Vleesgerechten"
+        android:id="@+id/txvCategorieNaam"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:background="#c82c3e50"
+        android:textColor="#ffffff"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignBottom="@+id/CategorieImage"
+        android:layout_alignRight="@+id/CategorieImage"
+        android:layout_alignEnd="@+id/CategorieImage"
+        android:layout_alignLeft="@+id/CategorieImage"
+        android:layout_alignStart="@+id/CategorieImage" />
+</RelativeLayout>
