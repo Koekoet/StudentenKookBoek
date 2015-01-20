@@ -1,4 +1,4 @@
-AndroidProject
+StudentenKookBoek
 ==============
 Dit is een project voor Application Development voor Android voor NMCT, HOWEST Kortrijk.
 
