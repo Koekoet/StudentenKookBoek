@@ -40,6 +40,9 @@
             android:name=".TestActivity"
             android:label="@string/title_activity_test" >
         </activity>
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
         <provider
             android:name=".contentprovider.ReceptenAppContentProvider"
             android:authorities="be.howest.nmct.receptenapp.contentprovider" >

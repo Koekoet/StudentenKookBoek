@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.InputType;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import be.howest.nmct.receptenapp.data.helpers.SwipeDismissListViewTouchListener
 public class ReceptBoodschappenlijstjeFragment extends ListFragment {
     private ArrayList<String> arrBoodschappenlijstje;
     private BoodschappenlijstjeAdapter mAdapter;
-
+    private static View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +113,19 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_boodschappenlijstje, null, false);
+        if(view != null){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null){
+                parent.removeView(view);
+            }
+        }
+        try{
+            view = inflater.inflate(R.layout.fragment_boodschappenlijstje, container, false);
+        } catch(InflateException e){
+
+        }
+        return view;
+
     }
 
     public class BoodschappenlijstjeAdapter extends ArrayAdapter<String> {

@@ -94,6 +94,7 @@
     <string name="action_share">Delen</string>
     <string name="addIngredients">Ingrediënten toevoegen</string>
     <string name="app_name">Studentenkookboek</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="bereiding">Bereiding:</string>
     <!-- From: file:/C:/Users/Toine/Dropbox/School/3e%20jaar/S1/App%20Dev%20Android/Opdracht/Project/ReceptenApp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/common_strings.xml -->
     <eat-comment/>
