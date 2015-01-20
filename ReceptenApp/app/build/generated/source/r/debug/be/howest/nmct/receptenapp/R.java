@@ -10,7 +10,9 @@ package be.howest.nmct.receptenapp;
 public final class R {
     public static final class array {
         public static final int MenuBasic=0x7f060000;
-        public static final int MenuUser=0x7f060001;
+        public static final int MenuDrawableBasic=0x7f060001;
+        public static final int MenuDrawableUser=0x7f060002;
+        public static final int MenuUser=0x7f060003;
     }
     public static final class attr {
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
@@ -407,8 +409,8 @@ containing a value of this type.
         public static final int common_signin_btn_text_pressed_dark=0x7f020019;
         public static final int common_signin_btn_text_pressed_light=0x7f02001a;
         public static final int drawer_shadow=0x7f02001b;
-        public static final int ic_action_discard=0x7f02001c;
-        public static final int ic_action_favorite=0x7f02001d;
+        public static final int favorite=0x7f02001c;
+        public static final int ic_action_discard=0x7f02001d;
         public static final int ic_action_important=0x7f02001e;
         public static final int ic_action_isfavorite=0x7f02001f;
         public static final int ic_action_new=0x7f020020;
@@ -426,12 +428,19 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f02002c;
         public static final int ic_tick=0x7f02002d;
         public static final int ic_upload=0x7f02002e;
-        public static final int powered_by_google_dark=0x7f02002f;
-        public static final int powered_by_google_light=0x7f020030;
-        public static final int textlinesborder=0x7f020031;
+        public static final int isfavorite=0x7f02002f;
+        public static final int menu_add=0x7f020030;
+        public static final int menu_booschappen=0x7f020031;
+        public static final int menu_favorite=0x7f020032;
+        public static final int menu_globe=0x7f020033;
+        public static final int menu_login=0x7f020034;
+        public static final int menu_logout=0x7f020035;
+        public static final int menu_profile=0x7f020036;
+        public static final int powered_by_google_dark=0x7f020037;
+        public static final int powered_by_google_light=0x7f020038;
+        public static final int textlinesborder=0x7f020039;
     }
     public static final class id {
-        public static final int BrouwerijImage=0x7f080040;
         public static final int CategorieImage=0x7f080043;
         public static final int TextView2=0x7f08001f;
         public static final int action_delete=0x7f080055;
@@ -475,6 +484,7 @@ containing a value of this type.
         public static final int monochrome=0x7f080016;
         public static final int nameRecipe=0x7f080022;
         public static final int navigation=0x7f080019;
+        public static final int navimg=0x7f080040;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080003;
         public static final int numPersons=0x7f080028;

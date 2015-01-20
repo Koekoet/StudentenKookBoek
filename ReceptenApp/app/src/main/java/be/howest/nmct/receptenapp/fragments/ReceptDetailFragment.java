@@ -83,10 +83,10 @@ public class ReceptDetailFragment extends Fragment{
         Cursor fav = context.getContentResolver().query(favUri, null, null, null, null);
 
         if(fav.getCount() == 0){
-           menu.findItem(R.id.menu_item_favorite).setIcon(R.drawable.ic_action_favorite);
+           menu.findItem(R.id.menu_item_favorite).setIcon(R.drawable.favorite);
             isFav = false;
         } else {
-            menu.findItem(R.id.menu_item_favorite).setIcon(R.drawable.ic_action_isfavorite);
+            menu.findItem(R.id.menu_item_favorite).setIcon(R.drawable.isfavorite);
             isFav = true;
         }
 
@@ -104,13 +104,13 @@ public class ReceptDetailFragment extends Fragment{
                     isFav = false;
                     Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_FAV + "/" + ReceptID);
                     context.getContentResolver().delete(uri, null, null);
-                    item.setIcon(R.drawable.ic_action_favorite);
+                    item.setIcon(R.drawable.favorite);
                 } else {
                     isFav = true;
                     ContentValues values = new ContentValues();
                     values.put(FavoriteTable.COLUMN_ID,ReceptID);
                     context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_FAV, values);
-                    item.setIcon(R.drawable.ic_action_isfavorite);
+                    item.setIcon(R.drawable.isfavorite);
                 }
 
                 return true;

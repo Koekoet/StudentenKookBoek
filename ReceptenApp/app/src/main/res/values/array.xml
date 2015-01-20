@@ -14,4 +14,20 @@
         <item>Profiel</item>
         <item>Uitloggen</item>
     </string-array>
+    <string-array name="MenuDrawableBasic">
+        <item>@drawable/menu_globe</item>
+        <item>@drawable/menu_booschappen</item>
+        <item>@drawable/menu_favorite</item>
+        <item>@drawable/menu_login</item>
+        <item>@drawable/menu_booschappen</item>
+        <item>@drawable/menu_favorite</item>
+    </string-array>
+    <string-array name="MenuDrawableUser">
+        <item>@drawable/menu_globe</item>
+        <item>@drawable/menu_booschappen</item>
+        <item>@drawable/menu_favorite</item>
+        <item>@drawable/menu_add</item>
+        <item>@drawable/menu_profile</item>
+        <item>@drawable/menu_logout</item>
+    </string-array>
 </resources>
