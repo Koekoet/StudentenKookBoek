@@ -5,7 +5,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/android:list"
         android:layout_weight="1"
         android:layout_alignParentLeft="true"
@@ -16,6 +16,15 @@
         android:textAlignment="center"
         android:layout_marginTop="20dp"
         android:text="Geen boodschappen toegevoegd"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="center_vertical|center_horizontal"
+
+        android:layout_above="@+id/adFragmentShopping"
+        android:layout_alignParentTop="true"/>
+    <fragment
+        android:id="@+id/adFragmentShopping"
+        android:name="be.howest.nmct.receptenapp.fragments.AdFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

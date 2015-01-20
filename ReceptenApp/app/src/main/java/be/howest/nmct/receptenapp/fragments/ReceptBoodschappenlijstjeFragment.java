@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.text.InputType;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +41,9 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
     private MyCursorAdapter mAdapter;
     private ListView listView;
     private Context context;
+
+    private ArrayList<String> arrBoodschappenlijstje;
+    private static View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -148,7 +152,19 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_boodschappenlijstje, null, false);
+        if(view != null){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null){
+                parent.removeView(view);
+            }
+        }
+        try{
+            view = inflater.inflate(R.layout.fragment_boodschappenlijstje, container, false);
+        } catch(InflateException e){
+
+        }
+        return view;
+
     }
 
     public class MyCursorAdapter extends CursorAdapter {

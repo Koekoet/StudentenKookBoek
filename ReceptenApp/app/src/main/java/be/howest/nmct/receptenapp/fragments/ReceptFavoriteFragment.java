@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +43,7 @@ public class ReceptFavoriteFragment extends ListFragment {
 
     //GLOBAL
     public static final String ARR_FAVORITE_RECIPES = "";
+    private static View view;
 
 
     @Override
@@ -208,6 +210,17 @@ public class ReceptFavoriteFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_favorite, null, false);
+        if(view != null){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null){
+                parent.removeView(view);
+            }
+        }
+        try{
+            view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        } catch(InflateException e){
+
+        }
+        return view;
     }
 }

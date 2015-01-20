@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,6 +58,8 @@ public class ReceptReceptenFragment extends ListFragment {
     public static final String ARR_RECIPES = "";
     public static final String RECIPE_VIEW = "";
 
+    private static View view;
+
     public ReceptReceptenFragment(){}
 
     public void onCreate(Bundle savedInstanceState) {
@@ -78,9 +81,17 @@ public class ReceptReceptenFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //getActivity().setTitle(category.getName());
-        View view =  inflater.inflate(R.layout.fragment_recepten, container, false);
+        if(view != null){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null){
+                parent.removeView(view);
+            }
+        }
+        try{
+            view = inflater.inflate(R.layout.fragment_recepten, container, false);
+        } catch(InflateException e){
 
-
+        }
 
         /*((TextView) view.findViewById(R.id.Title)).setText("");
         txvTitle = (TextView) view.findViewById(R.id.Title);

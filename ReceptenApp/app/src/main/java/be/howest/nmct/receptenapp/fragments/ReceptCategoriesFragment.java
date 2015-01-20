@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,7 +59,7 @@ public class ReceptCategoriesFragment extends ListFragment {
     private ListView listView;
     private Uri uri;
 
-
+    private static View view;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +69,17 @@ public class ReceptCategoriesFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_categorie, container, false);
+        if(view != null){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null){
+                parent.removeView(view);
+            }
+        }
+        try{
+            view = inflater.inflate(R.layout.fragment_categorie, container, false);
+        } catch(InflateException e){
 
+        }
         return view;
     }
 

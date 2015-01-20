@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import be.howest.nmct.receptenapp.R;
  * Created by Toine on 20/01/2015.
  */
 public class ReceptProfileFragment extends Fragment {
+    private static View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,17 @@ public class ReceptProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recept_profile, container, false);
+        if(view != null){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(parent != null){
+                parent.removeView(view);
+            }
+        }
+        try{
+            view = inflater.inflate(R.layout.fragment_recept_profile, container, false);
+        } catch(InflateException e){
+
+        }
 
         ImageView ivImage = (ImageView) view.findViewById(R.id.ivProfileImage);
         TextView txtProfileName = (TextView) view.findViewById(R.id.txbProfileName);
