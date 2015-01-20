@@ -66,6 +66,7 @@ import be.howest.nmct.receptenapp.fragments.ReceptFavoriteFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptInfoFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptIngredientenFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptNavigationFragment;
+import be.howest.nmct.receptenapp.fragments.ReceptProfileFragment;
 import be.howest.nmct.receptenapp.fragments.ReceptReceptenFragment;
 
 public class MainActivity extends FragmentActivity
@@ -326,7 +327,9 @@ public class MainActivity extends FragmentActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateInfoFragment).addToBackStack(null).commit();
                     break;
                 case 4:
-                    Toast.makeText(MainActivity.this, "Profiel", Toast.LENGTH_SHORT).show();
+                    //Gebruikt voorlopig de Globale variabele LOGGEDINUSER
+                    ReceptProfileFragment receptProfileFragment = new ReceptProfileFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptProfileFragment).addToBackStack(null).commit();
                     break;
 
                 case 5:
@@ -427,6 +430,7 @@ public class MainActivity extends FragmentActivity
                     LOGGEDINUSER.setFirstname(profile.getString("given_name"));
                     LOGGEDINUSER.setLastname(profile.getString("family_name"));
                     LOGGEDINUSER.setEmail(email);
+                    LOGGEDINUSER.setImage(profile.getString("picture"));
 
                     FragmentManager fm = getSupportFragmentManager();
                     ReceptNavigationFragment fragment = (ReceptNavigationFragment) fm.findFragmentById(R.id.fragment_navigation);

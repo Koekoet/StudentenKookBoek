@@ -11,6 +11,7 @@ public class Author implements Parcelable {
     private String Firstname;
     private String Lastname;
     private String Email;
+    private String Image;
 
     @Override
     public int describeContents() {
@@ -23,6 +24,7 @@ public class Author implements Parcelable {
         out.writeString(getFirstname());
         out.writeString(getLastname());
         out.writeString(getEmail());
+        out.writeString(getImage());
 
     }
 
@@ -31,6 +33,7 @@ public class Author implements Parcelable {
         setFirstname(in.readString());
         setLastname(in.readString());
         setEmail(in.readString());
+        setImage(in.readString());
     }
 
     public Author() {
@@ -79,5 +82,13 @@ public class Author implements Parcelable {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
     }
 }

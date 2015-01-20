@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:contentDescription="Profile Image"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:id="@+id/ivProfileImage"
+        android:src="@drawable/ic_noimage"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#F9F9F9"
+        android:cropToPadding="false"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ProfileName"
+        android:id="@+id/txbProfileName"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:background="#c82c3e50"
+        android:textColor="#ffffff"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignBottom="@+id/ivProfileImage"
+        android:layout_alignRight="@+id/ivProfileImage"
+        android:layout_alignEnd="@+id/ivProfileImage"
+        android:layout_alignLeft="@+id/ivProfileImage"
+        android:layout_alignStart="@+id/ivProfileImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/FirstName"
+        android:id="@+id/txbFirstName"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/txtFirstName"
+        android:text="User FirstName"
+        android:textColor="#FF737373"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/txbFirstName"
+        android:layout_alignLeft="@+id/txbFirstName"
+        android:layout_alignStart="@+id/txbFirstName"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/FamilyName"
+        android:id="@+id/txbFamilyName"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/txtFirstName"
+        android:layout_alignLeft="@+id/txbFirstName"
+        android:layout_alignStart="@+id/txbFirstName" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="User FamilyName"
+        android:id="@+id/txtFamilyName"
+        android:layout_below="@id/txbFamilyName"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignStart="@id/txbFamilyName"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="#FF737373"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/Email"
+        android:id="@+id/txbEmail"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/txtFamilyName"
+        android:layout_alignLeft="@+id/txbFamilyName"
+        android:layout_alignStart="@+id/txbFamilyName" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="User Email"
+        android:id="@+id/txtEmail"
+        android:layout_below="@id/txbEmail"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignStart="@id/txbEmail"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="#FF737373"/>
+</RelativeLayout>

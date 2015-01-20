@@ -46,4 +46,7 @@
     <string name="receptimage">receptimage</string>
     <string name="receptname">Large Text</string>
     <string name="refresh">refresh</string>
+    <string name="FirstName">Voornaam:</string>
+    <string name="FamilyName">Familienaam:</string>
+    <string name="Email">Email:</string>
 </resources>
