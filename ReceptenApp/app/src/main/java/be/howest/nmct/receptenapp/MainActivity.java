@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -121,9 +122,12 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        disableLandscapeInSmallDevices();
+
         setContentView(R.layout.activity_main);
         context = MainActivity.this;
         savedInstanceStateGlobal = savedInstanceState;
+
 
         arrRecipes = new ArrayList<ArrayList<Recept>>();
 
@@ -155,10 +159,6 @@ public class MainActivity extends FragmentActivity
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        /*if(navigationDrawer.isDrawerOpen(navigationView)){
-            navigationDrawer.closeDrawer(navigationView);}*/
-
-
         if (savedInstanceStateGlobal == null) {
             //check sqlite database
             CategoryDatabaseHelper catdatabase = new CategoryDatabaseHelper(MainActivity.this);
@@ -176,9 +176,6 @@ public class MainActivity extends FragmentActivity
                 // continue mainactivity
                 setCategories();
             }
-
-            // LoadCategoriesTask task = new LoadCategoriesTask();
-            //task.execute();
         }
 
 
@@ -194,6 +191,12 @@ public class MainActivity extends FragmentActivity
             Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
+    private void disableLandscapeInSmallDevices() {
+        if ((this.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) < Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
+   
 
     class LoadDataTask extends AsyncTask<String, Integer, Void> {
         private ProgressDialog pDialog;
