@@ -96,7 +96,7 @@ public class Category implements Parcelable{
                     JSONObject c = categories.getJSONObject(i);
                     int id = c.getInt("ID");
                     String name = c.getString("Name");
-                    String picture = c.getString("Picture");
+                    String picture = c.getString("Image");
                     Category diff = new Category(id, picture, name);
                     list.add(diff);
                 } catch (Exception e) {
@@ -115,7 +115,7 @@ public class Category implements Parcelable{
                 JSONObject c = category.getJSONObject(0);
                 int _id = c.getInt("ID");
                 String name = c.getString("Name");
-                String picture = c.getString("Picture");
+                String picture = c.getString("Image");
                 Category newCat = new Category(_id, picture, name);
                 cat = newCat;
             } catch (Exception e) {
@@ -128,7 +128,7 @@ public class Category implements Parcelable{
     public static void createCategory(String _picture, String _name){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", "ap_recept_category"));
-        params.add(new BasicNameValuePair("Picture", _picture));
+        params.add(new BasicNameValuePair("Image", _picture));
         params.add(new BasicNameValuePair("Name", _name));
         onlineData.create(params);
     }
@@ -153,7 +153,7 @@ public class Category implements Parcelable{
                     int id = c.getInt("ID");
                     values.put(CategoryTable.COLUMN_ID, c.getInt("ID"));
                     values.put(CategoryTable.COLUMN_NAME, c.getString("Name"));
-                    values.put(CategoryTable.COLUMN_IMAGE, c.getString("Picture"));
+                    values.put(CategoryTable.COLUMN_IMAGE, c.getString("Image"));
                     context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_CAT, values);
                 } catch (Exception e) {
                 }

@@ -280,7 +280,7 @@ public class Recept implements Parcelable {
                     int numberOfPersons = c.getInt("NumberOfPersons");
                     int difficultyId = c.getInt("DifficultyId");
                     be.howest.nmct.receptenapp.data.DifficultyData.Difficulty dif = be.howest.nmct.receptenapp.data.DifficultyData.Difficulty.getDifficultyById(difficultyId);
-                    String picture = c.getString("Picture");
+                    String picture = c.getString("Image");
                     //ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
                     String recipeText = c.getString("RecipeText");
 
@@ -372,7 +372,7 @@ public class Recept implements Parcelable {
                 int numberOfPersons = c.getInt("NumberOfPersons");
                 int difficultyId = c.getInt("DifficultyId");
                 be.howest.nmct.receptenapp.data.DifficultyData.Difficulty dif = be.howest.nmct.receptenapp.data.DifficultyData.Difficulty.getDifficultyById(difficultyId);
-                String picture = c.getString("Picture");
+                String picture = c.getString("Image");
                 ArrayList<Ingredient> ingredients = makeIngredientsList(c.getString("Ingredients"));
                 String recipeText = c.getString("RecipeText");
 
@@ -420,7 +420,7 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("Cost", "" + _cost));
         params.add(new BasicNameValuePair("Persons", "" + _persons));
         params.add(new BasicNameValuePair("Difficulty", "" + _difficultyId));
-        params.add(new BasicNameValuePair("Picture", "" + _picture));
+        params.add(new BasicNameValuePair("Image", "" + _picture));
         params.add(new BasicNameValuePair("Ingredients", "" + _ingredients));
         params.add(new BasicNameValuePair("RecipeText", "" + _recipeText));
         int newId = onlineData.create(params);
@@ -435,7 +435,7 @@ public class Recept implements Parcelable {
         params.add(new BasicNameValuePair("Cost", "" + recept.getCost()));
         params.add(new BasicNameValuePair("Persons", "" + recept.getNumberOfPersons()));
         params.add(new BasicNameValuePair("Difficulty", "" + recept.getDifficultyID()));
-        params.add(new BasicNameValuePair("Picture", "" + recept.getPicture()));
+        params.add(new BasicNameValuePair("Image", "" + recept.getPicture()));
         params.add(new BasicNameValuePair("Ingredients", "" + ingredients));
         params.add(new BasicNameValuePair("RecipeText", "" + recept.getRecipeText()));
         int newId = onlineData.create(params);
@@ -465,7 +465,7 @@ public class Recept implements Parcelable {
                     values.put(ReceptTable.COLUMN_COST, c.getString("Cost"));
                     values.put(ReceptTable.COLUMN_NUMBEROFPERSONS, c.getInt("NumberOfPersons"));
                     values.put(ReceptTable.COLUMN_DIFFICULTYID, c.getInt("DifficultyId"));
-                    values.put(ReceptTable.COLUMN_PICTURE, c.getString("Picture"));
+                    values.put(ReceptTable.COLUMN_PICTURE, c.getString("Image"));
                     values.put(ReceptTable.COLUMN_INGREDIENTS, c.getString("Ingredients"));
                     values.put(ReceptTable.COLUMN_RECIPETEXT, c.getString("RecipeText"));
                     context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
