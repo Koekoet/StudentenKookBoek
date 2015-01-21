@@ -208,7 +208,7 @@ public class MainActivity extends FragmentActivity
             LoadDataTask taskCat = new LoadDataTask();
             taskCat.execute();
         } else {
-            Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Geen netwerkverbinding", Toast.LENGTH_SHORT).show();
         }
     }
     private Boolean IsSmallDevice() {
@@ -226,7 +226,7 @@ public class MainActivity extends FragmentActivity
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(context);
-            pDialog.setMessage("Loading data from servers");
+            pDialog.setMessage("Data downloaden");
             pDialog.setProgressStyle(pDialog.STYLE_HORIZONTAL);
             pDialog.setCancelable(false);
             pDialog.setIndeterminate(false);
@@ -430,7 +430,7 @@ public class MainActivity extends FragmentActivity
                 mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                 getUser();
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(MainActivity.this, "You must pick an account", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Selecteer account", Toast.LENGTH_SHORT).show();
             }
         } else if((requestCode == REQUEST_CODE_RECOVER_FROM_AUTH_ERROR ||
                 requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) && resultCode == Activity.RESULT_OK){
@@ -577,7 +577,7 @@ public class MainActivity extends FragmentActivity
             }
 
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Press back again to leave", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Druk nogmaals om te sluiten", Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
 
