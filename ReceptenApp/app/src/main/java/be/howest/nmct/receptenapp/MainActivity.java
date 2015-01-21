@@ -605,13 +605,15 @@ public class MainActivity extends FragmentActivity
     public void onNextCreateIngredientSelectedListener(Recept recept, String button) {
         this.recCreateRecipe = recept;
         if(button.equals("next")){
-            //dan recept = goed, next
-            ReceptCreateBereidingFragment receptCreateBereidingFragment = new ReceptCreateBereidingFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
-            receptCreateBereidingFragment.setArguments(bundle);
+            if(recCreateRecipe.getIngredients() != null && recCreateRecipe.getIngredients().size() != 0){
+                //dan recept = goed, next
+                ReceptCreateBereidingFragment receptCreateBereidingFragment = new ReceptCreateBereidingFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
+                receptCreateBereidingFragment.setArguments(bundle);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateBereidingFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateBereidingFragment).addToBackStack(null).commit();
+            } else { Toast.makeText(MainActivity.this, "Geen ingredienten toegevoegd.", Toast.LENGTH_SHORT).show();}
         } else {
             //vorige pagina
             ReceptCreateCategoryFragment receptCreateCategoryFragment = new ReceptCreateCategoryFragment();
@@ -692,13 +694,19 @@ public class MainActivity extends FragmentActivity
     public void onNextCreateCategorySelectedListener(Recept recept, String button) {
         this.recCreateRecipe = recept;
         if(button.equals("next")){
-            ReceptCreateIngredientFragment receptCreateIngredientFragment = new ReceptCreateIngredientFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
-            receptCreateIngredientFragment.setArguments(bundle);
+            if(recCreateRecipe.getCategoryIDs() != null && recCreateRecipe.getCategoryIDs().size() !=0){
+                ReceptCreateIngredientFragment receptCreateIngredientFragment = new ReceptCreateIngredientFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);
+                receptCreateIngredientFragment.setArguments(bundle);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateIngredientFragment).addToBackStack(null).commit();
-        } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, receptCreateIngredientFragment).addToBackStack(null).commit();
+
+            } else {
+                Toast.makeText(MainActivity.this, "Selecteer minstens 1 categorie.", Toast.LENGTH_SHORT).show();
+            }
+
+            } else {
             ReceptCreateInfoFragment receptCreateInfoFragment = new ReceptCreateInfoFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelable("CREATERECIPEVALUES", this.recCreateRecipe);

@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,6 +33,16 @@ public class ReceptProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override

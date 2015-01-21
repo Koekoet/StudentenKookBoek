@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +30,7 @@ public class ReceptCreateBereidingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -76,5 +80,15 @@ public class ReceptCreateBereidingFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnNextCreateBereidingSelectedListener");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 }

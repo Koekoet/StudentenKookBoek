@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -53,7 +56,7 @@ public class ReceptCreateCategoryFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         Bundle args = getArguments();
         recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
         if(recCreateRecipe.getCategoryIDs() != null){
@@ -158,35 +161,45 @@ public class ReceptCreateCategoryFragment extends ListFragment {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        public void bindView(View view, Context context, Cursor cursor) {
-            TextView content = (TextView) view.findViewById(R.id.txtCategoryCreate);
-            content.setText(cursor.getString(cursor.getColumnIndex(CategoryTable.COLUMN_NAME)));
+    public void bindView(View view, Context context, Cursor cursor) {
+        TextView content = (TextView) view.findViewById(R.id.txtCategoryCreate);
+        content.setText(cursor.getString(cursor.getColumnIndex(CategoryTable.COLUMN_NAME)));
 
-            String catImage = cursor.getString(cursor.getColumnIndex(CategoryTable.COLUMN_IMAGE));
+        String catImage = cursor.getString(cursor.getColumnIndex(CategoryTable.COLUMN_IMAGE));
 
-            ImageView image = (ImageView) view.findViewById(R.id.ivCategoryImage);
-            Bitmap bmp;
+        ImageView image = (ImageView) view.findViewById(R.id.ivCategoryImage);
+        Bitmap bmp;
 
-            //controleer of er een afbeelding werd geplaatst in db
-            if(catImage.isEmpty()){
-                //geen afbeelding opgegeven --> no_image weergeven
-                bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage); //zit standaard in de app, dus hoeft niet als string worden geconverteerd
-            }else{
-                //afbeelding zit in database (als string)
-                bmp = ImageConverter.StringToBitmap(catImage);
-            }
-            image.setImageBitmap(bmp);
-
-            int thisCatID = cursor.getInt(cursor.getColumnIndex(CategoryTable.COLUMN_ID));
-            if(selectedIDs.contains(thisCatID)){
-                view.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-            } else {
-                view.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-            }
+        //controleer of er een afbeelding werd geplaatst in db
+        if(catImage.isEmpty()){
+            //geen afbeelding opgegeven --> no_image weergeven
+            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage); //zit standaard in de app, dus hoeft niet als string worden geconverteerd
+        }else{
+            //afbeelding zit in database (als string)
+            bmp = ImageConverter.StringToBitmap(catImage);
         }
+        image.setImageBitmap(bmp);
 
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return mInflater.inflate(R.layout.row_create_category, parent, false);
+        int thisCatID = cursor.getInt(cursor.getColumnIndex(CategoryTable.COLUMN_ID));
+        if(selectedIDs.contains(thisCatID)){
+            view.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+        } else {
+            view.setBackgroundColor(getResources().getColor(android.R.color.background_light));
         }
+    }
+
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return mInflater.inflate(R.layout.row_create_category, parent, false);
+    }
+}
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 }

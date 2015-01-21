@@ -12,6 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -56,6 +59,7 @@ public class ReceptCreateIngredientFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         Bundle args = getArguments();
         recCreateRecipe = args.getParcelable("CREATERECIPEVALUES");
 
@@ -107,6 +111,9 @@ public class ReceptCreateIngredientFragment extends ListFragment {
                 saveIngredients();
                 recCreateRecipe.setIngredients(allIngredients);
                 mCallback.onNextCreateIngredientSelectedListener(recCreateRecipe, "next");
+                if(allIngredients.size() == 0){
+                    allIngredients.add(new Ingredient(-1, ""));
+                }
             }
         });
 
@@ -150,6 +157,7 @@ public class ReceptCreateIngredientFragment extends ListFragment {
 
         }
         allIngredients = saveValidIngr;
+
     }
 
     public interface OnNextCreateIngredientSelectedListener{
@@ -205,5 +213,15 @@ public class ReceptCreateIngredientFragment extends ListFragment {
 
             return row;
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(menu != null){
+            MenuItem refresh = menu.findItem(R.id.menu_item_refresh);
+            refresh.setVisible(false);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 }
