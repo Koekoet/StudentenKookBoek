@@ -30,6 +30,7 @@ import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
 import be.howest.nmct.receptenapp.data.IngredientData.IngredientTable;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
+import be.howest.nmct.receptenapp.data.UnitData.UnitTable;
 
 /**
  * Created by Toine on 5/11/2014.
@@ -171,14 +172,15 @@ public class ReceptIngredientenFragment extends ListFragment {
             final String name = cursor.getString(cursor.getColumnIndex(IngredientTable.COLUMN_NAME));
             final String amount = cursor.getString(cursor.getColumnIndex(IngredientTable.COLUMN_AMOUNT));
             final String unitid = cursor.getString(cursor.getColumnIndex(IngredientTable.COLUMN_UNITID));
+
             TextView tvName = (TextView) view.findViewById(R.id.tv_ingredient_name);
-            tvName.setText(cursor.getString(cursor.getColumnIndex(IngredientTable.COLUMN_NAME)));
+            tvName.setText(createBooschapText(cursor));
 
             final ImageButton imageButton = (ImageButton) view.findViewById(R.id.riAddBasket);
             imageButton.setImageResource(R.drawable.ic_action_new);
             imageButton.setBackgroundResource(0);
             if(isInBasket(ID)){
-                imageButton.setImageResource(R.drawable.ic_tick);
+                imageButton.setImageResource(R.drawable.checked);
             } else {
                 imageButton.setImageResource(R.drawable.ic_action_new);
             }
@@ -193,7 +195,7 @@ public class ReceptIngredientenFragment extends ListFragment {
                         values.put(BasketTable.COLUMN_AMOUNT,amount);
                         values.put(BasketTable.COLUMN_UNITID,unitid);
                         ingContext.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_BASKET, values);
-                        imageButton.setImageResource(R.drawable.ic_tick);
+                        imageButton.setImageResource(R.drawable.checked);
                     } else {
                         //REMOVE FORM BOODSCHAP
                         Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_BASKET + "/" + ID);
@@ -216,10 +218,19 @@ public class ReceptIngredientenFragment extends ListFragment {
         if(ingCursor.getCount() > 0){return true;}
         return false;
     }
-    private void AddToBasket(Ingredient ingredient) {
-        //CODE OM TOE TE VOEGEN AAN WINKELMANDJE
+    private String createBooschapText(Cursor cursor){
+        String text = "";
+        text += cursor.getString(cursor.getColumnIndex(BasketTable.COLUMN_AMOUNT));
+        text += getAbbreviation(cursor.getInt(cursor.getColumnIndex(BasketTable.COLUMN_UNITID))) + " ";
+        text += cursor.getString(cursor.getColumnIndex(BasketTable.COLUMN_NAME)) + " ";
+        return text;
+    }
+    private String getAbbreviation(int id){
+        Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_UNIT + "/" + id);
+        Cursor unitCursor = context.getContentResolver().query(uri, null, null, null, null);
 
-        Toast.makeText(getActivity(), "Toegevoegd aan mandje: " + ingredient.getID(), Toast.LENGTH_SHORT).show();
+        unitCursor.moveToFirst();
+        return unitCursor.getString(unitCursor.getColumnIndex(UnitTable.COLUMN_ABBREVIATION));
     }
 
 }

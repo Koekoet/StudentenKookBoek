@@ -17,7 +17,7 @@ public class AuthorTable {
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_AUTHOR + "("
-            + COLUMN_ID + " integer, "
+            + COLUMN_ID + " text not null, "
             + COLUMN_FNAME + " text not null, "
             + COLUMN_LNAME + " text not null"
             + ");";

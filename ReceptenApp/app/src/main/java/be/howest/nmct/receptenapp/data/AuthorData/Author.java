@@ -130,11 +130,11 @@ public class Author implements Parcelable {
                 try {
                     JSONObject c = categories.getJSONObject(i);
                     ContentValues values = new ContentValues();
-                    int id = c.getInt("ID");
-                    values.put(AuthorTable.COLUMN_ID, c.getInt("AuthorId"));
-                    values.put(AuthorTable.COLUMN_FNAME, c.getString("Firstname"));
-                    values.put(AuthorTable.COLUMN_LNAME, c.getString("Lastname"));
-                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_CAT, values);
+                    values.put(AuthorTable.COLUMN_ID, c.getString("AuthorId"));
+
+                    values.put(AuthorTable.COLUMN_FNAME, c.getString("FirstName"));
+                    values.put(AuthorTable.COLUMN_LNAME, c.getString("LastName"));
+                    context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_AUTHOR, values);
                 } catch (Exception e) {
                 }
             }

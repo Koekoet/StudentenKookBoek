@@ -117,7 +117,7 @@ public class ReceptDetailFragment extends Fragment{
             case R.id.menu_item_share:
                 ShareIntent();
                 return true;
-            case R.id.menu_item_rate:
+            /*case R.id.menu_item_rate:
                 View ratingView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_rating, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setView(ratingView);
@@ -146,7 +146,7 @@ public class ReceptDetailFragment extends Fragment{
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

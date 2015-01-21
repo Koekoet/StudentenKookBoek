@@ -8,10 +8,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/swipeToAddBasket"
+        android:text="Ingredienten:"
         android:id="@+id/tvSwipeRight"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
 
     <View
         android:layout_width="match_parent"

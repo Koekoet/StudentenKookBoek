@@ -51,6 +51,7 @@ public class ReceptFavoriteFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -69,10 +70,6 @@ public class ReceptFavoriteFragment extends ListFragment {
         int id = item.getItemId();
 
         switch (id){
-            /*case R.id.action_TestRecepi:
-                return false;
-            case R.id.action_TestFavorite:
-                return false;*/
             case R.id.action_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Alles verwijderen");
@@ -110,9 +107,9 @@ public class ReceptFavoriteFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        showFavorites();
         getActivity().getActionBar().setSubtitle("Favorieten");
-        listView = getListView();
-       showFavorites();
+
 
 
         SwipeDismissListViewTouchListener touchListener = new SwipeDismissListViewTouchListener(
@@ -147,7 +144,6 @@ public class ReceptFavoriteFragment extends ListFragment {
                 //Toast.makeText(getActivity(), favorietenLijst.get(i).getName(), Toast.LENGTH_SHORT).show();
                 mCursor.moveToPosition(i);
                 String id = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_ID));
-                mCursor.close();
                 ReceptDetailFragment fragment = new ReceptDetailFragment();
                 Bundle bundle = new Bundle();
                 Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_REC + "/" + id);
@@ -215,9 +211,11 @@ public class ReceptFavoriteFragment extends ListFragment {
             if(parent != null){
                 parent.removeView(view);
             }
+
         }
         try{
             view = inflater.inflate(R.layout.fragment_favorite, container, false);
+
         } catch(InflateException e){
 
         }

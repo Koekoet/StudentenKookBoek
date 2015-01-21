@@ -23,15 +23,15 @@ public class ReceptTable {
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_RECEPI + "("
-            + COLUMN_ID + " integer primary key autoincrement not null, "
+            + COLUMN_ID + " text not null, "
             + COLUMN_NAME + " text not null, "
-            + COLUMN_AUTHORID + " integer,"
-            + COLUMN_DURATION + " text not null,"
-            + COLUMN_COST + " text not null,"
-            + COLUMN_NUMBEROFPERSONS + " integer,"
-            + COLUMN_DIFFICULTYID + " integer,"
-            + COLUMN_PICTURE + " text not null,"
-            + COLUMN_INGREDIENTS + " text not null,"
+            + COLUMN_AUTHORID + " text not null, "
+            + COLUMN_DURATION + " text not null, "
+            + COLUMN_COST + " text not null, "
+            + COLUMN_NUMBEROFPERSONS + " integer, "
+            + COLUMN_DIFFICULTYID + " integer, "
+            + COLUMN_PICTURE + " text not null, "
+            + COLUMN_INGREDIENTS + " text not null, "
             + COLUMN_RECIPETEXT + " text not null"
             + ");";
 

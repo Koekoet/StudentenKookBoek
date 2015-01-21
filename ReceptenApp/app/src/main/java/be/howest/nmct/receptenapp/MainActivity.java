@@ -43,6 +43,8 @@ import java.util.ArrayList;
 
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
 import be.howest.nmct.receptenapp.data.AuthorData.Author;
+import be.howest.nmct.receptenapp.data.AuthorData.AuthorDatabaseHelper;
+import be.howest.nmct.receptenapp.data.AuthorData.AuthorTable;
 import be.howest.nmct.receptenapp.data.CategoryData.Category;
 import be.howest.nmct.receptenapp.data.CategoryData.CategoryDatabaseHelper;
 import be.howest.nmct.receptenapp.data.IngredientData.Ingredient;
@@ -109,6 +111,38 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Author.loadAllAuthors(MainActivity.this);
+
+        /*Cursor test = MainActivity.this.getContentResolver().query(ReceptenAppContentProvider.CONTENT_URI_AUTHOR,null,null,null,null);
+        int testsize = test.getCount();
+
+        test.moveToFirst();
+        String id1 = test.getString(test.getColumnIndex(AuthorTable.COLUMN_ID));
+        test.moveToNext();
+        String id2 = test.getString(test.getColumnIndex(AuthorTable.COLUMN_ID));
+        test.moveToNext();*/
+
+
+       /* //Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_AUTHOR);
+        Cursor test = MainActivity.this.getContentResolver().query(ReceptenAppContentProvider.CONTENT_URI_AUTHOR,null,null,null,null);
+        int testsize = test.getCount();
+
+        AuthorDatabaseHelper arthData = new AuthorDatabaseHelper(MainActivity.this);
+        SQLiteDatabase auDb = arthData.getReadableDatabase();
+
+        Cursor testcount = auDb.rawQuery("select count(*) from author", null);
+        testcount.moveToFirst();
+        int counsdqgt= testcount.getInt(0);
+
+        test.moveToFirst();
+        String id1 = test.getString(test.getColumnIndex(AuthorTable.COLUMN_ID));
+        test.moveToNext();
+        String id2 = test.getString(test.getColumnIndex(AuthorTable.COLUMN_ID));
+        test.moveToNext();
+        String id3 = test.getString(test.getColumnIndex(AuthorTable.COLUMN_ID));
+
+*/
         isSmall = IsSmallDevice();
 
         setContentView(R.layout.activity_main);
@@ -144,11 +178,6 @@ public class MainActivity extends FragmentActivity
             getActionBar().setDisplayHomeAsUpEnabled(true);
             getActionBar().setHomeButtonEnabled(true);
         }
-
-
-
-
-
 
         if (savedInstanceState == null) {
             //check sqlite database
@@ -202,7 +231,7 @@ public class MainActivity extends FragmentActivity
             pDialog.setCancelable(false);
             pDialog.setIndeterminate(false);
             //The maximum number of items is 100
-            pDialog.setMax(5);
+            pDialog.setMax(6);
             //Set the current progress to zero
             pDialog.setProgress(0);
             pDialog.show();
@@ -220,6 +249,8 @@ public class MainActivity extends FragmentActivity
             publishProgress(4);
             Unit.LoadAllUnitsCURSOR(context);
             publishProgress(5);
+            Author.loadAllAuthors(context);
+            publishProgress(6);
             return null;
         }
 
@@ -276,9 +307,12 @@ public class MainActivity extends FragmentActivity
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
+        if(isSmall){
+            if (mDrawerToggle.onOptionsItemSelected(item)) {
+                return true;
+            }
         }
+
         int id = item.getItemId();
 
         switch (id){
@@ -616,7 +650,7 @@ public class MainActivity extends FragmentActivity
                                 String cost = recCreateRecipe.getCost();
                                 cost = cost.replaceAll(">","").replaceAll("<","").replaceAll("€","").replaceAll(" ", "");
 
-                                recCreateRecipe.setAuthorID(Integer.parseInt(LOGGEDINUSER.getAuthorID()));
+                                recCreateRecipe.setAuthorID(LOGGEDINUSER.getAuthorID());
 
 
 
@@ -713,6 +747,7 @@ public class MainActivity extends FragmentActivity
             //UPDATE REC BY CAT TABLE
             RecipesByCategory.getAllRecipesByCategoryCURSOR(MainActivity.this);
             Ingredient.LoadAllIngredientsCURSOR(MainActivity.this);
+            RecipesByCategory.getAllRecipesByCategoryCURSOR(MainActivity.this);
 
             return id;
         }

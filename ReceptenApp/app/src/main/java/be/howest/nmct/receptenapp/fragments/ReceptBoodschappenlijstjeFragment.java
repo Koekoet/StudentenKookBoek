@@ -197,10 +197,6 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
         Uri uri = Uri.parse(ReceptenAppContentProvider.CONTENT_URI_UNIT + "/" + id);
         Cursor unitCursor = context.getContentResolver().query(uri, null, null, null, null);
 
-        //Text
-        Cursor test = context.getContentResolver().query(ReceptenAppContentProvider.CONTENT_URI_UNIT, null, null, null, null);
-        int countTest = unitCursor.getCount();
-
         unitCursor.moveToFirst();
         return unitCursor.getString(unitCursor.getColumnIndex(UnitTable.COLUMN_ABBREVIATION));
     }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import be.howest.nmct.receptenapp.R;
 import be.howest.nmct.receptenapp.contentprovider.ReceptenAppContentProvider;
+import be.howest.nmct.receptenapp.data.AuthorData.AuthorTable;
 import be.howest.nmct.receptenapp.data.ReceptData.Recept;
 import be.howest.nmct.receptenapp.data.ReceptData.ReceptTable;
 import be.howest.nmct.receptenapp.data.helpers.ImageConverter;
@@ -58,12 +59,17 @@ public class ReceptInfoFragment extends Fragment {
         TextView tvUploadedRecipe = (TextView) v.findViewById(R.id.tvUploadedRecipe);
         ImageView ivImageRecipe = (ImageView) v.findViewById(R.id.ivPictureRecipe);
 
+        String test = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_AUTHORID));
+        //byte[] test2 = mCursor.getBlob(mCursor.getColumnIndex(ReceptTable.COLUMN_AUTHORID));
+        //String testID = String.format("%.12f",test);
+
+
         //Set text
         riName.setText(mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_NAME)));
         tvDuration.setText(mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_DURATION)) + " min");
         tvCostRecipe.setText(mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_COST)) + " €");
         tvNumPersons.setText(mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_NUMBEROFPERSONS)));
-        tvUploadedRecipe.setText("user not defined yet"/*+selectedRecipe.getAuthor().getName()*/);
+        tvUploadedRecipe.setText(findAuthorByID(mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_AUTHORID))));
 
         String picture = mCursor.getString(mCursor.getColumnIndex(ReceptTable.COLUMN_PICTURE));
         if (picture != null && !picture.isEmpty()) {
@@ -73,6 +79,23 @@ public class ReceptInfoFragment extends Fragment {
             ivImageRecipe.setImageResource(R.drawable.ic_noimage);
         }
         return v;
+    }
+
+    private String findAuthorByID(String authorID) {
+        Uri uri = Uri.parse((ReceptenAppContentProvider.CONTENT_URI_AUTHOR + ""));
+        Cursor authors = context.getContentResolver().query(uri,null,null,null,null);
+        authors.moveToFirst();
+        String name ="";
+        for (int i = 0; i < authors.getCount(); i++) {
+            String authorAll = authors.getString(authors.getColumnIndex(AuthorTable.COLUMN_ID));
+            if(authorID.equals(authorAll)){
+                name = authors.getString(authors.getColumnIndex(AuthorTable.COLUMN_FNAME)) + " ";
+                name += authors.getString(authors.getColumnIndex(AuthorTable.COLUMN_LNAME));
+                return name;
+            }
+            authors.moveToNext();
+        }
+        return "";
     }
 
     @Override

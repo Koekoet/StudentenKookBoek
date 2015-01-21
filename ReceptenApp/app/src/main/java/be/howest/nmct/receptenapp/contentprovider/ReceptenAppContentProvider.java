@@ -187,8 +187,9 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 break;
             case AUTHOR_ID:
                 selectedDatabase = 7;
+                String parameter = uri.getLastPathSegment();
                 queryBuilder.setTables(AuthorTable.TABLE_AUTHOR);
-                queryBuilder.appendWhere(AuthorTable.COLUMN_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(AuthorTable.COLUMN_ID + "=" + parameter);
                 break;
 
             default:
@@ -227,7 +228,7 @@ public class ReceptenAppContentProvider extends ContentProvider {
                 break;
             case RECEPTS:
                 sqlDB = RecDatabase.getWritableDatabase();
-                sqlDB.insert(ReceptTable.TABLE_RECEPI, null, values);
+                long inserted = sqlDB.insert(ReceptTable.TABLE_RECEPI, null, values);
                 break;
             case RECBYCAT:
                 sqlDB = RecByCatDatabase.getWritableDatabase();

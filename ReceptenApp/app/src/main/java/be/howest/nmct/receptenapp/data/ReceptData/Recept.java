@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.MatrixCursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -27,7 +28,7 @@ import be.howest.nmct.receptenapp.data.helpers.onlineData;
 public class Recept implements Parcelable {
     private int ID;
     private String Name;
-    private int AuthorID;
+    private String AuthorID;
     //private Author Author;
     private String Duration;
     private String Cost;
@@ -44,7 +45,7 @@ public class Recept implements Parcelable {
     private Recept(Parcel in) {
         setID(in.readInt());
         setName(in.readString());
-        setAuthorID(in.readInt());
+        setAuthorID(in.readString());
         //setAuthor((Author) in.readParcelable(Author.class.getClassLoader()));
         setIngredients(in.readArrayList(Ingredient.class.getClassLoader()));
         setDuration(in.readString());
@@ -70,7 +71,7 @@ public class Recept implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(getID());
         out.writeString(getName());
-        out.writeInt(getAuthorID());
+        out.writeString(getAuthorID());
         //out.writeParcelable(getAuthor(), 0);
         out.writeList(getIngredients());
         out.writeString(getDuration());
@@ -113,11 +114,11 @@ public class Recept implements Parcelable {
         Name = name;
     }
 
-    public int getAuthorID() {
+    public String getAuthorID() {
         return AuthorID;
     }
 
-    public void setAuthorID(int authorID) {
+    public void setAuthorID(String authorID) {
         AuthorID = authorID;
     }
 
@@ -274,7 +275,7 @@ public class Recept implements Parcelable {
                     //ophalen data
                     int id = c.getInt("ID");
                     String name = c.getString("Recipename");
-                    int authorId = c.getInt("AuthorId");
+                    String authorId = c.getString("AuthorId");
                     String duration = c.getString("Duration");
                     String cost = c.getString("Cost");
                     int numberOfPersons = c.getInt("NumberOfPersons");
@@ -320,7 +321,7 @@ public class Recept implements Parcelable {
                     //ophalen data
                     int id = c.getInt("ID");
                     String name = c.getString("Recipename");
-                    int authorId = c.getInt("AuthorId");
+                    String authorId = c.getString("AuthorId");
                     String duration = c.getString("Duration");
                     String cost = c.getString("Cost");
                     int numberOfPersons = c.getInt("NumberOfPersons");
@@ -366,7 +367,7 @@ public class Recept implements Parcelable {
                 //ophalen data
                 int _id = c.getInt("ID");
                 String name = c.getString("Recipename");
-                int authorId = c.getInt("AuthorId");
+                String authorId = c.getString("AuthorId");
                 String duration = c.getString("Duration");
                 String cost = c.getString("Cost");
                 int numberOfPersons = c.getInt("NumberOfPersons");
@@ -411,7 +412,7 @@ public class Recept implements Parcelable {
         return ingrList;
     }
 
-    public static int createRecipe(String _name, int _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText, String _catIDs) {
+    public static int createRecipe(String _name, String _author, String _duration, String _cost, int _persons, int _difficultyId, String _picture, String _ingredients, String _recipeText, String _catIDs) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tableName", "ap_recipe"));
         params.add(new BasicNameValuePair("Name", "" + _name));
@@ -461,9 +462,12 @@ public class Recept implements Parcelable {
                     JSONObject c = recipes.getJSONObject(i);
                     //ophalen data
                     ContentValues values = new ContentValues();
-                    values.put(ReceptTable.COLUMN_ID, c.getInt("ID"));
+                    values.put(ReceptTable.COLUMN_ID, c.getString("ID"));
                     values.put(ReceptTable.COLUMN_NAME, c.getString("Recipename"));
-                    values.put(ReceptTable.COLUMN_AUTHORID, c.getInt("AuthorId"));
+                    values.put(ReceptTable.COLUMN_AUTHORID, c.getString("AuthorId"));
+
+                    String author = c.getString("AuthorId");
+
                     values.put(ReceptTable.COLUMN_DURATION, c.getString("Duration"));
                     values.put(ReceptTable.COLUMN_COST, c.getString("Cost"));
                     values.put(ReceptTable.COLUMN_NUMBEROFPERSONS, c.getInt("NumberOfPersons"));
@@ -474,6 +478,7 @@ public class Recept implements Parcelable {
                     context.getContentResolver().insert(ReceptenAppContentProvider.CONTENT_URI_REC, values);
 
                 } catch (Exception e) {
+                    Log.e("Error",e.getMessage());
                 }
             }
             return true;
