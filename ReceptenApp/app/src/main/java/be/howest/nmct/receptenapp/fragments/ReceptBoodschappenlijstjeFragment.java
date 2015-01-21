@@ -106,7 +106,7 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
                 });
         listView.setOnTouchListener(touchListener);
         listView.setOnScrollListener(touchListener.makeScrollListener());
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             String boodschapDialog = "";
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -122,9 +122,6 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setText(boodschapDialog);
                 builder.setView(input);
-
-
-
 // Set up the buttons
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -147,7 +144,7 @@ public class ReceptBoodschappenlijstjeFragment extends ListFragment {
                 setListAdapter(mAdapter);
 
             }
-        });
+        });*/
     }
 
     @Override
